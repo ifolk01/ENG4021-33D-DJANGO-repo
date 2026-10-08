@@ -1,0 +1,215 @@
+body {
+    background-color: #F2F2ED;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #33364F;
+  }
+.barra-principal {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.barra-principal h2 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 800;
+}
+
+hr {
+    width: 100%;
+    border: none;
+    border-top: 2px solid #33364f;
+    margin: 0px 0;
+}
+
+.mecanismo_de_busca {
+    display: flex;
+    margin-left: -25px;
+}
+
+.barra-de-pesquisa {
+    width: 70%;
+    max-width: 850px;
+    height: 55px;
+    display: flex;
+    margin-left: 30px;
+    margin-top: 30px;
+    align-items: center;
+    padding: 0 12px 0 20px;
+    border: 2px solid #33364f;
+    border-radius: 20px;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.botao-pesquisa {
+    display: flex;
+    position: relative;
+    background-color: #ffffff;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-left: 750px;
+    margin-top: -36px;
+}
+
+.entrada-pesquisa {
+    flex: 1;
+    width: 90%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin-top: 15px;
+    background: transparent;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    color: #33364f;
+}
+
+.icone_perfil {
+    display: flex;
+    position: relative;
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: auto;
+    object-fit: contain;
+}
+
+.botao_home {
+    display: flex;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    padding: 0px 5px;
+    border-radius: 1px;
+    cursor: pointer;
+    margin: 0px 0px;
+}
+
+.container {
+    display: flex;
+    margin-left: auto;
+    background-color: transparent;
+}
+
+.texto_botao {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    color: #33364f;
+}
+
+.botao_filtro {
+    width: 35%;
+    justify-content: center;
+    max-width: 850px;
+    height: 55px;
+    display: flex;
+    margin-left: 40px;
+    margin-top: 30px;
+    align-items: center;
+    padding: 0 12px 0 20px;
+    border: 2px solid #33364f;
+    border-radius: 20px;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.botao_busca {
+    display: flex;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    padding: 0px 100px;
+    border-radius: 1px;
+    cursor: pointer;
+    margin: 0px 0px;
+}
+
+.vaga {
+    width: 70%;
+    max-width: 850px;
+    height: 300px;
+    display: flex;
+    margin-left: 30px;
+    margin-top: 30px;
+    align-items: center;
+    border: 2px solid #33364f;
+    border-radius: 20px;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.grade {
+    display: flex;
+    margin-left: 30px;
+}
+
+.img_vaga {
+    width: 250px;
+    height: 250px;
+}
+
+.texto_vaga {
+    margin-top: 0px;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    color: #33364f;
+}
+
+.texto_desc {
+    margin-top: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    color: #33364f;
+}
+
+.texto_reg {
+    margin-top: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    color: #33364f;
+}
+
+.texto_sal {
+    margin-top: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    color: #33364f;
+}
+
+.img_botao {
+    display: flex;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    padding: 0px 5px;
+    border-radius: 1px;
+    cursor: pointer;
+    margin: 0px 0px;
+}
+
+.div1 {
+    
+}
+
+.div2 {
+    margin-left: 600px;
+}
+
+.barra_e_login {
+    display: flex;
+}
+
+.texto_corrido{
+    margin-top: 250px;
+    margin-left: 150px;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    color: #33364f;
+}

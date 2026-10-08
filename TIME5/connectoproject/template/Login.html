@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecto - Login</title>
+  <link rel="stylesheet" href="{% static 'login.css' %}">
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="auth-logo-box">
+      
+      <img src="{% static 'logo_icon.jpg' %}" alt="Logo Connecto">
+    </div>
+    
+    <div class="auth-subtitle">Conectando talentos e oportunidades</div>
+
+    <form class="auth-form" method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      
+      <input type="text" name="username" class="auth-input" placeholder="Matrícula" required>
+      <input type="password" name="password" class="auth-input" placeholder="Senha" required>
+
+      {% if erro %}
+        <p style="color: red; font-size: 14px; text-align: center; margin: 0;">{{ erro }}</p>
+      {% endif %}
+
+      <div class="auth-forgot">
+        <a href="#">Esqueceu a senha?</a>
+      </div>
+
+      <button type="submit" class="auth-button">Entrar</button>
+    </form>
+  </div>
+
+  <div class="auth-footer">
+    Não tem conta? <a href="{% url 'criar_conta' %}">Criar conta</a>
+  </div>
+
+</body>
+</html>

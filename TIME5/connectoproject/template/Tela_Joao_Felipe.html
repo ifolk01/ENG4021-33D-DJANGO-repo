@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styleJoaoFelipe.css' %}">
+
+    <title>CONNECTO | Busca</title>
+</head>
+
+<body>
+    <div class="barra-principal">
+        <button class="botao_home"><img src="connectologo-transparente-simples.png" width="70"></button>
+        <button class="botao_home"><h2>CONNECTO</h2></button>
+        <div class="container">
+        <button><img src="icone_perfil.png" class="icone_perfil" width="50"></button>
+        </div>
+    </div>
+    <hr>
+    <div class="mecanismo_de_busca">
+    <div class="barra-de-pesquisa">
+        <form action="/buscar" method="GET">
+            <input type="search" placeholder="Área, empresa ou curso" class="entrada-pesquisa">
+            <div>
+            <button type="submit" class="botao-pesquisa"><img src="lupa.png" width=30></button>
+            </div>
+        </form>
+    </div>
+    <div class="botao_filtro">
+        <button class="botao_busca"><h3 class="texto_botao">Filtros</h3></button>
+    </div>
+    <div class="botao_filtro">
+        <button class="botao_busca"><h3 class="texto_botao">Ordenar</h3></button>
+    </div>
+    </div>
+
+    <div class="grade">
+        <div class="vaga">
+            <div>
+                <button class="img_botao"><img src="microsoft logo.png" class="img_vaga"></button>
+            </div>
+            <div>
+                <div>
+                    <h2 class="texto_vaga">Estágio em desenvolvimento front-end</h2>
+                </div>
+                <h3 class="texto_desc">Centro, Rio de Janeiro, RJ</h3>
+                <h3 class="texto_reg">Remoto</h3>
+                <h3 class="texto_sal">R$ 1.200,00</h3>
+            </div>
+        </div>
+        <div class="vaga">
+            <div>
+                <button class="img_botao"><img src="microsoft logo.png" class="img_vaga"></button>
+            </div>
+            <div>
+                <div>
+                    <h2 class="texto_vaga">Estágio em engenharia de dados</h2>
+                </div>
+                <h3 class="texto_desc">Centro, Rio de Janeiro, RJ</h3>           
+                <h3 class="texto_reg">Híbrido</h3>
+                <h3 class="texto_sal">R$ 1.750,00</h3>
+            </div> 
+        </div>
+    </div>
+        <div class="grade">
+        <div class="vaga">
+            <div>
+                <button class="img_botao"><img src="microsoft logo.png" class="img_vaga"></button>
+            </div>
+            <div>
+                <div>
+                    <h2 class="texto_vaga">Estágio em inteligência artificial</h2>
+                </div>
+                <h3 class="texto_desc">Centro, Rio de Janeiro, RJ</h3>
+                <h3 class="texto_reg">Remoto</h3>
+                <h3 class="texto_sal">R$ 1.400,00</h3>
+            </div>
+        </div>
+        <div class="vaga">
+            <div>
+                <button class="img_botao"><img src="microsoft logo.png" class="img_vaga"></button>
+            </div>
+            <div>
+                <div>
+                    <h2 class="texto_vaga">Estágio em computação gráfica</h2>
+                </div>
+                <h3 class="texto_desc">Centro, Rio de Janeiro, RJ</h3>
+                <h3 class="texto_reg">Presencial</h3>
+                <h3 class="texto_sal">R$ 1.350,00</h3>
+            </div>
+        </div>
+    </div>
+        <div class="grade">
+        <div class="vaga">
+            <div>
+                <button class="img_botao"><img src="https://t.ctcdn.com.br/UVz1olMJelnOtdSJ1wE9On6GksY=/i490024.jpeg" class="img_vaga"></button>
+            </div>
+            <div>
+                <div>
+                    <h2 class="texto_vaga">Estágio em comunicação</h2>
+                </div>
+                <h3 class="texto_desc">Barra da Tijuca, Rio de Janeiro, RJ</h3>
+                <h3 class="texto_reg">Presencial</h3>
+                <h3 class="texto_sal">R$ 1.100,00</h3>
+            </div>
+        </div>
+        <div class="vaga">
+            <div>
+                <button class="img_botao"><img src="microsoft logo.png" class="img_vaga"></button>
+            </div>
+            <div>
+                <div>
+                    <h2 class="texto_vaga">Estágio em administração</h2>
+                </div>
+                <h3 class="texto_desc">Centro, Rio de Janeiro, RJ</h3>
+                <h3 class="texto_reg">Presencial</h3>
+                <h3 class="texto_sal">R$ 1.200,00</h3>
+            </div>
+        </div>
+    </div>
+        <div class="grade">
+        <div class="vaga">
+            <div>
+                <button class="img_botao"><img src="https://t.ctcdn.com.br/UVz1olMJelnOtdSJ1wE9On6GksY=/i490024.jpeg" class="img_vaga"></button>
+            </div>
+            <div>
+                <div>
+                    <h2 class="texto_vaga">Estágio em desenvolvimento back-end</h2>
+                </div>
+                <h3 class="texto_desc">Barra da Tijuca, Rio de Janeiro, RJ</h3>
+                <h3 class="texto_reg">Remoto</h3>
+                <h3 class="texto_sal">R$ 1.900,00</h3>
+            </div>
+        </div>
+        <div class="vaga">
+            <div>
+                <button class="img_botao"><img src="https://t.ctcdn.com.br/UVz1olMJelnOtdSJ1wE9On6GksY=/i490024.jpeg" class="img_vaga"></button>
+            </div>
+            <div>
+                <div>
+                    <h2 class="texto_vaga">Estagiário AWS</h2>
+                </div>
+                <h3 class="texto_desc">Barra da Tijuca, Rio de Janeiro, RJ</h3>
+                <h3 class="texto_reg">Remoto</h3>
+                <h3 class="texto_sal">R$ 2.100,00</h3>
+            </div>
+        </div>
+    </div>
+</body>

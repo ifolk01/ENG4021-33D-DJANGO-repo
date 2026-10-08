@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Connecto - Perfil</title>
+  <link rel="stylesheet" href="{% static 'perfil.css' %}">
+</head>
+
+<body>
+  <h1>CONNECT<span>O</span></h1>
+  <h2><a href="login.html">‹</a> PERFIL DO ESTUDANTE</h2>
+
+  <div class="card">
+    <img src="../static/img/foto.png" width="80">
+    <h3>Lucas Silva</h3>
+    <p class="curso"><b>Ciência da Computação</b></p>
+    <p>UFRJ - Univ. Federal do Rio de Janeiro</p>
+
+    <div class="contadores">
+      <div class="caixa">
+        <p>CANDIDATURAS</p>
+        <h3>2</h3>
+      </div>
+      <div class="caixa">
+        <p>FAVORITOS</p>
+        <h3 class="vermelho">2</h3>
+      </div>
+    </div>
+
+    <button>Editar Dados do Perfil</button>
+  </div>
+
+  <div class="card">
+    <h3>DADOS ACADÊMICOS E CONTATO</h3>
+    <div class="caixa">
+      <p>E-MAIL</p>
+      <p><b>lucas.silva@email.com</b></p>
+    </div>
+    <div class="caixa">
+      <p>INSTITUIÇÃO</p>
+      <p><b>UFRJ - Univ. Federal do Rio de Janeiro</b></p>
+    </div>
+    <div class="caixa">
+      <p>CURSO E PERÍODO</p>
+      <p><b>Ciência da Computação (5º período)</b></p>
+    </div>
+  </div>
+</body>
+
+</html>

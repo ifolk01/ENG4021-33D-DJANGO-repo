@@ -1,0 +1,176 @@
+:root {
+  --connecto-primary-dark: #33364F;
+  --connecto-secondary: #2a6d8c;
+  --connecto-bg: #F2F2ED;
+  --connecto-surface: #FFFFFF;
+  --connecto-border: #DCDCD3;
+  --connecto-text: #33364F;
+  --connecto-text-soft: #6B6F80;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--connecto-bg);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.login-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.auth-logo-box {
+  width: 80px;
+  height: 80px;
+  background-color: var(--connecto-surface);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.auth-logo-box img {
+  width: 50px;
+  object-fit: contain;
+}
+
+.auth-subtitle {
+  color: var(--connecto-text-soft);
+  font-size: 15px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+
+.auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--connecto-border);
+  background-color: var(--connecto-surface);
+  font-size: 16px;
+  color: var(--connecto-text);
+  box-sizing: border-box;
+  outline: none;
+}
+
+.auth-input::placeholder {
+  color: #999;
+}
+
+.auth-input:focus {
+  border-color: var(--connecto-primary-dark);
+}
+
+.auth-forgot {
+  text-align: right;
+  margin-top: -8px;
+  margin-bottom: 16px;
+}
+
+.auth-forgot a {
+  color: var(--connecto-secondary);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: var(--connecto-primary-dark);
+  color: var(--connecto-surface);
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 40px;
+}
+
+.auth-footer {
+  margin-top: auto;
+  text-align: center;
+  padding-bottom: 24px;
+  color: var(--connecto-text-soft);
+  font-size: 15px;
+}
+
+.auth-footer a {
+  color: var(--connecto-text);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.cadastro-container {
+  max-width: 400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.cadastro-topbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.back-button {
+  width: 40px;
+  height: 40px;
+  background-color: var(--connecto-surface);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--connecto-text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  position: absolute;
+  left: 0;
+}
+
+.back-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cadastro-topbar h2 {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  font-size: 16px;
+  color: var(--connecto-text);
+}
+
+.cadastro-header h1 {
+  font-size: 28px;
+  color: var(--connecto-primary-dark);
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.cadastro-header p {
+  color: var(--connecto-text-soft);
+  font-size: 15px;
+  margin: 0 0 32px 0;
+}

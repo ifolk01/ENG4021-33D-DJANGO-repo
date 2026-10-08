@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+
+    <title>CONNECTO | Home</title>
+
+    <style>
+        body {
+            background-image: url("connectologo-transparente.png");
+            background-repeat: no-repeat; 
+            background-size: 700px;
+            background-position: 0% 700%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="barra-principal">
+        <button class="botao_home"><img src="connectologo-transparente-simples.png" width="70"></button>
+        <button class="botao_home"><h2>CONNECTO</h2></button>
+        <div class="container">
+        <button><img src="icone_perfil.png" class="icone_perfil" width="50"></button>
+        </div>
+    </div>
+    <hr>
+    <div class="home">
+        <div class="div1">
+
+        </div>
+        <div class="div2">
+            <div class="barra_e_login">
+            <div class="barra-de-pesquisa">
+        <form action="/buscar" method="GET">
+            <input type="search" placeholder="Área, empresa ou curso" class="entrada-pesquisa">
+            <div>
+            <button type="submit" class="botao-pesquisa"><img src="lupa.png" width=30></button>
+            </div>
+        </form>
+    </div>
+    <div class="botao_filtro">
+        <button class="botao_busca"><h3 class="texto_botao">Login ou cadastro</h3></button>
+    </div>
+    </div>
+    <div>
+        <p class="texto_corrido">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam nostrum amet quae obcaecati non architecto natus illum eos sit necessitatibus? Commodi veniam aliquid illo, est corrupti nam unde odit ipsa?</p>
+    </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
