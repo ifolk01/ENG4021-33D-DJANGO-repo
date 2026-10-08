@@ -3,47 +3,50 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.models import User
 
 
+
 def login(request):
     if request.method == "POST":
-        # Recolhe os dados enviados pelo HTML
-        matricula = request.POST.get('username')
-        senha = request.POST.get('password')
+       
+        matricula = request.POST.get('username', '').strip()
+        senha = request.POST.get('password', '')
 
-        # O Django verifica se existe um utilizador com esta matrícula e palavra-passe
+       
         user = authenticate(request, username=matricula, password=senha)
 
         if user is not None:
-            # Se os dados estiverem corretos, faz o login e envia para a Home
             auth_login(request, user)
             return redirect('home')
         else:
-            # Se falhar, devolve o ecrã de login com uma mensagem de erro
-            return render(request, "Login.html", {"erro": "Matrícula ou senha incorretos."})
+            # Se falhar, devolve um erro visual para a página de login
+            return render(request, "Login.html", {"erro": "Matrícula ou senha incorretos. Tente novamente."})
 
-    # Se for apenas aceder à página (GET), mostra o formulário vazio
     return render(request, "Login.html")
 
 
 def criar_conta(request):
     if request.method == "POST":
-        matricula = request.POST.get('username')
-        senha = request.POST.get('password')
+        nome = request.POST.get('nome', '') # Recolhe o nome completo
+        matricula = request.POST.get('username', '').strip()
+        senha = request.POST.get('password', '')
+        confirmar_senha = request.POST.get('confirmar_senha', '')
 
-        # Verifica se a matrícula já existe na base de dados
+        # Trava 1: Verifica se as duas senhas são iguais
+        if senha != confirmar_senha:
+            return render(request, "criar_conta.html", {"erro": "As senhas não coincidem!"})
+
+        # Trava 2: Verifica se a matrícula já existe
         if User.objects.filter(username=matricula).exists():
             return render(request, "criar_conta.html", {"erro": "Esta matrícula já está registada."})
-        else:
-            # Cria o utilizador de forma segura na base de dados do Django
-            user = User.objects.create_user(username=matricula, password=senha)
-            user.save()
-            # Redireciona para o login para que o utilizador possa entrar
-            return redirect('login')
+        
+        
+        user = User.objects.create_user(username=matricula, password=senha, first_name=nome)
+        user.save()
+        
+        return redirect('login')
 
     return render(request, "criar_conta.html")
 
-# Tela Inicial 
-def login(request):
-    return render(request, "Login.html")
+
 
 # Home 
 def home(request):
