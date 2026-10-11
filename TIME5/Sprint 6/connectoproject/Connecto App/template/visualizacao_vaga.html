@@ -1,37 +1,44 @@
+
 {% load static %}
 <!DOCTYPE html>
+<html lang="pt-BR">
 
-<html>
+<head>
+    <meta charset="utf-8">
+    <title>CONNECTO - Visualização de Vaga</title>
+    <link rel="stylesheet" href="{% static 'visualizacao_vagas.css' %}">
+</head>
 
-    <head>
-        <title>Visualização de Vaga</title>
-        <link rel="stylesheet" href="{% static 'visualizacao_vagas_2.css' %}">
-    </head>
+<body>
 
-    <body>
+    <div class="cabecalho">
+        <img src="{% static 'logo_icon.jpg' %}" alt="Logo CONNECTO">
         <h1>Visualização de Vaga</h1>
+    </div>
 
-        <div class="vaga">
-            <h2>Estágio em Desenvolvimento de Software</h2>
-            <p>Rio de Janeiro - Botafogo</p>
-            <p>Presencial</p>
-            <p>Tecnologia e Desenvolvimento</p>
-        </div>
+    <div class="vaga">
+        <h2>Estágio em Desenvolvimento de Software</h2>
+        <p><strong>Localização:</strong> Rio de Janeiro - Botafogo</p>
+        <p><strong>Modalidade:</strong> Presencial</p>
+        <p><strong>Área:</strong> Tecnologia e Desenvolvimento</p>
+    </div>
 
-        <div class="detalhes">
-            <h2>Sobre a vaga</h2>
-            <p>Buscamos um estagiário para auxiliar no desenvolvimento de software e participar dos projetos da equipe.</p>
-            <h2>Requisitos</h2>
-            <p>Estar cursando graduação e ter interesse em tecnologia e desenvolvimento de software.</p>
-            <h2>Sobre a empresa</h2>
-            <p>A Empresa ABC atua na área de tecnologia e desenvolvimento de soluções digitais.</p>
-        </div>
+    <div class="detalhes">
+        <h2>Sobre a vaga</h2>
+        <p>Buscamos um estagiário para auxiliar no desenvolvimento de software e participar dos projetos da equipe.</p>
 
-        <div class="candidatar">
-            <h2>Candidatar-se</h2>
-            <h2>Saber mais</h2>
-        </div>
-            
-    </body>
+        <h2>Requisitos</h2>
+        <p>Estar cursando graduação e ter interesse em tecnologia e desenvolvimento de software.</p>
+
+        <h2>Sobre a empresa</h2>
+        <p>A Empresa ABC atua na área de tecnologia e desenvolvimento de soluções digitais.</p>
+    </div>
+
+    <div class="candidatar">
+        <h2 class="botao-candidatar">Candidatar-se</h2>
+        <h2 class="saber-mais">Saber mais</h2>
+    </div>
+
+</body>
 
 </html>

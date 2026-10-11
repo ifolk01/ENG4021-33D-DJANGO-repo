@@ -1,16 +1,52 @@
+
 body {
     font-family: Arial;
+    background-color: #F2F2ED;
 }
 
 h1 {
-    color: blue;
+    color: #33364F;
+    text-align: center;
 }
 
 .vaga {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
     background-color: white;
-    color: black;
+    color: #33364F;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    border: 1px solid #DCDCD3;
+    border-radius: 12px;
+}
+
+.vaga h2 {
+    color: #33364F;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.vaga p {
+    color: #6B6F80;
+    font-size: 15px;
+    margin: 6px 0;
+}
+
+.cabecalho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.cabecalho img {
+    width: 150px;
+    border-radius: 12px;
+}
+
+.detalhes {
+    color: #2A6D8C;
+    font-weight: bold;
 }
