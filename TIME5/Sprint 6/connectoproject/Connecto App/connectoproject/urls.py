@@ -25,4 +25,7 @@ urlpatterns = [
 
     path("vaga/", views.visualizacao_vaga, name="visualizacao_vaga"),
     path("vaga/<int:vaga_id>/", views.visualizacao_vaga, name="detalhe_vaga"),
+    path(
+    "favoritar/<int:vaga_id>/",views.toggle_favorito,name="toggle_favorito"),
+    
 ]

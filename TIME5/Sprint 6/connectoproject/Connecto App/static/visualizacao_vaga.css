@@ -1,0 +1,283 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f7f8fa;
+    color: #17324d;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+.app-shell {
+    width: 100%;
+    min-height: 100dvh;
+    max-width: 560px;
+    margin: 0 auto;
+    background: #f7f8fa;
+
+    padding-bottom:
+        calc(
+            90px +
+            env(safe-area-inset-bottom)
+        );
+}
+
+
+/* HEADER */
+
+.vaga-header {
+    height: 68px;
+
+    display: grid;
+    grid-template-columns: 48px 1fr 48px;
+    align-items: center;
+
+    padding: 0 16px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #edf0f3;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 20;
+}
+
+.vaga-header h1 {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    text-align: center;
+
+    color: #183b56;
+}
+
+.back-button {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    font-size: 25px;
+
+    color: #183b56;
+}
+
+
+/* CONTEÚDO */
+
+.vaga-page {
+    padding: 18px 16px 30px;
+}
+
+
+/* CARD PRINCIPAL */
+
+.vaga-card,
+.vaga-section {
+    background: #ffffff;
+
+    border: 1px solid #edf0f3;
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    margin-bottom: 14px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(34, 62, 85, 0.04);
+}
+
+
+/* EMPRESA */
+
+.vaga-company-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    margin-bottom: 18px;
+}
+
+.empresa-avatar {
+    width: 52px;
+    min-width: 52px;
+    height: 52px;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e4f3f8;
+
+    color: #34738c;
+
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.vaga-heading {
+    flex: 1;
+}
+
+.vaga-heading h2 {
+    margin: 1px 0 5px;
+
+    font-size: 20px;
+    line-height: 1.25;
+
+    color: #183b56;
+}
+
+.vaga-heading p {
+    margin: 0;
+
+    font-size: 14px;
+
+    color: #6e7f8d;
+}
+
+
+/* TAGS */
+
+.vaga-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    margin-bottom: 20px;
+}
+
+.vaga-tag {
+    padding: 7px 11px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.vaga-tag.location {
+    background: #fde8ec;
+    color: #a34f61;
+}
+
+.vaga-tag.modalidade {
+    background: #fff1c7;
+    color: #88702a;
+}
+
+.vaga-tag.area {
+    background: #dfeefa;
+    color: #386b8c;
+}
+
+
+/* INFO */
+
+.vaga-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 14px 0;
+
+    border-top: 1px solid #eef1f3;
+
+    font-size: 14px;
+}
+
+.vaga-info-row span {
+    color: #798895;
+}
+
+.vaga-info-row strong {
+    color: #183b56;
+
+    text-align: right;
+}
+
+
+/* SEÇÕES */
+
+.vaga-section h3 {
+    margin: 0 0 12px;
+
+    font-size: 17px;
+
+    color: #183b56;
+}
+
+.vaga-section p {
+    margin: 0;
+
+    color: #586b79;
+
+    font-size: 14px;
+    line-height: 1.65;
+
+    white-space: pre-line;
+}
+
+
+/* CANDIDATURA */
+
+.vaga-action {
+    margin-top: 22px;
+    margin-bottom: 12px;
+}
+
+.candidatar-button {
+    width: 100%;
+    height: 54px;
+
+    border: 0;
+    border-radius: 14px;
+
+    background: #32758e;
+
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.candidatar-button:active {
+    transform: scale(0.98);
+}
+
+
+/* RESPONSIVO */
+
+@media (min-width: 600px) {
+
+    .app-shell {
+        border-left: 1px solid #eceff1;
+        border-right: 1px solid #eceff1;
+    }
+
+}

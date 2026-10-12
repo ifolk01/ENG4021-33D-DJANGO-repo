@@ -5,6 +5,7 @@ from django.db import transaction
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+from django.utils.http import url_has_allowed_host_and_scheme
 
 from .models import (
     Candidatura,
@@ -118,6 +119,33 @@ def home(request):
     )
     return render(request, "home.html", {"vagas": vagas})
 
+@require_POST
+@login_required
+def toggle_favorito(request, vaga_id):
+    vaga = get_object_or_404(
+        Oportunidade,
+        pk=vaga_id,
+        ativa=True
+    )
+
+    favorito, criado = Favorito.objects.get_or_create(
+        usuario=request.user,
+        oportunidade=vaga
+    )
+
+    if not criado:
+        favorito.delete()
+
+    destino = request.POST.get("next", "")
+
+    if destino and url_has_allowed_host_and_scheme(
+        destino,
+        allowed_hosts={request.get_host()},
+        require_https=request.is_secure(),
+    ):
+        return redirect(destino)
+
+    return redirect("home")
 
 @login_required
 def busca(request):
@@ -145,7 +173,7 @@ def visualizacao_vaga(request, vaga_id=None):
 
     return render(
         request,
-        "visualizacao_vaga_melhorada.html",
+        "visualizacao_vaga.html",
         {"vaga": vaga, "vaga_id": vaga.id, "ja_candidatado": ja_candidatado},
     )
 
