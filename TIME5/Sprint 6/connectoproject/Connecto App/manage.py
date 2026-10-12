@@ -7,10 +7,7 @@ import sys
 def main():
     """Executa os comandos administrativos do Django."""
 
-    os.environ.setdefault(
-        'DJANGO_SETTINGS_MODULE',
-        'moviesproject.settings'
-    )
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'connectoproject.settings')
 
     try:
         from django.core.management import execute_from_command_line
