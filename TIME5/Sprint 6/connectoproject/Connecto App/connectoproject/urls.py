@@ -30,4 +30,6 @@ urlpatterns = [
     path('candidaturas/', views.candidaturas, name='candidaturas'),
     path('favoritas/', views.favoritas, name='favoritas'),
     path('vaga/', views.visualizacao_vaga, name='visualizacao_vaga'),
+    # Rota com id da vaga (Sprint 6 - João Henrique): /vaga/1/, /vaga/2/...
+    path('vaga/<int:vaga_id>/', views.visualizacao_vaga, name='detalhe_vaga'),
 ]
