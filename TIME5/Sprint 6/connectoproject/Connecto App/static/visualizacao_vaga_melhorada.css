@@ -1,0 +1,148 @@
+body {
+    background-color: #F2F2ED;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #33364F;
+    margin: 0;
+    padding: 16px;
+}
+
+/* Cabeçalho */
+.topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.topo h1 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.voltar {
+    font-size: 30px;
+    color: #33364F;
+    text-decoration: none;
+}
+
+.coracao {
+    font-size: 24px;
+    color: #6B6F80;
+}
+
+/* Cards */
+.card {
+    background-color: #FFFFFF;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+}
+
+.vaga-cabecalho {
+    display: flex;
+    gap: 12px;
+}
+
+.vaga-icone {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    flex-shrink: 0;
+    text-align: center;
+    font-size: 24px;
+    border-radius: 12px;
+    background-color: #DDEEF4;
+}
+
+.card h2 {
+    margin: 0;
+    font-size: 19px;
+}
+
+.empresa {
+    margin: 4px 0 0 0;
+    color: #6B6F80;
+}
+
+/* Tags */
+.tags {
+    margin: 14px 0;
+}
+
+.tag {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 4px 6px 0;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.tag-local {
+    background-color: #F8E7E5;
+    color: #C85A5A;
+}
+
+.tag-modalidade {
+    background-color: #FBF0DC;
+    color: #D8962B;
+}
+
+.tag-area {
+    background-color: #DDEEF4;
+    color: #118AB2;
+}
+
+.publicada {
+    margin: 0;
+    padding-top: 12px;
+    border-top: 1px solid #E4E4DD;
+    font-size: 14px;
+    color: #6B6F80;
+}
+
+/* Detalhes */
+.detalhes h3 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+}
+
+.detalhes p,
+.detalhes li {
+    color: #6B6F80;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.detalhes p {
+    margin: 0 0 20px 0;
+}
+
+.detalhes ul {
+    margin: 0 0 20px 0;
+    padding-left: 20px;
+}
+
+/* Botões */
+.botao {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.botao-candidatar {
+    background-color: #116A85;
+    color: #FFFFFF;
+}
+
+.botao-saber-mais {
+    background-color: #FFFFFF;
+    color: #116A85;
+}

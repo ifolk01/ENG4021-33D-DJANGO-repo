@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecto - Perfil</title>
+  <link rel="stylesheet" href="{% static 'perfil_melhorada.css' %}">
+</head>
+
+<body>
+
+  <h1>Perfil</h1>
+
+  <div class="identificacao">
+    <div class="avatar">{{ iniciais }}</div>
+    <h2>{{ nome }}</h2>
+    <p class="curso">{{ curso }}</p>
+  </div>
+
+  <div class="contadores">
+    <div class="contador">
+      <h3>{{ total_candidaturas }}</h3>
+      <p>Candidaturas</p>
+    </div>
+    <div class="contador">
+      <h3>{{ total_salvas }}</h3>
+      <p>Salvas</p>
+    </div>
+    <div class="contador">
+      <h3>{{ total_conversas }}</h3>
+      <p>Conversas</p>
+    </div>
+  </div>
+
+  <div class="dados">
+    <div class="linha">
+      <span class="icone">🪪</span>
+      <span>Matrícula</span>
+      <span class="valor">{{ matricula }}</span>
+    </div>
+    <div class="linha">
+      <span class="icone">🎓</span>
+      <span>Curso</span>
+      <span class="valor">{{ curso }}</span>
+    </div>
+  </div>
+
+  <a href="{% url 'login' %}" class="botao botao-sair">Sair da conta</a>
+  <button class="botao botao-excluir">Excluir conta</button>
+
+  <nav class="menu">
+    <a href="{% url 'home' %}">🏠<br>Vagas</a>
+    <a href="#">✨<br>Match</a>
+    <a href="{% url 'candidaturas' %}">📋<br>Minhas</a>
+    <a href="#">💬<br>Mensagens</a>
+    <a href="{% url 'perfil' %}" class="ativo">👤<br>Perfil</a>
+  </nav>
+
+</body>
+
+</html>
+
+<!--
+  O QUE FOI ALTERADO / MELHORADO NA TELA DE PERFIL (Sprint 6 - João Henrique)
+
+  1. Adicionei lang="pt-BR" e o viewport completo, para a tela se adaptar
+     ao celular.
+  2. Troquei o cabeçalho "CONNECTO / PERFIL DO ESTUDANTE" por um título
+     simples "Perfil", igual ao protótipo do app.
+  3. No lugar da logo dentro do card, coloquei um avatar redondo com as
+     iniciais do aluno, com o nome e o curso embaixo.
+  4. Os 2 contadores (Candidaturas e Favoritos) viraram 3 cards separados:
+     Candidaturas, Salvas e Conversas.
+  5. Os dados acadêmicos viraram uma lista com ícone, nome do campo e valor
+     (Matrícula e Curso), separados por uma linha.
+  6. Troquei o botão "Editar Dados do Perfil" pelos botões "Sair da conta"
+     (volta para o login) e "Excluir conta" (em vermelho claro).
+  7. Adicionei o menu inferior (Vagas, Match, Minhas, Mensagens, Perfil),
+     com o Perfil destacado.
+  8. Os dados não estão mais escritos direto no HTML: nome, iniciais,
+     matrícula, curso e contadores vêm da view "perfil" (views.py).
+-->

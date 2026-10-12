@@ -1,0 +1,149 @@
+body {
+  background-color: #F2F2ED;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #33364F;
+  margin: 0;
+  padding: 16px 16px 110px 16px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 18px;
+}
+
+/* Avatar, nome e curso */
+.identificacao {
+  text-align: center;
+  margin: 24px 0;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  margin: 0 auto 12px auto;
+  border-radius: 50%;
+  background-color: #E6E6F2;
+  color: #464B71;
+  font-size: 30px;
+}
+
+.identificacao h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.curso {
+  margin: 6px 0 0 0;
+  color: #6B6F80;
+}
+
+/* Contadores */
+.contadores {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.contador {
+  flex: 1;
+  background-color: #FFFFFF;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+}
+
+.contador h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.contador p {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: #6B6F80;
+}
+
+/* Lista de dados */
+.dados {
+  background-color: #FFFFFF;
+  border-radius: 14px;
+  padding: 0 16px;
+  margin-bottom: 24px;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 0;
+}
+
+.linha + .linha {
+  border-top: 1px solid #E4E4DD;
+}
+
+.icone {
+  font-size: 20px;
+}
+
+.valor {
+  margin-left: auto;
+  color: #6B6F80;
+}
+
+/* Botões */
+.botao {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  margin-bottom: 12px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.botao-sair {
+  background-color: #116A85;
+  color: #FFFFFF;
+}
+
+.botao-excluir {
+  background-color: #F0E2E0;
+  color: #C85A5A;
+}
+
+/* Menu inferior */
+.menu {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-around;
+  background-color: #FAFAF7;
+  border-radius: 40px;
+  padding: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.menu a {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: #1C1C1C;
+  text-decoration: none;
+  padding: 6px 0;
+  border-radius: 30px;
+}
+
+.menu a.ativo {
+  background-color: #E9E9E4;
+  color: #464B71;
+}
