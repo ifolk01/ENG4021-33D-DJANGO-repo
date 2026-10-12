@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Connecto — Match</title>
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+  <link rel="stylesheet" href="{% static 'match.css' %}">
+</head>
+<body class="connecto-page match-page">
+  <main class="match-shell">
+    <header class="match-topbar">
+      <strong>Para você • {{ restantes }} vaga{{ restantes|pluralize:"s" }}</strong>
+      <span>Toque ❤️ curtir · ✕ pular</span>
+    </header>
+
+    {% if vaga %}
+      <section class="match-stack" aria-label="Vaga para avaliar">
+        <div class="match-card-back match-card-back--far" aria-hidden="true"></div>
+        <div class="match-card-back" aria-hidden="true"></div>
+
+        <article class="match-card" id="match-card">
+          <div class="match-company-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4h2a2 2 0 0 1 2 2v12h-7v-4H9v4H4Zm4-16v2h2V6H8Zm0 4v2h2v-2H8Zm0 4v2h2v-2H8Zm4-8v2h2V6h-2Zm0 4v2h2v-2h-2Zm0 4v2h2v-2h-2Zm4-2v2h2v-2h-2Zm0 4v2h2v-2h-2Z"/>
+            </svg>
+          </div>
+
+          <div class="match-card__content">
+            <h1>{{ vaga.titulo }}</h1>
+            <p class="match-company">
+              {{ vaga.empresa.nome }}{% if vaga.cidade %} · {{ vaga.cidade }}{% endif %}
+            </p>
+
+            <div class="match-tags">
+              {% if vaga.modalidade %}<span class="tag tag--work">{{ vaga.modalidade }}</span>{% endif %}
+              {% if vaga.area %}<span class="tag tag--area">{{ vaga.area }}</span>{% endif %}
+              {% if vaga.bolsa %}<span class="tag tag--money">R$ {{ vaga.bolsa|floatformat:0 }}/mês</span>{% endif %}
+            </div>
+
+            <p class="match-description">{{ vaga.descricao }}</p>
+          </div>
+
+          <div class="match-actions">
+            <form method="post" action="{% url 'match_acao' vaga.id %}" id="skip-form">
+              {% csrf_token %}
+              <input type="hidden" name="acao" value="descartar">
+              <button type="submit" id="skip-button" class="match-action match-action--skip" aria-label="Pular vaga">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6 6 18"/>
+                </svg>
+              </button>
+            </form>
+
+            <span class="match-progress">{{ posicao }} de {{ total_match }}</span>
+
+            <form method="post" action="{% url 'match_acao' vaga.id %}" id="like-form">
+              {% csrf_token %}
+              <input type="hidden" name="acao" value="curtir">
+              <button type="submit" id="like-button" class="match-action match-action--like" aria-label="Candidatar-se à vaga">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8Z"/>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </article>
+      </section>
+    {% else %}
+      <section class="match-empty">
+        <div class="match-empty__icon">✓</div>
+        <h1>Você viu todas as vagas por enquanto</h1>
+        <p>Quando novas oportunidades forem cadastradas, elas aparecerão aqui.</p>
+        <a href="{% url 'home' %}" class="primary-link">Voltar para Vagas</a>
+      </section>
+    {% endif %}
+  </main>
+
+  {% include 'includes/bottom_nav.html' with pagina_ativa='match' %}
+
+  {% if vaga %}
+  <script>
+    (() => {
+      const card = document.getElementById('match-card');
+      const skipForm = document.getElementById('skip-form');
+      const likeForm = document.getElementById('like-form');
+      const skipButton = document.getElementById('skip-button');
+      const likeButton = document.getElementById('like-button');
+      if (!card || !skipForm || !likeForm) return;
+
+      let startX = 0;
+      let deltaX = 0;
+      let dragging = false;
+      let busy = false;
+
+      const threshold = () => Math.min(110, window.innerWidth * 0.24);
+
+      const resetCard = () => {
+        card.style.transition = 'transform .22s ease, opacity .22s ease';
+        card.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
+        card.style.opacity = '1';
+        window.setTimeout(() => {
+          card.style.transition = '';
+        }, 230);
+      };
+
+      const finish = (direction) => {
+        if (busy) return;
+        busy = true;
+
+        const form = direction === 'right' ? likeForm : skipForm;
+        const distance = Math.max(window.innerWidth, 520) * 1.25;
+        const rotation = direction === 'right' ? 11 : -11;
+
+        card.style.transition = 'transform .28s cubic-bezier(.2,.75,.25,1), opacity .24s ease';
+        card.style.transform = `translate3d(${direction === 'right' ? distance : -distance}px, -8px, 0) rotate(${rotation}deg)`;
+        card.style.opacity = '.15';
+
+        window.setTimeout(() => form.submit(), 230);
+      };
+
+      card.addEventListener('pointerdown', (event) => {
+        if (busy || event.target.closest('button, a')) return;
+        dragging = true;
+        startX = event.clientX;
+        deltaX = 0;
+        card.style.transition = 'none';
+        card.setPointerCapture(event.pointerId);
+      });
+
+      card.addEventListener('pointermove', (event) => {
+        if (!dragging || busy) return;
+        deltaX = event.clientX - startX;
+        const rotation = Math.max(-8, Math.min(8, deltaX / 25));
+        const lift = Math.min(8, Math.abs(deltaX) / 30);
+        card.style.transform = `translate3d(${deltaX}px, ${-lift}px, 0) rotate(${rotation}deg)`;
+        card.style.opacity = String(Math.max(.78, 1 - Math.abs(deltaX) / 900));
+      });
+
+      const release = () => {
+        if (!dragging || busy) return;
+        dragging = false;
+
+        if (deltaX > threshold()) finish('right');
+        else if (deltaX < -threshold()) finish('left');
+        else resetCard();
+      };
+
+      card.addEventListener('pointerup', release);
+      card.addEventListener('pointercancel', () => {
+        dragging = false;
+        if (!busy) resetCard();
+      });
+
+      skipButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        finish('left');
+      });
+
+      likeButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        finish('right');
+      });
+    })();
+  </script>
+  {% endif %}
+</body>
+</html>

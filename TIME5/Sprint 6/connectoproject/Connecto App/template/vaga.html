@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONNECTO - Visualização de Vaga</title>
+    <link rel="stylesheet" href="{% static 'vaga.css' %}">
+</head>
+
+<body>
+
+    <div class="topo">
+        <a href="{% url 'home' %}" class="voltar">‹</a>
+        <h1>Vaga</h1>
+        <span class="coracao">♡</span>
+    </div>
+
+    <div class="card">
+        <div class="vaga-cabecalho">
+            <div class="vaga-icone">🏢</div>
+            <div>
+                <h2>{{ vaga.titulo }}</h2>
+                <p class="empresa">{{ vaga.empresa }}</p>
+            </div>
+        </div>
+
+        <div class="tags">
+            <span class="tag tag-local">📍 {{ vaga.cidade }}</span>
+            <span class="tag tag-modalidade">{{ vaga.modalidade }}</span>
+            <span class="tag tag-area">{{ vaga.area }}</span>
+        </div>
+
+        <p class="publicada">{{ vaga.publicada }}</p>
+    </div>
+
+    <div class="card detalhes">
+        <h3>Sobre a vaga</h3>
+        <p>{{ vaga.descricao }}</p>
+
+        <h3>Requisitos</h3>
+        <ul>
+            {% for requisito in vaga.requisitos %}
+            <li>{{ requisito }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Sobre a empresa</h3>
+        <p>{{ vaga.sobre_empresa }}</p>
+    </div>
+
+    <div class="acoes">
+        <button class="botao botao-candidatar">Candidatar-se</button>
+        <a href="#" class="botao botao-saber-mais">Saber mais</a>
+    </div>
+
+</body>
+
+</html>
+
+<!--
+  O QUE FOI ALTERADO / MELHORADO NA TELA DE VISUALIZAÇÃO DE VAGA
+  (Sprint 6 - João Henrique)
+
+  1. Adicionei o meta viewport: antes a tela não se adaptava ao celular.
+  2. Troquei o cabeçalho com a logo grande por uma barra no padrão do app:
+     voltar para a Home, título "Vaga" e coração para salvar.
+  3. O card principal ficou igual aos cards de vaga da Home: ícone da
+     empresa, título, nome da empresa e tags coloridas (local, modalidade
+     e área), no lugar dos parágrafos "Localização / Modalidade / Área".
+  4. Os requisitos viraram uma lista (<ul>), mais fácil de ler.
+  5. "Candidatar-se" e "Saber mais" eram <h2> (título) fazendo papel de
+     botão; agora são um <button> e um link de verdade.
+  6. Os dados da vaga não estão mais escritos no HTML: vêm da view
+     "visualizacao_vaga" (views.py) pela URL /vaga/<id>/ (ex.: /vaga/2/).
+-->

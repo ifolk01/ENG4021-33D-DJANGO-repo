@@ -3,58 +3,73 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Connecto — Minhas Vagas</title>
-  <link rel="stylesheet" href="{% static 'styleFelipe.css' %}">
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+  <link rel="stylesheet" href="{% static 'candidaturas.css' %}">
 </head>
-<body>
+<body class="connecto-page applications-page">
+  <main class="standard-shell applications-shell">
+    <header class="applications-header">
+      <h1>Minhas Vagas</h1>
+    </header>
 
-  <!-- Título da Página -->
-  <header class="page-header">
-    <h1>Minhas Vagas</h1>
-  </header>
+    <nav class="applications-tabs" aria-label="Minhas vagas">
+      <a href="{% url 'candidaturas' %}" class="applications-tab active">Candidaturas</a>
+      <a href="{% url 'favoritas' %}" class="applications-tab">Salvas</a>
+    </nav>
 
-  <!-- Abas de Navegação -->
-  <div class="tabs">
-    <div class="tab active">Candidaturas</div>
-    <div class="tab">Salvas</div>
-  </div>
+    {% if candidaturas %}
+      <section class="applications-list" aria-label="Candidaturas realizadas">
+        {% for candidatura in candidaturas %}
+          <a href="{% url 'detalhe_vaga' candidatura.oportunidade.id %}" class="application-card">
+            <div class="application-company-icon" aria-hidden="true">
+              {{ candidatura.oportunidade.empresa.iniciais }}
+            </div>
 
-  <!-- Estado Vazio (Empty State) -->
-  <section class="connecto-empty-state">
-    <svg class="connecto-empty-state__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="22" y1="2" x2="11" y2="13"></line>
-      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-    </svg>
-    <p class="connecto-empty-state__texto">
-      Você ainda não se candidatou a nenhuma vaga
-    </p>
-  </section>
+            <div class="application-content">
+              <div class="application-status-row">
+                <span class="application-status">{{ candidatura.status }}</span>
+                <time datetime="{{ candidatura.data_candidatura|date:'Y-m-d' }}">
+                  {{ candidatura.data_candidatura|date:"d/m/Y" }}
+                </time>
+              </div>
 
-  <!-- Menu Inferior -->
-  <nav class="bottom-nav">
-    <a href="{% url 'home' %}" class="nav-item">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-      <span>Vagas</span>
-    </a>
-    <a href="#" class="nav-item">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-      <span>Match</span>
-    </a>
-    <!-- O item "Minhas" está ativo nesta página -->
-    <a href="{% url 'candidaturas' %}" class="nav-item active">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-      <span>Minhas</span>
-    </a>
-    <a href="#" class="nav-item">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
-      <span>Mensagens</span>
-    </a>
-    <a href="#" class="nav-item">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-      <span>Perfil</span>
-    </a>
-  </nav>
+              <h2>{{ candidatura.oportunidade.titulo }}</h2>
+              <p class="application-company">
+                {{ candidatura.oportunidade.empresa.nome }}
+                {% if candidatura.oportunidade.cidade %} · {{ candidatura.oportunidade.cidade }}{% endif %}
+              </p>
 
+              <div class="application-tags">
+                {% if candidatura.oportunidade.modalidade %}
+                  <span class="application-tag application-tag--mode">{{ candidatura.oportunidade.modalidade }}</span>
+                {% endif %}
+                {% if candidatura.oportunidade.area %}
+                  <span class="application-tag application-tag--area">{{ candidatura.oportunidade.area }}</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <span class="application-chevron" aria-hidden="true">›</span>
+          </a>
+        {% endfor %}
+      </section>
+    {% else %}
+      <section class="applications-empty">
+        <div class="applications-empty__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 3L10 14"/>
+            <path d="M21 3l-7 18-4-7-7-4 18-7z"/>
+          </svg>
+        </div>
+        <h2>Nenhuma candidatura ainda</h2>
+        <p>As vagas em que você der Match ou se candidatar pela Home aparecerão aqui.</p>
+        <a href="{% url 'match' %}" class="applications-primary">Encontrar oportunidades</a>
+      </section>
+    {% endif %}
+  </main>
+
+  {% include 'includes/bottom_nav.html' with pagina_ativa='candidaturas' %}
 </body>
 </html>
