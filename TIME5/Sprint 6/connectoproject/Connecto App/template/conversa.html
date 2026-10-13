@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Conversa — Connecto</title>
+
+    <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+    <link rel="stylesheet" href="{% static 'conversa.css' %}">
+</head>
+
+<body>
+
+<div class="app-shell conversa-shell">
+
+    <header class="chat-header">
+
+        <a href="{% url 'mensagens' %}" class="chat-back">
+            ←
+        </a>
+
+        <div class="chat-avatar">
+            {{ conversa.oportunidade.empresa.nome|slice:":2"|upper }}
+        </div>
+
+        <div class="chat-header-info">
+
+            <strong>
+                {{ conversa.oportunidade.empresa.nome }}
+            </strong>
+
+            <span>
+                {{ conversa.oportunidade.titulo }}
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <main class="chat-content">
+
+        <section class="match-notice">
+
+            <strong>Você se candidatou a esta vaga</strong>
+
+            <span>
+                {{ conversa.oportunidade.titulo }}
+            </span>
+
+        </section>
+
+
+        <div class="messages-list">
+
+            {% for mensagem in mensagens %}
+
+                {% if mensagem.remetente == request.user %}
+
+                    <div class="message-row message-row--user">
+
+                        <div class="message-bubble message-bubble--user">
+                            {{ mensagem.texto }}
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="message-row message-row--company">
+
+                        <div class="message-bubble message-bubble--company">
+                            {{ mensagem.texto }}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            {% empty %}
+
+                <div class="message-row message-row--company">
+
+                    <div class="message-bubble message-bubble--company">
+                        Olá! Vimos seu perfil e ficamos muito interessados
+                        na sua candidatura para
+                        {{ conversa.oportunidade.titulo }}.
+                        Você tem disponibilidade pra uma conversa essa semana?
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+
+    <form method="post" class="chat-form">
+
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="mensagem"
+            placeholder="Digite uma mensagem..."
+            autocomplete="off"
+            required
+        >
+
+        <button type="submit">
+            ➤
+        </button>
+
+    </form>
+    {% include 'includes/bottom_nav.html' with pagina_ativa='mensagens' %}
+</div>
+
+</body>
+</html>

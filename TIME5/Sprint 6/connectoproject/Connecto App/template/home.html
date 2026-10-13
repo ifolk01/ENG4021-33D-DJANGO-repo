@@ -34,15 +34,31 @@
       >
     </form>
 
-    <nav class="home-filters" aria-label="Filtrar vagas por área">
-      <a href="{% url 'home' %}" class="filter-chip {% if not area_ativa %}active{% endif %}">Todas</a>
-      {% for area in areas %}
-        <a
-          href="{% url 'home' %}?area={{ area|urlencode }}"
-          class="filter-chip {% if area_ativa == area %}active{% endif %}"
-        >{{ area }}</a>
-      {% endfor %}
-    </nav>
+    <section class="filters-section">
+
+      <div class="filters-scroll">
+  
+          <a
+              href="{% url 'home' %}"
+              class="filter-chip {% if not area_selecionada %}active{% endif %}"
+          >
+              Todas
+          </a>
+  
+          {% for categoria in categorias %}
+  
+              <a
+                  href="{% url 'home' %}?area={{ categoria|urlencode }}"
+                  class="filter-chip {% if area_selecionada == categoria %}active{% endif %}"
+              >
+                  {{ categoria }}
+              </a>
+  
+          {% endfor %}
+  
+      </div>
+  
+  </section>
 
     <h1 class="home-section-title">Recomendadas para você</h1>
 

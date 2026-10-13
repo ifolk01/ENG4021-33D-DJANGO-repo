@@ -112,12 +112,63 @@ def _ids_candidatados(usuario):
 
 @login_required
 def home(request):
+    usuario = request.user
+
+    # Vagas em que o usuário já se candidatou
+    candidaturas_ids = Candidatura.objects.filter(
+        usuario=usuario
+    ).values_list(
+        "oportunidade_id",
+        flat=True
+    )
+
+    # Todas as vagas disponíveis
     vagas = (
-        Oportunidade.objects.filter(ativa=True)
-        .exclude(id__in=_ids_candidatados(request.user))
+        Oportunidade.objects
+        .filter(ativa=True)
+        .exclude(id__in=candidaturas_ids)
         .select_related("empresa")
     )
-    return render(request, "home.html", {"vagas": vagas})
+
+    # Filtro selecionado pela URL
+    area_selecionada = request.GET.get("area", "").strip()
+
+    if area_selecionada:
+        vagas = vagas.filter(
+            area__iexact=area_selecionada
+        )
+
+    # Categorias que queremos exibir na interface
+    categorias = (
+    Oportunidade.objects
+    .filter(ativa=True)
+    .exclude(area="")
+    .values_list("area", flat=True)
+    .distinct()
+    .order_by("area")
+)
+
+    favoritos_ids = set(
+        Favorito.objects.filter(
+            usuario=usuario
+        ).values_list(
+            "oportunidade_id",
+            flat=True
+        )
+    )
+
+    contexto = {
+        "vagas": vagas,
+        "categorias": categorias,
+        "area_selecionada": area_selecionada,
+        "favoritos_ids": favoritos_ids,
+    }
+
+    return render(
+        request,
+        "home.html",
+        contexto
+    )
 
 @require_POST
 @login_required
