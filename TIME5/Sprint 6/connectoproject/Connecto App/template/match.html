@@ -53,7 +53,7 @@
               </button>
             </form>
 
-            <span class="match-progress">{{ posicao }} de {{ total_match }}</span>
+            <span class="match-progress">{{ posicao }} de {{ total_vagas }}</span>
 
             <form method="post" action="{% url 'match_acao' vaga.id %}" id="like-form">
               {% csrf_token %}

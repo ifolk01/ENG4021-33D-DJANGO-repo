@@ -27,6 +27,12 @@
     <div class="dados">
       <div class="linha"><span class="icone">🪪</span><span>Matrícula</span><span class="valor">{{ matricula }}</span></div>
       <div class="linha"><span class="icone">🎓</span><span>Curso</span><span class="valor">{{ curso }}</span></div>
+      <div class="linha"><span class="icone">🏫</span><span>Instituição</span><span class="valor">{{ instituicao }}</span></div>
+    </div>
+
+    <div class="dados">
+      <div class="linha"><span class="icone">📞</span><span>Telefone</span><span class="valor">{{ telefone|default:"Não informado" }}</span></div>
+      <div class="linha"><span class="icone">📧</span><span>E-mail</span><span class="valor">{{ email }}</span></div>
     </div>
 
     <a href="{% url 'login' %}" class="botao botao-sair">Sair da conta</a>
