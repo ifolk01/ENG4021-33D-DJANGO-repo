@@ -411,7 +411,7 @@ def perfil(request):
         "email": email,
         "curso": curso,
         "instituicao": instituicao,
-
+        
         "total_candidaturas":
             Candidatura.objects.filter(usuario=usuario).count(),
 
