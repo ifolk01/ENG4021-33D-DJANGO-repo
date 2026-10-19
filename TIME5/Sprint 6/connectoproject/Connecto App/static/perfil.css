@@ -11,21 +11,39 @@ h1 {
   font-size: 18px;
 }
 
+
 /* Avatar, nome e curso */
-.identificacao {
-  text-align: center;
-  margin: 24px 0;
+.avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 12px auto;
+    border-radius: 50%;
+    background-color: #E6E6F2;
+    color: #464B71;
+    font-size: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    cursor: pointer;
 }
 
-.avatar {
-  width: 80px;
-  height: 80px;
-  line-height: 80px;
-  margin: 0 auto 12px auto;
-  border-radius: 50%;
-  background-color: #E6E6F2;
-  color: #464B71;
-  font-size: 30px;
+.avatar img {
+    display: block;
+    width: 80px;
+    height: 80px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+
+.identificacao {
+    text-align: center;
 }
 
 .identificacao h2 {
@@ -59,6 +77,7 @@ h1 {
   font-size: 22px;
   font-weight: 500;
 }
+
 
 .contador p {
   margin: 4px 0 0 0;
