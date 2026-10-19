@@ -17,8 +17,28 @@ class Usuario(models.Model):
     periodo = models.IntegerField()
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
 
+
     def __str__(self):
         return self.nome
+
+
+
+class PerfilUsuario(models.Model):
+    usuario = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="perfil"
+    )
+
+    foto = models.ImageField(
+        upload_to="fotos_perfil/",
+        blank=True
+    )
+
+    def __str__(self):
+        return self.usuario.username
+
+
 
 
 class Empresa(models.Model):
