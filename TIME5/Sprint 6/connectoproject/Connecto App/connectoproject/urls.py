@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from connectoapp import views
 
@@ -27,5 +29,12 @@ urlpatterns = [
     path("vaga/<int:vaga_id>/", views.visualizacao_vaga, name="detalhe_vaga"),
     path(
     "favoritar/<int:vaga_id>/",views.toggle_favorito,name="toggle_favorito"),
+
     
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
