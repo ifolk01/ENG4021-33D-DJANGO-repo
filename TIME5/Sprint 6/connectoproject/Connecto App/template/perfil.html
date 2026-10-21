@@ -12,11 +12,38 @@
   <main class="standard-shell profile-shell">
     <h1>Perfil</h1>
 
-    <div class="identificacao">
-      <div class="avatar">{{ iniciais }}</div>
-      <h2>{{ nome }}</h2>
-      <p class="curso">{{ curso }}</p>
-    </div>
+
+
+
+<div class="identificacao">
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label for="foto-perfil" class="avatar">
+            {% if foto %}
+                <img src="{{ foto.url }}" alt="Foto de perfil">
+            {% else %}
+                {{ iniciais }}
+            {% endif %}
+        </label>
+
+        <input
+            type="file"
+            id="foto-perfil"
+            name="foto"
+            accept="image/*"
+            hidden
+        >
+
+        <button type="submit">Salvar foto</button>
+    </form>
+
+    <h2>{{ nome }}</h2>
+    <p class="curso">{{ curso }}</p>
+
+</div>
+
 
     <div class="contadores">
       <div class="contador"><h3>{{ total_candidaturas }}</h3><p>Candidaturas</p></div>

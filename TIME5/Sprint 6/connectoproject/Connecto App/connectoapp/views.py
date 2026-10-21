@@ -6,7 +6,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 from django.utils.http import url_has_allowed_host_and_scheme
-
+from .forms import FotoPerfilForm
 from .models import (
     Candidatura,
     Conversa,
@@ -14,6 +14,7 @@ from .models import (
     Mensagem,
     Oportunidade,
     VagaDescartada,
+    PerfilUsuario,
 )
 
 
@@ -391,6 +392,25 @@ def conversa(request, conversa_id):
 def perfil(request):
     usuario = request.user
 
+    perfil_usuario, criado = PerfilUsuario.objects.get_or_create(
+        usuario=usuario
+    )
+
+    if request.method == "POST":
+        form = FotoPerfilForm(
+            request.POST,
+            request.FILES,
+            instance=perfil_usuario
+        )
+
+        if form.is_valid():
+            form.save()
+            return redirect("perfil")
+    else:
+        form = FotoPerfilForm(instance=perfil_usuario)
+
+
+
     nome = usuario.first_name or usuario.username
     matricula = usuario.username
     email = usuario.email or "Não informado"
@@ -411,6 +431,8 @@ def perfil(request):
         "email": email,
         "curso": curso,
         "instituicao": instituicao,
+        "foto": perfil_usuario.foto,
+        "foto_form": form,
         
         "total_candidaturas":
             Candidatura.objects.filter(usuario=usuario).count(),
