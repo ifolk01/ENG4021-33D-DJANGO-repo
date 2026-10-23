@@ -3,89 +3,166 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: #33364F;
   margin: 0;
-  padding: 24px;
+  padding: 16px 16px 110px 16px;
 }
 
 h1 {
-  color: #33364F;
-  text-align: center;
-  font-size: 24px;
-  margin-top: 16px;
-}
-
-span {
-  color: #2a6d8c; 
-}
-
-h2 {
-  color: #33364F;
   text-align: center;
   font-size: 18px;
-  margin-bottom: 24px;
 }
 
-h2 a {
-  color: #6B6F80;
-  text-decoration: none;
-  margin-right: 8px;
+
+/* Avatar, nome e curso */
+.avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 12px auto;
+    border-radius: 50%;
+    background-color: #E6E6F2;
+    color: #464B71;
+    font-size: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    cursor: pointer;
 }
 
-.card {
-  background-color: #FFFFFF;
-  max-width: 400px;
-  margin: 0 auto 20px auto;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  text-align: center;
+.avatar img {
+    display: block;
+    width: 80px;
+    height: 80px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+
+.identificacao {
+    text-align: center;
+}
+
+.identificacao h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
 }
 
 .curso {
-  color: #2a6d8c;
+  margin: 6px 0 0 0;
+  color: #6B6F80;
+}
+
+/* Contadores */
+.contadores {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.contador {
+  flex: 1;
+  background-color: #FFFFFF;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+}
+
+.contador h3 {
+  margin: 0;
+  font-size: 22px;
   font-weight: 500;
 }
 
-.contadores {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 16px;
-}
 
-.caixa {
-  background-color: #F2F2ED;
-  padding: 12px;
-  border-radius: 12px;
-  flex: 1;
-}
-
-.caixa p {
-  margin: 0;
-  font-size: 11px;
+.contador p {
+  margin: 4px 0 0 0;
+  font-size: 13px;
   color: #6B6F80;
-  font-weight: 600;
-  letter-spacing: 0.5px;
 }
 
-.caixa h3 {
-  margin: 8px 0 0 0;
-  color: #33364F;
+/* Lista de dados */
+.dados {
+  background-color: #FFFFFF;
+  border-radius: 14px;
+  padding: 0 16px;
+  margin-bottom: 24px;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 0;
+}
+
+.linha + .linha {
+  border-top: 1px solid #E4E4DD;
+}
+
+.icone {
   font-size: 20px;
 }
 
-.vermelho {
-  color: #33364F; 
+.valor {
+  margin-left: auto;
+  color: #6B6F80;
 }
 
-button {
+/* Botões */
+.botao {
+  display: block;
   width: 100%;
-  padding: 16px;
-  margin-top: 24px;
-  background-color: #33364F;
-  color: #FFFFFF;
+  box-sizing: border-box;
+  padding: 15px;
+  margin-bottom: 12px;
   border: none;
   border-radius: 12px;
   font-size: 16px;
-  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
+}
+
+.botao-sair {
+  background-color: #116A85;
+  color: #FFFFFF;
+}
+
+.botao-excluir {
+  background-color: #F0E2E0;
+  color: #C85A5A;
+}
+
+/* Menu inferior */
+.menu {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-around;
+  background-color: #FAFAF7;
+  border-radius: 40px;
+  padding: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.menu a {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: #1C1C1C;
+  text-decoration: none;
+  padding: 6px 0;
+  border-radius: 30px;
+}
+
+.menu a.ativo {
+  background-color: #E9E9E4;
+  color: #464B71;
 }

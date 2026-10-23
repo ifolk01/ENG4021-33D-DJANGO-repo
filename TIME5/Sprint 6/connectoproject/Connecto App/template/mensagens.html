@@ -1,0 +1,80 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Connecto — {% trans "Mensagens" %}</title>
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+  <link rel="stylesheet" href="{% static 'mensagens.css' %}">
+</head>
+<body class="connecto-page messages-page">
+  <main class="messages-shell">
+    <label class="messages-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m20 20-3.8-3.8"></path>
+      </svg>
+      <input id="conversation-search" type="search" placeholder="{% trans 'Buscar empresa...' %}" autocomplete="off">
+    </label>
+
+  <h2>{% trans "Mensagens" %}</h2>
+
+    <section class="conversation-list" id="conversation-list">
+      {% for item in itens %}
+        <a
+          href="{% url 'conversa' item.conversa.id %}"
+          class="conversation-card"
+          data-search="{{ item.conversa.oportunidade.empresa.nome|lower }} {{ item.conversa.oportunidade.titulo|lower }}"
+        >
+          <div class="conversation-avatar">
+            <span>{{ item.conversa.oportunidade.empresa.iniciais }}</span>
+            <i class="online-dot" aria-label="{% trans 'Online' %}"></i>
+          </div>
+
+          <div class="conversation-main">
+            <strong>{{ item.conversa.oportunidade.empresa.nome }}</strong>
+            {% if item.ultima_mensagem %}
+              <span>{{ item.ultima_mensagem.texto|truncatechars:38 }}</span>
+            {% else %}
+              <span>{% trans "Conversa iniciada" %}</span>
+            {% endif %}
+          </div>
+
+          <div class="conversation-meta">
+            {% if item.ultima_mensagem %}
+              <time datetime="{{ item.ultima_mensagem.criada_em|date:'c' }}">{{ item.ultima_mensagem.criada_em|date:"d/m, H:i" }}</time>
+            {% endif %}
+            <span class="chevron">›</span>
+          </div>
+        </a>
+      {% empty %}
+        <div class="messages-empty">
+          <div class="messages-empty__icon">💬</div>
+          <h2>{% trans "Nenhuma conversa ainda" %}</h2>
+          <p>{% trans "Ao se candidatar a uma vaga, a conversa com a empresa aparecerá aqui." %}</p>
+          <a href="{% url 'match' %}" class="primary-link">{% trans "Encontrar vagas no Match" %}</a>
+        </div>
+      {% endfor %}
+    </section>
+  </main>
+
+  {% include 'includes/bottom_nav.html' with pagina_ativa='mensagens' %}
+
+  <script>
+    (() => {
+      const input = document.getElementById('conversation-search');
+      const cards = [...document.querySelectorAll('.conversation-card')];
+      if (!input) return;
+
+      input.addEventListener('input', () => {
+        const term = input.value.trim().toLowerCase();
+        cards.forEach((card) => {
+          card.hidden = term && !card.dataset.search.includes(term);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

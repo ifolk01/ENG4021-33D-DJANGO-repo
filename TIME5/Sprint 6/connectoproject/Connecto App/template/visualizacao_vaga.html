@@ -1,44 +1,184 @@
-
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-    <meta charset="utf-8">
-    <title>CONNECTO - Visualização de Vaga</title>
-    <link rel="stylesheet" href="{% static 'visualizacao_vagas.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ vaga.titulo }} — Connecto</title>
+
+    <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+    <link rel="stylesheet" href="{% static 'visualizacao_vaga.css' %}">
 </head>
 
 <body>
 
-    <div class="cabecalho">
-        <img src="{% static 'logo_icon.jpg' %}" alt="Logo CONNECTO">
-        <h1>Visualização de Vaga</h1>
-    </div>
+<div class="app-shell">
 
-    <div class="vaga">
-        <h2>Estágio em Desenvolvimento de Software</h2>
-        <p><strong>Localização:</strong> Rio de Janeiro - Botafogo</p>
-        <p><strong>Modalidade:</strong> Presencial</p>
-        <p><strong>Área:</strong> Tecnologia e Desenvolvimento</p>
-    </div>
+    <!-- HEADER -->
+    <header class="vaga-header">
 
-    <div class="detalhes">
-        <h2>Sobre a vaga</h2>
-        <p>Buscamos um estagiário para auxiliar no desenvolvimento de software e participar dos projetos da equipe.</p>
+        <a href="{% url 'home' %}" class="back-button">
+            ←
+        </a>
 
-        <h2>Requisitos</h2>
-        <p>Estar cursando graduação e ter interesse em tecnologia e desenvolvimento de software.</p>
+        <h1>{% trans "Detalhes da vaga" %}</h1>
 
-        <h2>Sobre a empresa</h2>
-        <p>A Empresa ABC atua na área de tecnologia e desenvolvimento de soluções digitais.</p>
-    </div>
+        <div class="header-space"></div>
 
-    <div class="candidatar">
-        <h2 class="botao-candidatar">Candidatar-se</h2>
-        <h2 class="saber-mais">Saber mais</h2>
-    </div>
+    </header>
+
+
+    <!-- CONTEÚDO -->
+    <main class="vaga-page">
+
+        <section class="vaga-card">
+
+            <!-- EMPRESA / ÍCONE -->
+            <div class="vaga-company-row">
+
+                <div class="empresa-avatar">
+                    {{ vaga.empresa.nome|slice:":2"|upper }}
+                </div>
+
+                <div class="vaga-heading">
+
+                    <h2>
+                        {{ vaga.titulo }}
+                    </h2>
+
+                    <p>
+                        {{ vaga.empresa.nome }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- TAGS -->
+            <div class="vaga-tags">
+
+                {% if vaga.cidade %}
+                <span class="vaga-tag location">
+                    📍 {{ vaga.cidade }}
+                </span>
+                {% endif %}
+
+                {% if vaga.modalidade %}
+                <span class="vaga-tag modalidade">
+                    {{ vaga.modalidade }}
+                </span>
+                {% endif %}
+
+                {% if vaga.area %}
+                <span class="vaga-tag area">
+                    {{ vaga.area }}
+                </span>
+                {% endif %}
+
+            </div>
+
+
+            {% if vaga.bolsa %}
+            <div class="vaga-info-row">
+                <span>{% trans "Bolsa" %}</span>
+                <strong>R$ {{ vaga.bolsa }}</strong>
+            </div>
+            {% endif %}
+
+
+            {% if vaga.local %}
+            <div class="vaga-info-row">
+                <span>{% trans "Local" %}</span>
+                <strong>{{ vaga.local }}</strong>
+            </div>
+            {% endif %}
+
+
+            {% if vaga.prazo %}
+            <div class="vaga-info-row">
+                <span>{% trans "Prazo" %}</span>
+                <strong>{{ vaga.prazo|date:"d/m/Y" }}</strong>
+            </div>
+            {% endif %}
+
+        </section>
+
+
+        <!-- DESCRIÇÃO -->
+        <section class="vaga-section">
+
+            <h3>{% trans "Sobre a vaga" %}</h3>
+
+            <p>
+                {{ vaga.descricao }}
+            </p>
+
+        </section>
+
+
+        <!-- REQUISITOS -->
+        {% if vaga.requisitos %}
+
+        <section class="vaga-section">
+
+            <h3>{% trans "Requisitos" %}</h3>
+
+            <p>
+                {{ vaga.requisitos }}
+            </p>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- EMPRESA -->
+        {% if vaga.empresa.descricao %}
+
+        <section class="vaga-section">
+
+            <h3>{% trans "Sobre a empresa" %}</h3>
+
+            <p>
+                {{ vaga.empresa.descricao }}
+            </p>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- CANDIDATAR -->
+        <section class="vaga-action">
+
+            <form
+                method="post"
+                action="{% url 'candidatar' vaga.id %}"
+            >
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="candidatar-button"
+                >
+                    {% trans "Candidatar-se" %}
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    {% include 'includes/bottom_nav.html' with pagina_ativa='home' %}
+
+</div>
 
 </body>
-
 </html>

@@ -1,54 +1,72 @@
-
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html>
-
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Connecto - Perfil</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Connecto - {% trans "Perfil" %}</title>
   <link rel="stylesheet" href="{% static 'perfil.css' %}">
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
 </head>
+<body class="connecto-page">
+  <main class="standard-shell profile-shell">
+    <h1>{% trans "Perfil" %}</h1>
 
-<body>
-  <h1>CONNECT<span>O</span></h1>
-  <h2><a href="login.html">‹</a> PERFIL DO ESTUDANTE</h2>
 
-  <div class="card">
-    <img src="{% static 'logo_icon.jpg' %}" width="80" alt="Logo CONNECTO">
-    <h3>Lucas Silva</h3>
-    <p class="curso"><b>Ciência da Computação</b></p>
-    <p>UFRJ - Univ. Federal do Rio de Janeiro</p>
+
+
+<div class="identificacao">
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label for="foto-perfil" class="avatar">
+            {% if foto %}
+                <img src="{{ foto.url }}" alt="{% trans 'Foto de perfil' %}">
+            {% else %}
+                {{ iniciais }}
+            {% endif %}
+        </label>
+
+        <input
+            type="file"
+            id="foto-perfil"
+            name="foto"
+            accept="image/*"
+            hidden
+        >
+
+        <button type="submit">{% trans "Salvar foto" %}</button>
+    </form>
+
+    <h2>{{ nome }}</h2>
+    <p class="curso">{{ curso }}</p>
+
+</div>
+
 
     <div class="contadores">
-      <div class="caixa">
-        <p>CANDIDATURAS</p>
-        <h3>2</h3>
-      </div>
-      <div class="caixa">
-        <p>FAVORITOS</p>
-        <h3 class="vermelho">2</h3>
-      </div>
+      <div class="contador"><h3>{{ total_candidaturas }}</h3><p>{% trans "Candidaturas" %}</p></div>
+      <div class="contador"><h3>{{ total_salvas }}</h3><p>{% trans "Salvas" %}</p></div>
+      <div class="contador"><h3>{{ total_conversas }}</h3><p>{% trans "Conversas" %}</p></div>
     </div>
 
-    <button>Editar Dados do Perfil</button>
-  </div>
+    <div class="dados">
+      <div class="linha"><span class="icone">🪪</span><span>{% trans "Matrícula" %}</span><span class="valor">{{ matricula }}</span></div>
+      <div class="linha"><span class="icone">🎓</span><span>{% trans "Curso" %}</span><span class="valor">{{ curso }}</span></div>
+      <div class="linha"><span class="icone">🏫</span><span>{% trans "Instituição" %}</span><span class="valor">{{ instituicao }}</span></div>
+    </div>
 
-  <div class="card">
-    <h3>DADOS ACADÊMICOS E CONTATO</h3>
-    <div class="caixa">
-      <p>E-MAIL</p>
-      <p><b>lucas.silva@email.com</b></p>
+    <div class="dados">
+      <div class="linha"><span class="icone">📞</span><span>{% trans "Telefone" %}</span><span class="valor">{{ telefone|default:_("Não informado") }}</span></div>
+      <div class="linha"><span class="icone">📧</span><span>{% trans "E-mail" %}</span><span class="valor">{{ email }}</span></div>
     </div>
-    <div class="caixa">
-      <p>INSTITUIÇÃO</p>
-      <p><b>UFRJ - Univ. Federal do Rio de Janeiro</b></p>
-    </div>
-    <div class="caixa">
-      <p>CURSO E PERÍODO</p>
-      <p><b>Ciência da Computação (5º período)</b></p>
-    </div>
-  </div>
+    {% include 'includes/seletor_idioma.html' %}
+    <a href="{% url 'login' %}" class="botao botao-sair">{% trans "Sair da conta" %}</a>
+    <button class="botao botao-excluir">{% trans "Excluir conta" %}</button>
+  </main>
+
+  {% include 'includes/bottom_nav.html' with pagina_ativa='perfil' %}
 </body>
-
 </html>

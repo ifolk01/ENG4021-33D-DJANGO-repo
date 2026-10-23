@@ -1,0 +1,171 @@
+:root {
+  --connecto-bg: #f5f5ef;
+  --connecto-surface: #ffffff;
+  --connecto-navy: #30354f;
+  --connecto-text: #262a3e;
+  --connecto-muted: #73757d;
+  --connecto-line: #e8e7df;
+  --connecto-cyan: #1596b7;
+  --connecto-cyan-soft: #e4f4f8;
+  --connecto-green: #3fa36b;
+  --connecto-green-soft: #e7f3eb;
+  --connecto-red: #d76264;
+  --connecto-red-soft: #f9e8e7;
+  --connecto-amber: #d89a28;
+  --connecto-amber-soft: #fbf1de;
+  --connecto-nav-active: #e6e7e8;
+  --connecto-shadow: 0 8px 22px rgba(37, 40, 51, .08);
+  --connecto-nav-height: 72px;
+  --connecto-nav-gap: 10px;
+  --connecto-mobile-width: 460px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--connecto-bg);
+}
+
+body.connecto-page {
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--connecto-bg);
+  color: var(--connecto-navy);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  padding-bottom: calc(var(--connecto-nav-height) + 28px + env(safe-area-inset-bottom));
+}
+
+button,
+input,
+a {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-shell,
+.standard-shell {
+  width: min(100%, var(--connecto-mobile-width));
+  margin: 0 auto;
+}
+
+.bottom-nav {
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  bottom: max(var(--connecto-nav-gap), env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(calc(100% - 22px), 420px);
+  height: var(--connecto-nav-height);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 2px;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, .96);
+  border-radius: 36px;
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 10px 28px rgba(38, 40, 47, .12);
+  backdrop-filter: blur(20px) saturate(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.1);
+}
+
+.nav-item {
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 5px 2px 4px;
+  border-radius: 28px;
+  color: #151515;
+  text-decoration: none;
+  font-size: 11.5px;
+  font-weight: 650;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background-color .18s ease, color .18s ease, transform .16s ease;
+}
+
+.nav-item svg {
+  width: 25px;
+  height: 25px;
+  flex: none;
+}
+
+.nav-item.active {
+  color: var(--connecto-navy);
+  background: var(--connecto-nav-active);
+}
+
+.nav-item:active {
+  transform: scale(.95);
+}
+
+.primary-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border-radius: 24px;
+  background: var(--connecto-navy);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 750;
+}
+
+.connecto-empty-state {
+  padding: 58px 18px 30px;
+  text-align: center;
+}
+
+.connecto-empty-state__texto {
+  max-width: 330px;
+  margin: 0 auto 18px;
+  color: var(--connecto-muted);
+  line-height: 1.45;
+}
+
+/* Espaço extra para conteúdos roláveis não ficarem escondidos pela barra fixa. */
+.nav-safe-bottom {
+  padding-bottom: calc(var(--connecto-nav-height) + 34px + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 360px) {
+  :root {
+    --connecto-nav-height: 68px;
+  }
+
+  .bottom-nav {
+    width: calc(100% - 14px);
+    bottom: max(6px, env(safe-area-inset-bottom));
+    padding: 5px;
+  }
+
+  .nav-item {
+    font-size: 10px;
+  }
+
+  .nav-item svg {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+@media (min-width: 700px) {
+  .bottom-nav {
+    bottom: 16px;
+  }
+}

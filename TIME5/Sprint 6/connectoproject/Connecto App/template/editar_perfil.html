@@ -1,0 +1,107 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecto - {% trans "Editar Perfil" %}</title>
+  <link rel="stylesheet" href="{% static 'editar_perfil.css' %}">
+</head>
+
+<body>
+
+  <div class="topo">
+    <a href="{% url 'perfil' %}" class="voltar">‹</a>
+    <h1>{% trans "Editar perfil" %}</h1>
+    <span class="espaco"></span>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="foto">
+      <div class="avatar">LS</div>
+      <a href="#" class="alterar-foto">{% trans "Alterar foto" %}</a>
+    </div>
+
+    <div class="card">
+      <h2>{% trans "Dados pessoais" %}</h2>
+
+      <label for="nome">{% trans "Nome completo" %}</label>
+      <input type="text" id="nome" name="nome" value="Lucas Silva">
+
+      <label for="email">{% trans "E-mail" %}</label>
+      <input type="email" id="email" name="email" value="lucas.silva@email.com">
+    </div>
+
+    <div class="card">
+      <h2>{% trans "Dados acadêmicos" %}</h2>
+
+      <label for="matricula">{% trans "Matrícula" %}</label>
+      <input type="text" id="matricula" name="matricula" value="2510335" disabled>
+
+      <div class="lado-a-lado">
+        <div class="campo-curso">
+          <label for="curso">{% trans "Curso" %}</label>
+          <select id="curso" name="curso">
+            <option>{% trans "Administração" %}</option>
+            <option selected>{% trans "Ciência da Computação" %}</option>
+            <option>{% trans "Design" %}</option>
+            <option>{% trans "Direito" %}</option>
+            <option>{% trans "Economia" %}</option>
+            <option>{% trans "Engenharia de Produção" %}</option>
+            <option>{% trans "Engenharia Civil" %}</option>
+          </select>
+        </div>
+        <div class="campo-periodo">
+          <label for="periodo">{% trans "Período" %}</label>
+          <select id="periodo" name="periodo">
+            <option>{% trans "1º" %}</option>
+            <option>{% trans "2º" %}</option>
+            <option>{% trans "3º" %}</option>
+            <option>{% trans "4º" %}</option>
+            <option selected>{% trans "5º" %}</option>
+            <option>{% trans "6º" %}</option>
+            <option>{% trans "7º" %}</option>
+            <option>{% trans "8º" %}</option>
+            <option>{% trans "9º" %}</option>
+            <option>{% trans "10º" %}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>{% trans "Áreas de interesse" %}</h2>
+
+      <div class="areas">
+        <input type="checkbox" id="a-tec" name="areas" value="tecnologia" checked>
+        <label for="a-tec">{% trans "Tecnologia" %}</label>
+
+        <input type="checkbox" id="a-dados" name="areas" value="dados">
+        <label for="a-dados">{% trans "Dados / BI" %}</label>
+
+        <input type="checkbox" id="a-fin" name="areas" value="financas">
+        <label for="a-fin">{% trans "Finanças" %}</label>
+
+        <input type="checkbox" id="a-mkt" name="areas" value="marketing">
+        <label for="a-mkt">{% trans "Marketing" %}</label>
+
+        <input type="checkbox" id="a-eng" name="areas" value="engenharia">
+        <label for="a-eng">{% trans "Engenharia" %}</label>
+
+        <input type="checkbox" id="a-design" name="areas" value="design">
+        <label for="a-design">{% trans "Design" %}</label>
+      </div>
+    </div>
+
+    <button type="submit" class="botao botao-salvar">{% trans "Salvar alterações" %}</button>
+    <a href="{% url 'perfil' %}" class="botao botao-cancelar">{% trans "Cancelar" %}</a>
+
+  </form>
+
+</body>
+
+</html>
