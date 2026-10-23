@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -23,7 +24,7 @@
             ←
         </a>
 
-        <h1>Detalhes da vaga</h1>
+        <h1>{% trans "Detalhes da vaga" %}</h1>
 
         <div class="header-space"></div>
 
@@ -83,7 +84,7 @@
 
             {% if vaga.bolsa %}
             <div class="vaga-info-row">
-                <span>Bolsa</span>
+                <span>{% trans "Bolsa" %}</span>
                 <strong>R$ {{ vaga.bolsa }}</strong>
             </div>
             {% endif %}
@@ -91,7 +92,7 @@
 
             {% if vaga.local %}
             <div class="vaga-info-row">
-                <span>Local</span>
+                <span>{% trans "Local" %}</span>
                 <strong>{{ vaga.local }}</strong>
             </div>
             {% endif %}
@@ -99,7 +100,7 @@
 
             {% if vaga.prazo %}
             <div class="vaga-info-row">
-                <span>Prazo</span>
+                <span>{% trans "Prazo" %}</span>
                 <strong>{{ vaga.prazo|date:"d/m/Y" }}</strong>
             </div>
             {% endif %}
@@ -110,7 +111,7 @@
         <!-- DESCRIÇÃO -->
         <section class="vaga-section">
 
-            <h3>Sobre a vaga</h3>
+            <h3>{% trans "Sobre a vaga" %}</h3>
 
             <p>
                 {{ vaga.descricao }}
@@ -124,7 +125,7 @@
 
         <section class="vaga-section">
 
-            <h3>Requisitos</h3>
+            <h3>{% trans "Requisitos" %}</h3>
 
             <p>
                 {{ vaga.requisitos }}
@@ -140,7 +141,7 @@
 
         <section class="vaga-section">
 
-            <h3>Sobre a empresa</h3>
+            <h3>{% trans "Sobre a empresa" %}</h3>
 
             <p>
                 {{ vaga.empresa.descricao }}
@@ -165,7 +166,7 @@
                     type="submit"
                     class="candidatar-button"
                 >
-                    Candidatar-se
+                    {% trans "Candidatar-se" %}
                 </button>
 
             </form>

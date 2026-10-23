@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -11,12 +12,12 @@
 <body class="connecto-page match-page">
   <main class="match-shell">
     <header class="match-topbar">
-      <strong>Para você • {{ restantes }} vaga{{ restantes|pluralize:"s" }}</strong>
-      <span>Toque ❤️ curtir · ✕ pular</span>
+      <strong>{% blocktrans count counter=restantes %}Para você • {{ counter }} vaga{% plural %}Para você • {{ counter }} vagas{% endblocktrans %}</strong>
+      <span>{% trans "Toque ❤️ curtir · ✕ pular" %}</span>
     </header>
 
     {% if vaga %}
-      <section class="match-stack" aria-label="Vaga para avaliar">
+      <section class="match-stack" aria-label="{% trans 'Vaga para avaliar' %}">
         <div class="match-card-back match-card-back--far" aria-hidden="true"></div>
         <div class="match-card-back" aria-hidden="true"></div>
 
@@ -36,7 +37,7 @@
             <div class="match-tags">
               {% if vaga.modalidade %}<span class="tag tag--work">{{ vaga.modalidade }}</span>{% endif %}
               {% if vaga.area %}<span class="tag tag--area">{{ vaga.area }}</span>{% endif %}
-              {% if vaga.bolsa %}<span class="tag tag--money">R$ {{ vaga.bolsa|floatformat:0 }}/mês</span>{% endif %}
+              {% if vaga.bolsa %}<span class="tag tag--money">{% blocktrans with valor=vaga.bolsa|floatformat:0 %}R$ {{ valor }}/mês{% endblocktrans %}</span>{% endif %}
             </div>
 
             <p class="match-description">{{ vaga.descricao }}</p>
@@ -46,19 +47,19 @@
             <form method="post" action="{% url 'match_acao' vaga.id %}" id="skip-form">
               {% csrf_token %}
               <input type="hidden" name="acao" value="descartar">
-              <button type="submit" id="skip-button" class="match-action match-action--skip" aria-label="Pular vaga">
+              <button type="submit" id="skip-button" class="match-action match-action--skip" aria-label="{% trans 'Pular vaga' %}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
                   <path d="M6 6l12 12M18 6 6 18"/>
                 </svg>
               </button>
             </form>
 
-            <span class="match-progress">{{ posicao }} de {{ total_vagas }}</span>
+            <span class="match-progress">{% blocktrans %}{{ posicao }} de {{ total_vagas }}{% endblocktrans %}</span>
 
             <form method="post" action="{% url 'match_acao' vaga.id %}" id="like-form">
               {% csrf_token %}
               <input type="hidden" name="acao" value="curtir">
-              <button type="submit" id="like-button" class="match-action match-action--like" aria-label="Candidatar-se à vaga">
+              <button type="submit" id="like-button" class="match-action match-action--like" aria-label="{% trans 'Candidatar-se à vaga' %}">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8Z"/>
                 </svg>
@@ -70,9 +71,9 @@
     {% else %}
       <section class="match-empty">
         <div class="match-empty__icon">✓</div>
-        <h1>Você viu todas as vagas por enquanto</h1>
-        <p>Quando novas oportunidades forem cadastradas, elas aparecerão aqui.</p>
-        <a href="{% url 'home' %}" class="primary-link">Voltar para Vagas</a>
+        <h1>{% trans "Você viu todas as vagas por enquanto" %}</h1>
+        <p>{% trans "Quando novas oportunidades forem cadastradas, elas aparecerão aqui." %}</p>
+        <a href="{% url 'home' %}" class="primary-link">{% trans "Voltar para Vagas" %}</a>
       </section>
     {% endif %}
   </main>

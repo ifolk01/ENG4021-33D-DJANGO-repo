@@ -1,0 +1,366 @@
+# English translations for Connecto.
+msgid ""
+msgstr ""
+"Project-Id-Version: Connecto\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-23 00:00+0000\n"
+"PO-Revision-Date: 2026-10-23 00:00+0000\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Logo Connecto"
+msgstr "Connecto logo"
+
+msgid "Conectando talentos e oportunidades"
+msgstr "Connecting talent and opportunities"
+
+msgid "Matrícula"
+msgstr "Student ID"
+
+msgid "Senha"
+msgstr "Password"
+
+msgid "Esqueceu a senha?"
+msgstr "Forgot your password?"
+
+msgid "Entrar"
+msgstr "Sign in"
+
+msgid "Não tem conta?"
+msgstr "Don't have an account?"
+
+msgid "Criar conta"
+msgstr "Create account"
+
+msgid "Minhas Vagas"
+msgstr "My Jobs"
+
+msgid "Minhas vagas"
+msgstr "My jobs"
+
+msgid "Candidaturas"
+msgstr "Applications"
+
+msgid "Salvas"
+msgstr "Saved"
+
+msgid "Candidaturas realizadas"
+msgstr "Submitted applications"
+
+msgid "Nenhuma candidatura ainda"
+msgstr "No applications yet"
+
+msgid "As vagas em que você der Match ou se candidatar pela Home aparecerão aqui."
+msgstr "Jobs you match with or apply to from Home will appear here."
+
+msgid "Encontrar oportunidades"
+msgstr "Find opportunities"
+
+msgid "Conversa"
+msgstr "Conversation"
+
+msgid "Você se candidatou a esta vaga"
+msgstr "You applied to this job"
+
+#, python-format
+msgid "Olá! Vimos seu perfil e ficamos muito interessados na sua candidatura para %(titulo)s. Você tem disponibilidade pra uma conversa essa semana?"
+msgstr "Hello! We saw your profile and we're very interested in your application for %(titulo)s. Are you available for a chat this week?"
+
+msgid "Digite uma mensagem..."
+msgstr "Type a message..."
+
+msgid "Cadastro"
+msgstr "Sign up"
+
+msgid "Leva menos de um minuto."
+msgstr "It takes less than a minute."
+
+msgid "Nome completo"
+msgstr "Full name"
+
+msgid "Curso"
+msgstr "Degree program"
+
+msgid "Senha (mínimo 6 caracteres)"
+msgstr "Password (minimum 6 characters)"
+
+msgid "Confirmar senha"
+msgstr "Confirm password"
+
+msgid "Editar Perfil"
+msgstr "Edit Profile"
+
+msgid "Editar perfil"
+msgstr "Edit profile"
+
+msgid "Alterar foto"
+msgstr "Change photo"
+
+msgid "Dados pessoais"
+msgstr "Personal information"
+
+msgid "E-mail"
+msgstr "Email"
+
+msgid "Dados acadêmicos"
+msgstr "Academic information"
+
+msgid "Administração"
+msgstr "Business Administration"
+
+msgid "Ciência da Computação"
+msgstr "Computer Science"
+
+msgid "Design"
+msgstr "Design"
+
+msgid "Direito"
+msgstr "Law"
+
+msgid "Economia"
+msgstr "Economics"
+
+msgid "Engenharia de Produção"
+msgstr "Industrial Engineering"
+
+msgid "Engenharia Civil"
+msgstr "Civil Engineering"
+
+msgid "Período"
+msgstr "Term"
+
+msgid "1º"
+msgstr "1st"
+
+msgid "2º"
+msgstr "2nd"
+
+msgid "3º"
+msgstr "3rd"
+
+msgid "4º"
+msgstr "4th"
+
+msgid "5º"
+msgstr "5th"
+
+msgid "6º"
+msgstr "6th"
+
+msgid "7º"
+msgstr "7th"
+
+msgid "8º"
+msgstr "8th"
+
+msgid "9º"
+msgstr "9th"
+
+msgid "10º"
+msgstr "10th"
+
+msgid "Áreas de interesse"
+msgstr "Areas of interest"
+
+msgid "Tecnologia"
+msgstr "Technology"
+
+msgid "Dados / BI"
+msgstr "Data / BI"
+
+msgid "Finanças"
+msgstr "Finance"
+
+msgid "Marketing"
+msgstr "Marketing"
+
+msgid "Engenharia"
+msgstr "Engineering"
+
+msgid "Salvar alterações"
+msgstr "Save changes"
+
+msgid "Cancelar"
+msgstr "Cancel"
+
+msgid "Notificações"
+msgstr "Notifications"
+
+msgid "Buscar vaga ou empresa..."
+msgstr "Search jobs or companies..."
+
+msgid "Todas"
+msgstr "All"
+
+msgid "Recomendadas para você"
+msgstr "Recommended for you"
+
+msgid "Vagas recomendadas"
+msgstr "Recommended jobs"
+
+msgid "Remover dos favoritos"
+msgstr "Remove from favorites"
+
+msgid "Salvar vaga"
+msgstr "Save job"
+
+msgid "Não há novas vagas para mostrar com esse filtro."
+msgstr "There are no new jobs to show with this filter."
+
+msgid "Ver todas"
+msgstr "View all"
+
+#, python-format
+msgid "Para você • %(counter)s vaga"
+msgid_plural "Para você • %(counter)s vagas"
+msgstr[0] "For you • %(counter)s job"
+msgstr[1] "For you • %(counter)s jobs"
+
+msgid "Toque ❤️ curtir · ✕ pular"
+msgstr "Tap ❤️ to like · ✕ to skip"
+
+msgid "Vaga para avaliar"
+msgstr "Job to review"
+
+#, python-format
+msgid "R$ %(valor)s/mês"
+msgstr "R$ %(valor)s/month"
+
+msgid "Pular vaga"
+msgstr "Skip job"
+
+#, python-format
+msgid "%(posicao)s de %(total_vagas)s"
+msgstr "%(posicao)s of %(total_vagas)s"
+
+msgid "Candidatar-se à vaga"
+msgstr "Apply for this job"
+
+msgid "Você viu todas as vagas por enquanto"
+msgstr "You've seen all the jobs for now"
+
+msgid "Quando novas oportunidades forem cadastradas, elas aparecerão aqui."
+msgstr "When new opportunities are posted, they will appear here."
+
+msgid "Voltar para Vagas"
+msgstr "Back to Jobs"
+
+msgid "Mensagens"
+msgstr "Messages"
+
+msgid "Buscar empresa..."
+msgstr "Search company..."
+
+msgid "Online"
+msgstr "Online"
+
+msgid "Conversa iniciada"
+msgstr "Conversation started"
+
+msgid "Nenhuma conversa ainda"
+msgstr "No conversations yet"
+
+msgid "Ao se candidatar a uma vaga, a conversa com a empresa aparecerá aqui."
+msgstr "When you apply to a job, the conversation with the company will appear here."
+
+msgid "Encontrar vagas no Match"
+msgstr "Find jobs in Match"
+
+msgid "Voltar para a Home"
+msgstr "Back to Home"
+
+msgid "Lembretes das vagas em que você se candidatou."
+msgstr "Reminders for the jobs you applied to."
+
+msgid "Ativar avisos no navegador"
+msgstr "Enable browser notifications"
+
+msgid "Lista de notificações"
+msgstr "Notification list"
+
+#, python-format
+msgid "Você se candidatou na vaga %(titulo)s"
+msgstr "You applied to the job %(titulo)s"
+
+#, python-format
+msgid "Já enviou mensagem para <strong>%(empresa)s</strong> para dar seguimento à candidatura?"
+msgstr "Have you messaged <strong>%(empresa)s</strong> to follow up on your application?"
+
+#, python-format
+msgid "há %(tempo)s"
+msgstr "%(tempo)s ago"
+
+msgid "Ir para a conversa"
+msgstr "Go to conversation"
+
+msgid "Nenhuma notificação ainda"
+msgstr "No notifications yet"
+
+msgid "Quando você se candidatar a uma vaga, os lembretes aparecem aqui."
+msgstr "When you apply to a job, reminders will appear here."
+
+msgid "Explorar vagas"
+msgstr "Explore jobs"
+
+msgid "Perfil"
+msgstr "Profile"
+
+msgid "Foto de perfil"
+msgstr "Profile photo"
+
+msgid "Salvar foto"
+msgstr "Save photo"
+
+msgid "Conversas"
+msgstr "Conversations"
+
+msgid "Instituição"
+msgstr "Institution"
+
+msgid "Telefone"
+msgstr "Phone"
+
+msgid "Não informado"
+msgstr "Not provided"
+
+msgid "Sair da conta"
+msgstr "Log out"
+
+msgid "Excluir conta"
+msgstr "Delete account"
+
+msgid "Detalhes da vaga"
+msgstr "Job details"
+
+msgid "Bolsa"
+msgstr "Stipend"
+
+msgid "Local"
+msgstr "Location"
+
+msgid "Prazo"
+msgstr "Deadline"
+
+msgid "Sobre a vaga"
+msgstr "About the job"
+
+msgid "Requisitos"
+msgstr "Requirements"
+
+msgid "Sobre a empresa"
+msgstr "About the company"
+
+msgid "Candidatar-se"
+msgstr "Apply"
+
+msgid "Vagas"
+msgstr "Jobs"
+
+msgid "Minhas"
+msgstr "Mine"
