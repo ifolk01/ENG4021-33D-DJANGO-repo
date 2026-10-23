@@ -1,0 +1,15 @@
+.recuperacao-title {
+  color: var(--connecto-primary-dark);
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+}
+
+.recuperacao-description {
+  color: var(--connecto-text-soft);
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+  margin: 0 0 8px 0;
+}

@@ -1,0 +1,56 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecto - {% trans "Esqueceu sua senha?" %}</title>
+
+  <link rel="stylesheet" href="{% static 'login.css' %}">
+  <link rel="stylesheet" href="{% static 'esqueceu_senha.css' %}">
+</head>
+<body>
+  {% include 'includes/seletor_idioma.html' %}
+
+  <div class="login-container">
+    <div class="auth-logo-box">
+      <img src="{% static 'logo_icon.jpg' %}" alt="{% trans 'Logo Connecto' %}">
+    </div>
+
+    <div class="auth-subtitle">
+      {% trans "Conectando talentos e oportunidades" %}
+    </div>
+
+    <form class="auth-form" method="POST">
+      {% csrf_token %}
+
+      <h1 class="recuperacao-title">
+        {% trans "Esqueceu sua senha?" %}
+      </h1>
+
+      <p class="recuperacao-description">
+        {% trans "Informe seu e-mail cadastrado para receber instruções de recuperação de senha." %}
+      </p>
+
+      <input
+        type="email"
+        name="email"
+        class="auth-input"
+        placeholder="{% trans 'E-mail cadastrado' %}"
+        required
+      >
+
+      <button type="submit" class="auth-button">
+        {% trans "Enviar instruções" %}
+      </button>
+    </form>
+  </div>
+
+  <div class="auth-footer">
+    <a href="{% url 'login' %}">
+      {% trans "Voltar para o login" %}
+    </a>
+  </div>
+</body>
+</html>

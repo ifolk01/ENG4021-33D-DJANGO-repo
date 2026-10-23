@@ -70,3 +70,7 @@ def favoritas(request):
 # Tela de Visualização de Vaga Única
 def visualizacao_vaga(request):
     return render(request, "visualizacao_vaga.html")
+
+# Tela de Recuperação de Senha
+def esqueceu_senha(request):
+    return render(request, "esqueceu_senha.html")
