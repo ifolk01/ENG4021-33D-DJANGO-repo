@@ -24,3 +24,6 @@
     <span>Perfil</span>
   </a>
 </nav>
+
+{% load static %}
+<script src="{% static 'notificacoes.js' %}" data-csrf="{{ csrf_token }}" defer></script>

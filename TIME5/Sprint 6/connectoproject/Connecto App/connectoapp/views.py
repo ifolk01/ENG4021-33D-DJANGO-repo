@@ -7,6 +7,12 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 from django.utils.http import url_has_allowed_host_and_scheme
 from .forms import FotoPerfilForm
+from datetime import timedelta
+from django.db.models import Max
+from django.http import JsonResponse
+from django.utils import timezone
+from django.utils.timesince import timesince
+from django.views.decorators.http import require_GET
 from .models import (
     Candidatura,
     Conversa,
@@ -15,6 +21,7 @@ from .models import (
     Oportunidade,
     VagaDescartada,
     PerfilUsuario,
+    Notificacao,
 )
 
 
@@ -81,7 +88,8 @@ def _criar_candidatura_e_conversa(usuario, oportunidade, origem):
         oportunidade=oportunidade,
         defaults={"status": "Enviada", "origem": origem},
     )
-
+    if criada:
+        Notificacao.objects.create(usuario=usuario, candidatura=candidatura)
     conversa, conversa_criada = Conversa.objects.get_or_create(
         usuario=usuario,
         oportunidade=oportunidade,
@@ -449,3 +457,87 @@ def perfil(request):
         "perfil.html",
         contexto
     )
+
+    # Notificações
+
+INTERVALO_NOTIFICACAO = timedelta(minutes=10)
+
+
+def _serializar_notificacao(n):
+    oportunidade = n.candidatura.oportunidade
+    return {
+        "id": n.id,
+        "texto": (
+            f"Você se candidatou na vaga {oportunidade.titulo}. "
+            f"Já enviou mensagem para {oportunidade.empresa.nome} "
+            "para dar seguimento à candidatura?"
+        ),
+        "criada_em": n.criada_em.isoformat(),
+        "lida": n.lida,
+    }
+
+@require_POST
+@login_required
+def verificar_notificacoes(request):
+    agora = timezone.now()
+    mostrar = request.POST.get("mostrar") == "1"  # o navegador já tem permissão?
+
+    # Lembrete de 10 em 10 min por candidatura (inclui as antigas, sem notificação).
+    candidaturas = (
+        Candidatura.objects.filter(usuario=request.user)
+        .annotate(ultima=Max("notificacoes__criada_em"))
+    )
+    for c in candidaturas:
+        if c.ultima is None or agora - c.ultima >= INTERVALO_NOTIFICACAO:
+            Notificacao.objects.create(usuario=request.user, candidatura=c)
+
+    # Só marca como entregue se o navegador pode mesmo mostrar o aviso.
+    novas = []
+    if mostrar:
+        pendentes = list(
+            Notificacao.objects.filter(usuario=request.user, entregue=False)
+            .select_related("candidatura__oportunidade__empresa")
+        )
+        Notificacao.objects.filter(
+            id__in=[n.id for n in pendentes]
+        ).update(entregue=True)
+        novas = [_serializar_notificacao(n) for n in pendentes[:3]]  # evita rajada
+
+    return JsonResponse({
+        "novas": novas,
+        "nao_lidas": Notificacao.objects.filter(
+            usuario=request.user, lida=False
+        ).count(),
+    })
+
+
+@require_GET
+@login_required
+def notificacoes(request):
+    itens = list(
+        Notificacao.objects.filter(usuario=request.user)
+        .select_related("candidatura__oportunidade__empresa")[:50]
+    )
+
+    # Liga cada notificação à conversa da vaga, para o botão "Ir para a conversa".
+    conversas = {
+        c.oportunidade_id: c.id
+        for c in Conversa.objects.filter(usuario=request.user)
+    }
+    
+    agora = timezone.now()
+    for n in itens:
+        n.conversa_id = conversas.get(n.candidatura.oportunidade_id)
+        n.tempo = (
+            "agora"
+            if agora - n.criada_em < timedelta(minutes=1)
+            else f"há {timesince(n.criada_em)}"
+        )
+
+    # A lista já foi carregada, então n.lida ainda mostra o estado de antes:
+    # dá para destacar as novas no template e só depois marcar tudo como lido.
+    Notificacao.objects.filter(
+        id__in=[n.id for n in itens if not n.lida]
+    ).update(lida=True)
+
+    return render(request, "notificacoes.html", {"notificacoes": itens})
