@@ -29,6 +29,7 @@
   border-radius: 50%;
   background: transparent;
   color: var(--connecto-navy);
+  text-decoration: none;
 }
 
 .home-bell svg {
@@ -36,8 +37,7 @@
   height: 24px;
 }
 
-.home-bell::after {
-  content: "";
+.home-bell__badge {
   position: absolute;
   top: 6px;
   right: 6px;
@@ -46,6 +46,10 @@
   border: 2px solid var(--connecto-bg);
   border-radius: 50%;
   background: #e6aa28;
+}
+
+.home-bell__badge[hidden] {
+  display: none;
 }
 
 .home-search {

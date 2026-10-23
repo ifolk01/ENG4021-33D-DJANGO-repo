@@ -13,11 +13,12 @@
     <header class="home-topbar">
       <img src="{% static 'connectologo-transparente-simples.png' %}" alt="Connecto" class="home-logo">
 
-      <button type="button" class="home-bell" aria-label="Notificações">
+      <a href="{% url 'notificacoes' %}" class="home-bell" aria-label="Notificações">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 22a2.4 2.4 0 0 0 2.25-1.6h-4.5A2.4 2.4 0 0 0 12 22Zm7-5.1-1.8-2.1V10a5.2 5.2 0 0 0-4.1-5.1V4a1.1 1.1 0 1 0-2.2 0v.9A5.2 5.2 0 0 0 6.8 10v4.8L5 16.9V18h14v-1.1Z"/>
         </svg>
-      </button>
+        <span id="sino-badge" class="home-bell__badge" hidden></span>
+      </a>
     </header>
 
     <form class="home-search" action="{% url 'busca' %}" method="get">

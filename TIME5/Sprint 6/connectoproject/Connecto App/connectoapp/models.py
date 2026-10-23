@@ -231,3 +231,21 @@ class Mensagem(models.Model):
 
     def __str__(self):
         return f"{self.get_autor_display()}: {self.texto[:40]}"
+
+class Notificacao(models.Model):
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="notificacoes_connecto",
+    )
+    candidatura = models.ForeignKey(
+        Candidatura,
+        on_delete=models.CASCADE,
+        related_name="notificacoes",
+    )
+    criada_em = models.DateTimeField(auto_now_add=True)
+    entregue = models.BooleanField(default=False)  #já virou notificação do navegador
+    lida = models.BooleanField(default=False)      #já foi vista no painel do sino
+
+    class Meta:
+        ordering = ["-criada_em", "-id"]
