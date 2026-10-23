@@ -1,0 +1,366 @@
+# Spanish translations for Connecto.
+msgid ""
+msgstr ""
+"Project-Id-Version: Connecto\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-23 00:00+0000\n"
+"PO-Revision-Date: 2026-10-23 00:00+0000\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Login"
+msgstr "Iniciar sesión"
+
+msgid "Logo Connecto"
+msgstr "Logotipo de Connecto"
+
+msgid "Conectando talentos e oportunidades"
+msgstr "Conectando talento y oportunidades"
+
+msgid "Matrícula"
+msgstr "Matrícula"
+
+msgid "Senha"
+msgstr "Contraseña"
+
+msgid "Esqueceu a senha?"
+msgstr "¿Olvidaste tu contraseña?"
+
+msgid "Entrar"
+msgstr "Ingresar"
+
+msgid "Não tem conta?"
+msgstr "¿No tienes cuenta?"
+
+msgid "Criar conta"
+msgstr "Crear cuenta"
+
+msgid "Minhas Vagas"
+msgstr "Mis vacantes"
+
+msgid "Minhas vagas"
+msgstr "Mis vacantes"
+
+msgid "Candidaturas"
+msgstr "Postulaciones"
+
+msgid "Salvas"
+msgstr "Guardadas"
+
+msgid "Candidaturas realizadas"
+msgstr "Postulaciones realizadas"
+
+msgid "Nenhuma candidatura ainda"
+msgstr "Aún no hay postulaciones"
+
+msgid "As vagas em que você der Match ou se candidatar pela Home aparecerão aqui."
+msgstr "Las vacantes en las que hagas Match o te postules desde Inicio aparecerán aquí."
+
+msgid "Encontrar oportunidades"
+msgstr "Encontrar oportunidades"
+
+msgid "Conversa"
+msgstr "Conversación"
+
+msgid "Você se candidatou a esta vaga"
+msgstr "Te postulaste a esta vacante"
+
+#, python-format
+msgid "Olá! Vimos seu perfil e ficamos muito interessados na sua candidatura para %(titulo)s. Você tem disponibilidade pra uma conversa essa semana?"
+msgstr "¡Hola! Vimos tu perfil y nos interesa mucho tu postulación para %(titulo)s. ¿Tienes disponibilidad para conversar esta semana?"
+
+msgid "Digite uma mensagem..."
+msgstr "Escribe un mensaje..."
+
+msgid "Cadastro"
+msgstr "Registro"
+
+msgid "Leva menos de um minuto."
+msgstr "Toma menos de un minuto."
+
+msgid "Nome completo"
+msgstr "Nombre completo"
+
+msgid "Curso"
+msgstr "Carrera"
+
+msgid "Senha (mínimo 6 caracteres)"
+msgstr "Contraseña (mínimo 6 caracteres)"
+
+msgid "Confirmar senha"
+msgstr "Confirmar contraseña"
+
+msgid "Editar Perfil"
+msgstr "Editar perfil"
+
+msgid "Editar perfil"
+msgstr "Editar perfil"
+
+msgid "Alterar foto"
+msgstr "Cambiar foto"
+
+msgid "Dados pessoais"
+msgstr "Datos personales"
+
+msgid "E-mail"
+msgstr "Correo electrónico"
+
+msgid "Dados acadêmicos"
+msgstr "Datos académicos"
+
+msgid "Administração"
+msgstr "Administración"
+
+msgid "Ciência da Computação"
+msgstr "Ciencias de la Computación"
+
+msgid "Design"
+msgstr "Diseño"
+
+msgid "Direito"
+msgstr "Derecho"
+
+msgid "Economia"
+msgstr "Economía"
+
+msgid "Engenharia de Produção"
+msgstr "Ingeniería de Producción"
+
+msgid "Engenharia Civil"
+msgstr "Ingeniería Civil"
+
+msgid "Período"
+msgstr "Período"
+
+msgid "1º"
+msgstr "1.º"
+
+msgid "2º"
+msgstr "2.º"
+
+msgid "3º"
+msgstr "3.º"
+
+msgid "4º"
+msgstr "4.º"
+
+msgid "5º"
+msgstr "5.º"
+
+msgid "6º"
+msgstr "6.º"
+
+msgid "7º"
+msgstr "7.º"
+
+msgid "8º"
+msgstr "8.º"
+
+msgid "9º"
+msgstr "9.º"
+
+msgid "10º"
+msgstr "10.º"
+
+msgid "Áreas de interesse"
+msgstr "Áreas de interés"
+
+msgid "Tecnologia"
+msgstr "Tecnología"
+
+msgid "Dados / BI"
+msgstr "Datos / BI"
+
+msgid "Finanças"
+msgstr "Finanzas"
+
+msgid "Marketing"
+msgstr "Marketing"
+
+msgid "Engenharia"
+msgstr "Ingeniería"
+
+msgid "Salvar alterações"
+msgstr "Guardar cambios"
+
+msgid "Cancelar"
+msgstr "Cancelar"
+
+msgid "Notificações"
+msgstr "Notificaciones"
+
+msgid "Buscar vaga ou empresa..."
+msgstr "Buscar vacante o empresa..."
+
+msgid "Todas"
+msgstr "Todas"
+
+msgid "Recomendadas para você"
+msgstr "Recomendadas para ti"
+
+msgid "Vagas recomendadas"
+msgstr "Vacantes recomendadas"
+
+msgid "Remover dos favoritos"
+msgstr "Quitar de favoritos"
+
+msgid "Salvar vaga"
+msgstr "Guardar vacante"
+
+msgid "Não há novas vagas para mostrar com esse filtro."
+msgstr "No hay nuevas vacantes para mostrar con este filtro."
+
+msgid "Ver todas"
+msgstr "Ver todas"
+
+#, python-format
+msgid "Para você • %(counter)s vaga"
+msgid_plural "Para você • %(counter)s vagas"
+msgstr[0] "Para ti • %(counter)s vacante"
+msgstr[1] "Para ti • %(counter)s vacantes"
+
+msgid "Toque ❤️ curtir · ✕ pular"
+msgstr "Toca ❤️ para dar me gusta · ✕ para saltar"
+
+msgid "Vaga para avaliar"
+msgstr "Vacante para evaluar"
+
+#, python-format
+msgid "R$ %(valor)s/mês"
+msgstr "R$ %(valor)s/mes"
+
+msgid "Pular vaga"
+msgstr "Saltar vacante"
+
+#, python-format
+msgid "%(posicao)s de %(total_vagas)s"
+msgstr "%(posicao)s de %(total_vagas)s"
+
+msgid "Candidatar-se à vaga"
+msgstr "Postularse a la vacante"
+
+msgid "Você viu todas as vagas por enquanto"
+msgstr "Has visto todas las vacantes por ahora"
+
+msgid "Quando novas oportunidades forem cadastradas, elas aparecerão aqui."
+msgstr "Cuando se publiquen nuevas oportunidades, aparecerán aquí."
+
+msgid "Voltar para Vagas"
+msgstr "Volver a Vacantes"
+
+msgid "Mensagens"
+msgstr "Mensajes"
+
+msgid "Buscar empresa..."
+msgstr "Buscar empresa..."
+
+msgid "Online"
+msgstr "En línea"
+
+msgid "Conversa iniciada"
+msgstr "Conversación iniciada"
+
+msgid "Nenhuma conversa ainda"
+msgstr "Aún no hay conversaciones"
+
+msgid "Ao se candidatar a uma vaga, a conversa com a empresa aparecerá aqui."
+msgstr "Al postularte a una vacante, la conversación con la empresa aparecerá aquí."
+
+msgid "Encontrar vagas no Match"
+msgstr "Encontrar vacantes en Match"
+
+msgid "Voltar para a Home"
+msgstr "Volver al inicio"
+
+msgid "Lembretes das vagas em que você se candidatou."
+msgstr "Recordatorios de las vacantes a las que te postulaste."
+
+msgid "Ativar avisos no navegador"
+msgstr "Activar avisos en el navegador"
+
+msgid "Lista de notificações"
+msgstr "Lista de notificaciones"
+
+#, python-format
+msgid "Você se candidatou na vaga %(titulo)s"
+msgstr "Te postulaste a la vacante %(titulo)s"
+
+#, python-format
+msgid "Já enviou mensagem para <strong>%(empresa)s</strong> para dar seguimento à candidatura?"
+msgstr "¿Ya enviaste un mensaje a <strong>%(empresa)s</strong> para dar seguimiento a tu postulación?"
+
+#, python-format
+msgid "há %(tempo)s"
+msgstr "hace %(tempo)s"
+
+msgid "Ir para a conversa"
+msgstr "Ir a la conversación"
+
+msgid "Nenhuma notificação ainda"
+msgstr "Aún no hay notificaciones"
+
+msgid "Quando você se candidatar a uma vaga, os lembretes aparecem aqui."
+msgstr "Cuando te postules a una vacante, los recordatorios aparecerán aquí."
+
+msgid "Explorar vagas"
+msgstr "Explorar vacantes"
+
+msgid "Perfil"
+msgstr "Perfil"
+
+msgid "Foto de perfil"
+msgstr "Foto de perfil"
+
+msgid "Salvar foto"
+msgstr "Guardar foto"
+
+msgid "Conversas"
+msgstr "Conversaciones"
+
+msgid "Instituição"
+msgstr "Institución"
+
+msgid "Telefone"
+msgstr "Teléfono"
+
+msgid "Não informado"
+msgstr "No informado"
+
+msgid "Sair da conta"
+msgstr "Cerrar sesión"
+
+msgid "Excluir conta"
+msgstr "Eliminar cuenta"
+
+msgid "Detalhes da vaga"
+msgstr "Detalles de la vacante"
+
+msgid "Bolsa"
+msgstr "Beca"
+
+msgid "Local"
+msgstr "Ubicación"
+
+msgid "Prazo"
+msgstr "Plazo"
+
+msgid "Sobre a vaga"
+msgstr "Sobre la vacante"
+
+msgid "Requisitos"
+msgstr "Requisitos"
+
+msgid "Sobre a empresa"
+msgstr "Sobre la empresa"
+
+msgid "Candidatar-se"
+msgstr "Postularse"
+
+msgid "Vagas"
+msgstr "Vacantes"
+
+msgid "Minhas"
+msgstr "Mis"

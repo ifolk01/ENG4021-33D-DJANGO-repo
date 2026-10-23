@@ -1,14 +1,15 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connecto - Cadastro</title>
+  <title>Connecto - {% trans "Cadastro" %}</title>
   <link rel="stylesheet" href="{% static 'login.css' %}">
 </head>
 <body>
-
+  {% include 'includes/seletor_idioma.html' %}
   <div class="cadastro-container">
     <div class="cadastro-topbar">
       <a href="{% url 'login' %}" class="back-button">
@@ -16,34 +17,34 @@
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </a>
-      <h2>Cadastro</h2>
+      <h2>{% trans "Cadastro" %}</h2>
     </div>
 
     <div class="cadastro-header">
-      <h1>Criar conta</h1>
-      <p>Leva menos de um minuto.</p>
+      <h1>{% trans "Criar conta" %}</h1>
+      <p>{% trans "Leva menos de um minuto." %}</p>
     </div>
 
     <form class="auth-form" method="POST" action="{% url 'criar_conta' %}">
       {% csrf_token %}
       
-      <input type="text" name="nome" class="auth-input" placeholder="Nome completo" required>
+      <input type="text" name="nome" class="auth-input" placeholder="{% trans 'Nome completo' %}" required>
       
       <!-- O name="username" é vital para o Django reconhecer no views.py -->
-      <input type="text" name="username" class="auth-input" placeholder="Matrícula" required>
+      <input type="text" name="username" class="auth-input" placeholder="{% trans 'Matrícula' %}" required>
       
-      <input type="text" name="curso" class="auth-input" placeholder="Curso" required>
+      <input type="text" name="curso" class="auth-input" placeholder="{% trans 'Curso' %}" required>
       
       <!-- O name="password" é vital para o Django reconhecer no views.py -->
-      <input type="password" name="password" class="auth-input" placeholder="Senha (mínimo 6 caracteres)" minlength="6" required>
+      <input type="password" name="password" class="auth-input" placeholder="{% trans 'Senha (mínimo 6 caracteres)' %}" minlength="6" required>
       
-      <input type="password" name="confirmar_senha" class="auth-input" placeholder="Confirmar senha" required>
+      <input type="password" name="confirmar_senha" class="auth-input" placeholder="{% trans 'Confirmar senha' %}" required>
 
       {% if erro %}
         <p style="color: red; font-size: 14px; text-align: center; margin: 0;">{{ erro }}</p>
       {% endif %}
 
-      <button type="submit" class="auth-button" style="margin-top: 16px;">Criar conta</button>
+      <button type="submit" class="auth-button" style="margin-top: 16px;">{% trans "Criar conta" %}</button>
     </form>
   </div>
 

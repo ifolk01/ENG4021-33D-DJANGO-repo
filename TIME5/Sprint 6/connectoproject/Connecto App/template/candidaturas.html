@@ -1,26 +1,27 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Connecto — Minhas Vagas</title>
+  <title>Connecto — {% trans "Minhas Vagas" %}</title>
   <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
   <link rel="stylesheet" href="{% static 'candidaturas.css' %}">
 </head>
 <body class="connecto-page applications-page">
   <main class="standard-shell applications-shell">
     <header class="applications-header">
-      <h2>Minhas Vagas</h2>
+      <h2>{% trans "Minhas Vagas" %}</h2>
     </header>
 
-    <nav class="applications-tabs" aria-label="Minhas vagas">
-      <a href="{% url 'candidaturas' %}" class="applications-tab active">Candidaturas</a>
-      <a href="{% url 'favoritas' %}" class="applications-tab">Salvas</a>
+    <nav class="applications-tabs" aria-label="{% trans 'Minhas vagas' %}">
+      <a href="{% url 'candidaturas' %}" class="applications-tab active">{% trans "Candidaturas" %}</a>
+      <a href="{% url 'favoritas' %}" class="applications-tab">{% trans "Salvas" %}</a>
     </nav>
 
     {% if candidaturas %}
-      <section class="applications-list" aria-label="Candidaturas realizadas">
+      <section class="applications-list" aria-label="{% trans 'Candidaturas realizadas' %}">
         {% for candidatura in candidaturas %}
           <a href="{% url 'detalhe_vaga' candidatura.oportunidade.id %}" class="application-card">
             <div class="application-company-icon" aria-hidden="true">
@@ -63,9 +64,9 @@
             <path d="M21 3l-7 18-4-7-7-4 18-7z"/>
           </svg>
         </div>
-        <h2>Nenhuma candidatura ainda</h2>
-        <p>As vagas em que você der Match ou se candidatar pela Home aparecerão aqui.</p>
-        <a href="{% url 'match' %}" class="applications-primary">Encontrar oportunidades</a>
+        <h2>{% trans "Nenhuma candidatura ainda" %}</h2>
+        <p>{% trans "As vagas em que você der Match ou se candidatar pela Home aparecerão aqui." %}</p>
+        <a href="{% url 'match' %}" class="applications-primary">{% trans "Encontrar oportunidades" %}</a>
       </section>
     {% endif %}
   </main>

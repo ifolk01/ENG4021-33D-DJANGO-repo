@@ -1,16 +1,17 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Connecto - Perfil</title>
+  <title>Connecto - {% trans "Perfil" %}</title>
   <link rel="stylesheet" href="{% static 'perfil.css' %}">
   <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
 </head>
 <body class="connecto-page">
   <main class="standard-shell profile-shell">
-    <h1>Perfil</h1>
+    <h1>{% trans "Perfil" %}</h1>
 
 
 
@@ -22,7 +23,7 @@
 
         <label for="foto-perfil" class="avatar">
             {% if foto %}
-                <img src="{{ foto.url }}" alt="Foto de perfil">
+                <img src="{{ foto.url }}" alt="{% trans 'Foto de perfil' %}">
             {% else %}
                 {{ iniciais }}
             {% endif %}
@@ -36,7 +37,7 @@
             hidden
         >
 
-        <button type="submit">Salvar foto</button>
+        <button type="submit">{% trans "Salvar foto" %}</button>
     </form>
 
     <h2>{{ nome }}</h2>
@@ -46,24 +47,24 @@
 
 
     <div class="contadores">
-      <div class="contador"><h3>{{ total_candidaturas }}</h3><p>Candidaturas</p></div>
-      <div class="contador"><h3>{{ total_salvas }}</h3><p>Salvas</p></div>
-      <div class="contador"><h3>{{ total_conversas }}</h3><p>Conversas</p></div>
+      <div class="contador"><h3>{{ total_candidaturas }}</h3><p>{% trans "Candidaturas" %}</p></div>
+      <div class="contador"><h3>{{ total_salvas }}</h3><p>{% trans "Salvas" %}</p></div>
+      <div class="contador"><h3>{{ total_conversas }}</h3><p>{% trans "Conversas" %}</p></div>
     </div>
 
     <div class="dados">
-      <div class="linha"><span class="icone">🪪</span><span>Matrícula</span><span class="valor">{{ matricula }}</span></div>
-      <div class="linha"><span class="icone">🎓</span><span>Curso</span><span class="valor">{{ curso }}</span></div>
-      <div class="linha"><span class="icone">🏫</span><span>Instituição</span><span class="valor">{{ instituicao }}</span></div>
+      <div class="linha"><span class="icone">🪪</span><span>{% trans "Matrícula" %}</span><span class="valor">{{ matricula }}</span></div>
+      <div class="linha"><span class="icone">🎓</span><span>{% trans "Curso" %}</span><span class="valor">{{ curso }}</span></div>
+      <div class="linha"><span class="icone">🏫</span><span>{% trans "Instituição" %}</span><span class="valor">{{ instituicao }}</span></div>
     </div>
 
     <div class="dados">
-      <div class="linha"><span class="icone">📞</span><span>Telefone</span><span class="valor">{{ telefone|default:"Não informado" }}</span></div>
-      <div class="linha"><span class="icone">📧</span><span>E-mail</span><span class="valor">{{ email }}</span></div>
+      <div class="linha"><span class="icone">📞</span><span>{% trans "Telefone" %}</span><span class="valor">{{ telefone|default:_("Não informado") }}</span></div>
+      <div class="linha"><span class="icone">📧</span><span>{% trans "E-mail" %}</span><span class="valor">{{ email }}</span></div>
     </div>
-
-    <a href="{% url 'login' %}" class="botao botao-sair">Sair da conta</a>
-    <button class="botao botao-excluir">Excluir conta</button>
+    {% include 'includes/seletor_idioma.html' %}
+    <a href="{% url 'login' %}" class="botao botao-sair">{% trans "Sair da conta" %}</a>
+    <button class="botao botao-excluir">{% trans "Excluir conta" %}</button>
   </main>
 
   {% include 'includes/bottom_nav.html' with pagina_ativa='perfil' %}

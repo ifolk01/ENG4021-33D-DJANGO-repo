@@ -1,0 +1,13 @@
+{% load static %}
+{% load i18n %}
+{% get_current_language as CODIGO_ATUAL %}
+{% get_available_languages as IDIOMAS %}
+<form action="{% url 'set_language' %}" method="post" class="seletor-idioma">
+  {% csrf_token %}
+  <input name="next" type="hidden" value="{{ request.get_full_path }}">
+  <select name="language" aria-label="{% trans 'Idioma' %}" onchange="this.form.submit()">
+    {% for codigo, nome in IDIOMAS %}
+      <option value="{{ codigo }}" {% if codigo == CODIGO_ATUAL %}selected{% endif %}>{{ nome }}</option>
+    {% endfor %}
+  </select>
+</form>

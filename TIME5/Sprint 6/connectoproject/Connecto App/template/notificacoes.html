@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Connecto · Notificações</title>
+  <title>Connecto · {% trans "Notificações" %}</title>
   <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
   <link rel="stylesheet" href="{% static 'notificacoes.css' %}">
 </head>
@@ -13,22 +14,22 @@
 
     <!-- Topo: voltar + título -->
     <header class="notif-topbar">
-      <a href="{% url 'home' %}" class="notif-topbar__back" aria-label="Voltar para a Home">
+      <a href="{% url 'home' %}" class="notif-topbar__back" aria-label="{% trans 'Voltar para a Home' %}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="m15 5-7 7 7 7"/>
         </svg>
       </a>
-      <h1 class="notif-topbar__title">Notificações</h1>
+      <h1 class="notif-topbar__title">{% trans "Notificações" %}</h1>
     </header>
 
-    <p class="notif-intro">Lembretes das vagas em que você se candidatou.</p>
+    <p class="notif-intro">{% trans "Lembretes das vagas em que você se candidatou." %}</p>
 
     <button type="button" id="btn-ativar-avisos" class="notif-enable" hidden>
-        Ativar avisos no navegador
+        {% trans "Ativar avisos no navegador" %}
       </button>
 
     <!-- Lista de notificações -->
-    <section class="notif-list" aria-label="Lista de notificações">
+    <section class="notif-list" aria-label="{% trans 'Lista de notificações' %}">
       {% for n in notificacoes %}
         <article class="notif-card {% if not n.lida %}notif-card--nova{% endif %}">
           <div class="notif-card__icon" aria-hidden="true">
@@ -40,21 +41,23 @@
 
           <div class="notif-card__body">
             <h2 class="notif-card__title">
-              Você se candidatou na vaga {{ n.candidatura.oportunidade.titulo }}
+              {% blocktrans with titulo=n.candidatura.oportunidade.titulo %}Você se candidatou na vaga {{ titulo }}{% endblocktrans %}
             </h2>
             <p class="notif-card__text">
-              Já enviou mensagem para
-              <strong>{{ n.candidatura.oportunidade.empresa.nome }}</strong>
-              para dar seguimento à candidatura?
+              {% blocktrans trimmed with empresa=n.candidatura.oportunidade.empresa.nome %}
+                Já enviou mensagem para
+                <strong>{{ empresa }}</strong>
+                para dar seguimento à candidatura?
+              {% endblocktrans %}
             </p>
 
             <div class="notif-card__footer">
                 <time class="notif-card__time" datetime="{{ n.criada_em|date:'c' }}">{{ n.tempo }}</time>
-                há {{ n.criada_em|timesince }}
+                {% blocktrans with tempo=n.criada_em|timesince %}há {{ tempo }}{% endblocktrans %}
               </time>
               {% if n.conversa_id %}
                 <a href="{% url 'conversa' n.conversa_id %}" class="notif-card__action">
-                  Ir para a conversa
+                  {% trans "Ir para a conversa" %}
                 </a>
               {% endif %}
             </div>
@@ -67,11 +70,11 @@
               <path d="M12 22a2.4 2.4 0 0 0 2.25-1.6h-4.5A2.4 2.4 0 0 0 12 22Zm7-5.1-1.8-2.1V10a5.2 5.2 0 0 0-4.1-5.1V4a1.1 1.1 0 1 0-2.2 0v.9A5.2 5.2 0 0 0 6.8 10v4.8L5 16.9V18h14v-1.1Z"/>
             </svg>
           </div>
-          <h2 class="notif-empty__title">Nenhuma notificação ainda</h2>
+          <h2 class="notif-empty__title">{% trans "Nenhuma notificação ainda" %}</h2>
           <p class="notif-empty__text">
-            Quando você se candidatar a uma vaga, os lembretes aparecem aqui.
+            {% trans "Quando você se candidatar a uma vaga, os lembretes aparecem aqui." %}
           </p>
-          <a href="{% url 'home' %}" class="primary-link">Explorar vagas</a>
+          <a href="{% url 'home' %}" class="primary-link">{% trans "Explorar vagas" %}</a>
         </section>
       {% endfor %}
     </section>

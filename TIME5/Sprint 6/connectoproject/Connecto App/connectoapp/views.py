@@ -13,6 +13,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.utils.timesince import timesince
 from django.views.decorators.http import require_GET
+from django.utils.translation import gettext as _
 from .models import (
     Candidatura,
     Conversa,
@@ -38,7 +39,7 @@ def login(request):
         return render(
             request,
             "Login.html",
-            {"erro": "Matrícula ou senha incorretos. Tente novamente."},
+            {"erro": _("Matrícula ou senha incorretos. Tente novamente.")},
         )
 
     return render(request, "Login.html")
@@ -56,7 +57,7 @@ def criar_conta(request):
             return render(
                 request,
                 "criar_conta.html",
-                {"erro": "As senhas não coincidem!"}
+                {"erro": _("As senhas não coincidem!")}
             )
 
         # Matrícula não pode estar cadastrada
@@ -64,7 +65,7 @@ def criar_conta(request):
             return render(
                 request,
                 "criar_conta.html",
-                {"erro": "Esta matrícula já está registada."}
+                {"erro": _("Esta matrícula já está registada.")}
             )
 
         # Cria o usuário
@@ -421,7 +422,7 @@ def perfil(request):
 
     nome = usuario.first_name or usuario.username
     matricula = usuario.username
-    email = usuario.email or "Não informado"
+    email = usuario.email or _("Não informado")
 
     iniciais = "".join(
         parte[0] for parte in nome.split()[:2]
@@ -429,7 +430,7 @@ def perfil(request):
 
     # O User padrão do Django não possui campo curso.
     # Por enquanto mantemos esses dados no contexto.
-    curso = "Ciência da Computação"
+    curso = _("Ciência da Computação")
     instituicao = "PUC-Rio"
 
     contexto = {
@@ -467,11 +468,11 @@ def _serializar_notificacao(n):
     oportunidade = n.candidatura.oportunidade
     return {
         "id": n.id,
-        "texto": (
-            f"Você se candidatou na vaga {oportunidade.titulo}. "
-            f"Já enviou mensagem para {oportunidade.empresa.nome} "
+        "texto": _(
+            f"Você se candidatou na vaga %(vaga)s. "
+            f"Já enviou mensagem para %(empresa)s "
             "para dar seguimento à candidatura?"
-        ),
+        ) % {"vaga": oportunidade.titulo, "empresa": oportunidade.empresa.nome},
         "criada_em": n.criada_em.isoformat(),
         "lida": n.lida,
     }
