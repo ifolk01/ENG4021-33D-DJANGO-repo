@@ -77,7 +77,7 @@ def criar_conta(request):
 
         return redirect("login")
 
-    
+
     return render(request, "criar_conta.html")
 
 
@@ -335,6 +335,9 @@ def favoritas(request):
     )
     return render(request, "favoritas.html", {"favoritas": favoritas_usuario})
 
+# Tela de Recuperação de Senha
+def esqueceu_senha(request):
+    return render(request, "esqueceu_senha.html")
 
 
 # Mensagens
@@ -442,7 +445,7 @@ def perfil(request):
         "instituicao": instituicao,
         "foto": perfil_usuario.foto,
         "foto_form": form,
-        
+
         "total_candidaturas":
             Candidatura.objects.filter(usuario=usuario).count(),
 
@@ -525,7 +528,7 @@ def notificacoes(request):
         c.oportunidade_id: c.id
         for c in Conversa.objects.filter(usuario=request.user)
     }
-    
+
     agora = timezone.now()
     for n in itens:
         n.conversa_id = conversas.get(n.candidatura.oportunidade_id)

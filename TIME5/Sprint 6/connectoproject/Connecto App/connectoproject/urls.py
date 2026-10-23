@@ -35,6 +35,7 @@ urlpatterns = [
     path("notificacoes/verificar/", views.verificar_notificacoes, name="notificacoes_verificar"),
 
     
+    path("esqueceu-senha/", views.esqueceu_senha, name="esqueceu_senha"),
 ]
 
 if settings.DEBUG:
