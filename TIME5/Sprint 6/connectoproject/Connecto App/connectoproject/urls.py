@@ -36,6 +36,12 @@ urlpatterns = [
 
     
     path("esqueceu-senha/", views.esqueceu_senha, name="esqueceu_senha"),
+
+    path(
+    "duvidas-frequentes/",
+    views.duvidas_frequentes,
+    name="duvidas_frequentes"
+),
 ]
 
 if settings.DEBUG:
