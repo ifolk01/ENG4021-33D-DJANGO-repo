@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecto - Configurações</title>
+  <link rel="stylesheet" href="{% static 'configuracoes.css' %}">
+</head>
+
+<body>
+
+  <div class="topo">
+    <a href="{% url 'perfil' %}" class="voltar">‹</a>
+    <h1>Configurações</h1>
+    <span class="espaco"></span>
+  </div>
+
+  <h2 class="titulo-secao">Conta</h2>
+  <div class="card">
+    <a href="#" class="linha">
+      <span class="icone">👤</span>
+      <span>Editar perfil</span>
+      <span class="seta">›</span>
+    </a>
+    <a href="#" class="linha">
+      <span class="icone">🔒</span>
+      <span>Alterar senha</span>
+      <span class="seta">›</span>
+    </a>
+  </div>
+
+  <h2 class="titulo-secao">Notificações</h2>
+  <div class="card">
+    <label class="linha">
+      <span class="icone">💼</span>
+      <span>Novas vagas</span>
+      <input type="checkbox" class="chave" checked>
+    </label>
+    <label class="linha">
+      <span class="icone">💬</span>
+      <span>Mensagens</span>
+      <input type="checkbox" class="chave" checked>
+    </label>
+    <label class="linha">
+      <span class="icone">✉️</span>
+      <span>Avisos por e-mail</span>
+      <input type="checkbox" class="chave">
+    </label>
+  </div>
+
+  <h2 class="titulo-secao">Privacidade</h2>
+  <div class="card">
+    <label class="linha">
+      <span class="icone">👁️</span>
+      <span>Perfil visível para empresas</span>
+      <input type="checkbox" class="chave" checked>
+    </label>
+  </div>
+
+  <h2 class="titulo-secao">Sobre</h2>
+  <div class="card">
+    <a href="#" class="linha">
+      <span class="icone">📄</span>
+      <span>Termos de uso</span>
+      <span class="seta">›</span>
+    </a>
+  </div>
+
+  <a href="{% url 'login' %}" class="botao botao-sair">Sair da conta</a>
+  <p class="versao">Connecto · versão 1.0</p>
+
+</body>
+
+</html>
