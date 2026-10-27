@@ -10,8 +10,15 @@
 </head>
 <body class="connecto-page">
   <main class="standard-shell profile-shell">
-    <h1>Perfil</h1>
 
+    <a href="{% url 'duvidas_frequentes' %}"
+       class="botao-ajuda"
+       title="Dúvidas frequentes"
+       aria-label="Dúvidas frequentes">
+      ?
+    </a>
+
+    <h1>Perfil</h1>
 {% if messages %}
     {% for message in messages %}
         <div class="aviso {{ message.tags }}" role="status">
