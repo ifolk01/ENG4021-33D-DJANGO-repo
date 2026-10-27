@@ -459,3 +459,8 @@ def perfil(request):
         "perfil.html",
         contexto
     )
+
+
+@login_required
+def duvidas_frequentes(request):
+    return render(request, "duvidas_frequentes.html")
