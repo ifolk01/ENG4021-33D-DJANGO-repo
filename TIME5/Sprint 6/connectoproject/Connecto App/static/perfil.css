@@ -206,3 +206,41 @@ h1 {
 }
 
 
+/* Botão de dúvidas */
+
+.profile-shell {
+    position: relative;
+}
+
+.botao-ajuda {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+    border: 2px solid #116A85;
+
+    background-color: #FFFFFF;
+    color: #116A85;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.botao-ajuda:hover {
+    background-color: #116A85;
+    color: #FFFFFF;
+}
+
+
