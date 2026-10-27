@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -10,15 +11,10 @@
 </head>
 <body class="connecto-page">
   <main class="standard-shell profile-shell">
-
-    <a href="{% url 'duvidas_frequentes' %}"
-       class="botao-ajuda"
-       title="Dúvidas frequentes"
-       aria-label="Dúvidas frequentes">
-      ?
-    </a>
-
     <h1>Perfil</h1>
+
+    <a href="{% url 'duvidas_frequentes' %}" class="botao-ajuda" title="Dúvidas frequentes" aria-label="Dúvidas frequentes">?</a>
+
 {% if messages %}
     {% for message in messages %}
         <div class="aviso {{ message.tags }}" role="status">
@@ -26,10 +22,6 @@
         </div>
     {% endfor %}
 {% endif %}
-
-
-
-
 
 <div class="identificacao">
 
@@ -59,7 +51,6 @@
     <p class="curso">{{ curso }}</p>
 
 </div>
-
 
     <div class="contadores">
       <div class="contador"><h3>{{ total_candidaturas }}</h3><p>Candidaturas</p></div>
