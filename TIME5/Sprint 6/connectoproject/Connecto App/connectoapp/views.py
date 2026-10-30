@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -19,6 +19,16 @@ from .models import (
     PerfilUsuario,
 )
 from django.contrib import messages
+import json
+import logging
+
+from .gemini_service import (
+    GeminiConfigurationError,
+    GeminiResponseError,
+    responder_sobre_vaga,
+)
+
+logger = logging.getLogger(__name__)
 
 def login(request):
     if request.method == "POST":
@@ -121,18 +131,9 @@ def _criar_candidatura_e_conversa(usuario, oportunidade, origem):
         oportunidade=oportunidade,
     )
 
-    # A mensagem padrão nasce junto da candidatura/conversa.
-    if conversa_criada or not conversa.mensagens.exists():
-        Mensagem.objects.create(
-            conversa=conversa,
-            autor="empresa",
-            texto=(
-                "Olá! Vimos seu perfil e ficamos muito interessados na sua "
-                f"candidatura para {oportunidade.titulo}. Você tem "
-                "disponibilidade pra uma conversa essa semana?"
-            ),
-        )
-
+    # Não criamos mais respostas prontas. A conversa começa vazia e as
+    # respostas são geradas pelo assistente Gemini somente quando o candidato
+    # envia uma pergunta.
     return candidatura, criada, conversa
 
 
@@ -363,6 +364,11 @@ def favoritas(request):
 
 
 # Mensagens
+MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO = (
+    "Olá! Vimos seu perfil e ficamos muito interessados na sua candidatura para"
+)
+
+
 @login_required
 def mensagens(request):
     conversas = (
@@ -376,7 +382,9 @@ def mensagens(request):
         itens.append(
             {
                 "conversa": conversa_item,
-                "ultima_mensagem": conversa_item.mensagens.last(),
+                "ultima_mensagem": conversa_item.mensagens.exclude(
+                    texto__startswith=MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO
+                ).last(),
             }
         )
 
@@ -391,31 +399,122 @@ def conversa(request, conversa_id):
         usuario=request.user,
     )
 
-    if request.method == "POST":
-        texto = request.POST.get("texto", "").strip()
-        if texto:
-            Mensagem.objects.create(
-                conversa=conversa_atual,
-                autor="candidato",
-                texto=texto,
-            )
-            # Salva atualizada_em para a conversa voltar ao topo da lista.
-            conversa_atual.save(update_fields=["atualizada_em"])
-        return redirect("conversa", conversa_id=conversa_atual.id)
-
     candidatura = Candidatura.objects.filter(
         usuario=request.user,
         oportunidade=conversa_atual.oportunidade,
     ).first()
+
+    # Conversas antigas podem conter a resposta fixa criada pela versão
+    # anterior do app. Ela fica escondida para não parecer uma resposta da IA.
+    mensagens_visiveis = conversa_atual.mensagens.exclude(
+        texto__startswith=MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO
+    )
 
     return render(
         request,
         "conversa.html",
         {
             "conversa": conversa_atual,
-            "mensagens_conversa": conversa_atual.mensagens.all(),
+            "mensagens_conversa": mensagens_visiveis,
             "foi_match": bool(candidatura and candidatura.origem == "match"),
         },
+    )
+
+
+@require_POST
+@login_required
+def assistente_vaga(request, conversa_id):
+    conversa_atual = get_object_or_404(
+        Conversa.objects.select_related("oportunidade__empresa"),
+        pk=conversa_id,
+        usuario=request.user,
+    )
+
+    try:
+        if request.content_type == "application/json":
+            payload = json.loads(request.body or b"{}")
+            texto = str(payload.get("mensagem", "")).strip()
+        else:
+            texto = request.POST.get("mensagem", "").strip()
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return JsonResponse(
+            {"ok": False, "erro": "Requisição inválida."},
+            status=400,
+        )
+
+    if not texto:
+        return JsonResponse(
+            {"ok": False, "erro": "Digite uma pergunta antes de enviar."},
+            status=400,
+        )
+
+    if len(texto) > 2000:
+        return JsonResponse(
+            {"ok": False, "erro": "A mensagem deve ter no máximo 2000 caracteres."},
+            status=400,
+        )
+
+    historico = list(
+        conversa_atual.mensagens
+        .exclude(texto__startswith=MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO)
+        .order_by("criada_em", "id")
+        .values("autor", "texto")
+    )[-8:]
+
+    try:
+        resposta = responder_sobre_vaga(
+            vaga=conversa_atual.oportunidade,
+            pergunta=texto,
+            historico=historico,
+        )
+    except GeminiConfigurationError:
+        logger.exception("Gemini não está configurado para o Connecto.")
+        return JsonResponse(
+            {
+                "ok": False,
+                "erro": "O assistente ainda não está configurado no servidor.",
+            },
+            status=503,
+        )
+    except GeminiResponseError:
+        logger.exception("A Gemini API não retornou uma resposta utilizável.")
+        return JsonResponse(
+            {
+                "ok": False,
+                "erro": "Não foi possível obter uma resposta agora. Tente novamente.",
+            },
+            status=503,
+        )
+    except Exception:
+        logger.exception("Falha ao consultar a Gemini API.")
+        return JsonResponse(
+            {
+                "ok": False,
+                "erro": "Não foi possível obter uma resposta agora. Tente novamente.",
+            },
+            status=503,
+        )
+
+    with transaction.atomic():
+        mensagem_candidato = Mensagem.objects.create(
+            conversa=conversa_atual,
+            autor="candidato",
+            texto=texto,
+        )
+        mensagem_assistente = Mensagem.objects.create(
+            conversa=conversa_atual,
+            autor="empresa",
+            texto=resposta,
+        )
+        conversa_atual.save(update_fields=["atualizada_em"])
+
+    return JsonResponse(
+        {
+            "ok": True,
+            "resposta": resposta,
+            "mensagem_candidato_id": mensagem_candidato.id,
+            "mensagem_assistente_id": mensagem_assistente.id,
+        }
     )
 
 

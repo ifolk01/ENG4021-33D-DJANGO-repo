@@ -27,6 +27,11 @@ urlpatterns = [
 
     path("mensagens/", views.mensagens, name="mensagens"),
     path("mensagens/<int:conversa_id>/", views.conversa, name="conversa"),
+    path(
+        "mensagens/<int:conversa_id>/assistente/",
+        views.assistente_vaga,
+        name="assistente_vaga",
+    ),
 
     path("vaga/", views.visualizacao_vaga, name="visualizacao_vaga"),
     path("vaga/<int:vaga_id>/", views.visualizacao_vaga, name="detalhe_vaga"),
