@@ -52,6 +52,10 @@
     <h2>{{ nome }}</h2>
     <p class="curso">{{ curso }}</p>
 
+    <a href="{% url 'editar_perfil' %}" class="botao botao-editar">
+      {% trans "Editar perfil" %}
+    </a>
+
 </div>
 
     <div class="contadores">

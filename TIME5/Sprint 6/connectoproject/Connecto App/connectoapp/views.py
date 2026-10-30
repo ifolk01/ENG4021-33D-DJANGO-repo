@@ -522,6 +522,35 @@ def assistente_vaga(request, conversa_id):
 # Perfil
 
 @login_required
+def editar_perfil(request):
+    usuario = request.user
+
+    if request.method == "POST":
+        nome = request.POST.get("nome", "").strip()
+        email = request.POST.get("email", "").strip()
+
+        if not nome or not email:
+            messages.error(request, "Preencha nome e e-mail.")
+        else:
+            partes_nome = nome.split(maxsplit=1)
+            usuario.first_name = partes_nome[0]
+            usuario.last_name = partes_nome[1] if len(partes_nome) > 1 else ""
+            usuario.email = email
+            usuario.save(update_fields=["first_name", "last_name", "email"])
+
+            messages.success(request, "Perfil atualizado com sucesso!")
+            return redirect("perfil")
+
+    nome = usuario.get_full_name().strip() or usuario.username
+
+    return render(request, "editar_perfil.html", {
+        "nome": nome,
+        "email": usuario.email,
+        "matricula": usuario.username,
+    })
+    
+
+@login_required
 def perfil(request):
     usuario = request.user
 
@@ -554,7 +583,7 @@ def perfil(request):
 
 
 
-    nome = usuario.first_name or usuario.username
+    nome = usuario.get_full_name().strip() or usuario.username
     matricula = usuario.username
     email = usuario.email or "Não informado"
 
