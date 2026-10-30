@@ -1,0 +1,71 @@
+/*
+  Modo noturno do Connecto.
+  Só vale quando <html data-theme="dark">. No modo claro este arquivo não muda nada.
+
+  Dois grupos de variáveis:
+  1) --tema-*      criadas pelo script converter_cores_para_tema.py
+  2) --connecto-*  que os CSS já usavam (connecto_ui.css e login.css)
+*/
+
+html[data-theme="light"] { color-scheme: light; }
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* 1) variáveis --tema-* */
+  --tema-bg:         #14161f;
+  --tema-surface:    #1e2130;
+  --tema-surface-2:  #262a3d;
+  --tema-ink:        #e8e9f0;
+  --tema-muted:      #9a9eb0;
+  --tema-line:       #2e3247;
+  --tema-cyan-soft:  #15333c;
+  --tema-red-soft:   #3a2224;
+  --tema-amber-soft: #3a2e14;
+  --tema-green-soft: #153022;
+
+  /* 2) variáveis que já existiam */
+  --connecto-bg:          #14161f;
+  --connecto-surface:     #1e2130;
+  --connecto-navy:        #3f4a7a;   /* fundo de chips/botões ativos (texto branco por cima) */
+  --connecto-text:        #e8e9f0;
+  --connecto-muted:       #9a9eb0;
+  --connecto-line:        #2e3247;
+  --connecto-cyan:        #3bb5d3;
+  --connecto-cyan-soft:   #15333c;
+  --connecto-green:       #54bd82;
+  --connecto-green-soft:  #153022;
+  --connecto-red:         #e57b7d;
+  --connecto-red-soft:    #3a2224;
+  --connecto-amber:       #e6aa28;
+  --connecto-amber-soft:  #3a2e14;
+  --connecto-nav-active:  #2a2e42;
+  --connecto-shadow:      0 8px 22px rgba(0, 0, 0, .45);
+
+  /* nomes próprios do login.css */
+  --connecto-primary-dark: #3f4a7a;  /* fundo do botão "Entrar" (texto branco por cima) */
+  --connecto-secondary:    #3bb5d3;
+  --connecto-border:       #2e3247;
+  --connecto-text-soft:    #9a9eb0;
+}
+
+/* Ajustes pontuais do modo noturno */
+html[data-theme="dark"] .cadastro-header h1 { color: var(--tema-ink); }
+html[data-theme="dark"] .home-logo { filter: brightness(0) invert(1); }
+html[data-theme="dark"] .avatar { color: var(--tema-ink); }
+
+/* Botão "Modo noturno" (includes/alternar_tema.html) */
+.botao-tema {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--tema-line, #e4e4dd);
+  border-radius: 14px;
+  background: var(--tema-surface, #fff);
+  color: var(--tema-ink, #33364f);
+  font: inherit;
+  cursor: pointer;
+}
+.botao-tema[aria-pressed="true"] { border-color: var(--connecto-cyan, #1596b7); }
