@@ -1,11 +1,11 @@
 
 body {
     font-family: Arial;
-    background-color: #F2F2ED;
+    background-color: var(--tema-bg, #F2F2ED);
 }
 
 h1 {
-    color: #33364F;
+    color: var(--tema-ink, #33364F);
     text-align: center;
 }
 
@@ -13,23 +13,23 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    background-color: white;
-    color: #33364F;
+    background-color: var(--tema-surface, white);
+    color: var(--tema-ink, #33364F);
     padding: 20px;
     margin: 20px auto;
     max-width: 600px;
-    border: 1px solid #DCDCD3;
+    border: 1px solid var(--tema-line, #DCDCD3);
     border-radius: 12px;
 }
 
 .vaga h2 {
-    color: #33364F;
+    color: var(--tema-ink, #33364F);
     font-size: 20px;
     margin-bottom: 8px;
 }
 
 .vaga p {
-    color: #6B6F80;
+    color: var(--tema-muted, #6B6F80);
     font-size: 15px;
     margin: 6px 0;
 }

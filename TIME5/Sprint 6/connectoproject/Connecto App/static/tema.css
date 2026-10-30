@@ -12,8 +12,7 @@ html[data-theme="light"] { color-scheme: light; }
 html[data-theme="dark"] {
   color-scheme: dark;
 
-  /* 1) variáveis --tema-* */
-  --tema-bg:         #14161f;
+  --tema-bg:         #f2f2ed;
   --tema-surface:    #1e2130;
   --tema-surface-2:  #262a3d;
   --tema-ink:        #e8e9f0;
@@ -24,10 +23,9 @@ html[data-theme="dark"] {
   --tema-amber-soft: #3a2e14;
   --tema-green-soft: #153022;
 
-  /* 2) variáveis que já existiam */
   --connecto-bg:          #14161f;
   --connecto-surface:     #1e2130;
-  --connecto-navy:        #3f4a7a;   /* fundo de chips/botões ativos (texto branco por cima) */
+  --connecto-navy:        #3f4a7a;   
   --connecto-text:        #e8e9f0;
   --connecto-muted:       #9a9eb0;
   --connecto-line:        #2e3247;
@@ -42,19 +40,15 @@ html[data-theme="dark"] {
   --connecto-nav-active:  #2a2e42;
   --connecto-shadow:      0 8px 22px rgba(0, 0, 0, .45);
 
-  /* nomes próprios do login.css */
-  --connecto-primary-dark: #3f4a7a;  /* fundo do botão "Entrar" (texto branco por cima) */
-  --connecto-secondary:    #3bb5d3;
-  --connecto-border:       #2e3247;
-  --connecto-text-soft:    #9a9eb0;
+  --connecto-primary-dark: #464b71; 
+  --connecto-border:       #33364f;
+  --connecto-text-soft:    #6b6f80;
 }
 
-/* Ajustes pontuais do modo noturno */
 html[data-theme="dark"] .cadastro-header h1 { color: var(--tema-ink); }
 html[data-theme="dark"] .home-logo { filter: brightness(0) invert(1); }
 html[data-theme="dark"] .avatar { color: var(--tema-ink); }
 
-/* Botão "Modo noturno" (includes/alternar_tema.html) */
 .botao-tema {
   display: flex;
   align-items: center;

@@ -10,7 +10,7 @@ body {
 }
 
 body {
-    background: #f6f5f0;
+    background: var(--tema-surface-2, #f6f5f0);
     color: #2f3558;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
@@ -20,7 +20,7 @@ body {
     max-width: 560px;
     min-height: 100dvh;
     margin: 0 auto;
-    background: #f6f5f0;
+    background: var(--tema-surface-2, #f6f5f0);
     display: flex;
     flex-direction: column;
     position: relative;
@@ -51,7 +51,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
+    background: var(--tema-surface, #ffffff);
     border: 1px solid rgba(47, 53, 88, 0.08);
     box-shadow: 0 6px 18px rgba(33, 38, 66, 0.07);
     color: transparent;
@@ -76,7 +76,7 @@ body {
 
 .chat-header-info > strong {
     display: block;
-    color: #17191f;
+    color: var(--tema-ink, #17191f);
     font-size: 19px;
     font-weight: 750;
     line-height: 1.2;
@@ -134,7 +134,7 @@ body {
     margin: 4px auto 14px;
     padding: 12px 16px;
     border-radius: 18px;
-    background: #f2e8ce;
+    background: var(--tema-amber-soft, #f2e8ce);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -245,7 +245,7 @@ body {
 }
 
 .message-bubble--company {
-    background: #ffffff;
+    background: var(--tema-surface, #ffffff);
     color: #303755;
     border: 1px solid rgba(47, 53, 88, 0.055);
     border-bottom-left-radius: 6px;
@@ -337,7 +337,7 @@ body {
     border: 1px solid #deded8;
     border-radius: 27px;
     outline: none;
-    background: #ffffff;
+    background: var(--tema-surface, #ffffff);
     color: #303755;
     font: inherit;
     font-size: 15px;
@@ -376,7 +376,7 @@ body {
     width: 19px;
     height: 19px;
     transform: translate(-56%, -50%) rotate(-8deg);
-    background: #ffffff;
+    background: var(--tema-surface, #ffffff);
     clip-path: polygon(0 42%, 100% 0, 64% 100%, 46% 60%);
 }
 
@@ -396,8 +396,8 @@ body {
 
 @media (min-width: 600px) {
     .conversa-shell {
-        border-left: 1px solid #eae9e4;
-        border-right: 1px solid #eae9e4;
+        border-left: 1px solid var(--tema-line, #eae9e4);
+        border-right: 1px solid var(--tema-line, #eae9e4);
     }
 }
 

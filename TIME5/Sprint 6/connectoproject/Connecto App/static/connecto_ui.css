@@ -34,7 +34,7 @@ body.connecto-page {
   margin: 0;
   overflow-x: hidden;
   background: var(--connecto-bg);
-  color: var(--connecto-navy);
+  color: var(--tema-ink, var(--connecto-navy));
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -105,7 +105,7 @@ a {
 }
 
 .nav-item.active {
-  color: var(--connecto-navy);
+  color: var(--tema-ink, var(--connecto-navy));
   background: var(--connecto-nav-active);
 }
 

@@ -1,7 +1,7 @@
 body {
-    background-color: #F2F2ED;
+    background-color: var(--tema-bg, #F2F2ED);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #33364F;
+    color: var(--tema-ink, #33364F);
     margin: 0;
     padding: 16px;
 }
@@ -21,18 +21,18 @@ body {
 
 .voltar {
     font-size: 30px;
-    color: #33364F;
+    color: var(--tema-ink, #33364F);
     text-decoration: none;
 }
 
 .coracao {
     font-size: 24px;
-    color: #6B6F80;
+    color: var(--tema-muted, #6B6F80);
 }
 
 /* Cards */
 .card {
-    background-color: #FFFFFF;
+    background-color: var(--tema-surface, #FFFFFF);
     border-radius: 14px;
     padding: 18px;
     margin-bottom: 16px;
@@ -51,7 +51,7 @@ body {
     text-align: center;
     font-size: 24px;
     border-radius: 12px;
-    background-color: #DDEEF4;
+    background-color: var(--tema-cyan-soft, #DDEEF4);
 }
 
 .card h2 {
@@ -61,7 +61,7 @@ body {
 
 .empresa {
     margin: 4px 0 0 0;
-    color: #6B6F80;
+    color: var(--tema-muted, #6B6F80);
 }
 
 /* Tags */
@@ -78,26 +78,26 @@ body {
 }
 
 .tag-local {
-    background-color: #F8E7E5;
+    background-color: var(--tema-red-soft, #F8E7E5);
     color: #C85A5A;
 }
 
 .tag-modalidade {
-    background-color: #FBF0DC;
+    background-color: var(--tema-amber-soft, #FBF0DC);
     color: #D8962B;
 }
 
 .tag-area {
-    background-color: #DDEEF4;
+    background-color: var(--tema-cyan-soft, #DDEEF4);
     color: #118AB2;
 }
 
 .publicada {
     margin: 0;
     padding-top: 12px;
-    border-top: 1px solid #E4E4DD;
+    border-top: 1px solid var(--tema-line, #E4E4DD);
     font-size: 14px;
-    color: #6B6F80;
+    color: var(--tema-muted, #6B6F80);
 }
 
 /* Detalhes */
@@ -108,7 +108,7 @@ body {
 
 .detalhes p,
 .detalhes li {
-    color: #6B6F80;
+    color: var(--tema-muted, #6B6F80);
     font-size: 15px;
     line-height: 1.5;
 }
@@ -143,6 +143,6 @@ body {
 }
 
 .botao-saber-mais {
-    background-color: #FFFFFF;
+    background-color: var(--tema-surface, #FFFFFF);
     color: #116A85;
 }

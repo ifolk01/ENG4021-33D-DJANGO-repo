@@ -20,7 +20,7 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: var(--connecto-navy);
+  color: var(--tema-ink, var(--connecto-navy));
   text-decoration: none;
 }
 
@@ -35,7 +35,7 @@
 
 .notif-topbar__title {
   margin: 0;
-  color: var(--connecto-navy);
+  color: var(--tema-ink, var(--connecto-navy));
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -.02em;
@@ -64,7 +64,7 @@
   padding: 13px 14px 11px;
   border: 1px solid rgba(231, 231, 225, .9);
   border-radius: 15px;
-  background: #fff;
+  background: var(--tema-surface, #fff);
   box-shadow: var(--connecto-shadow);
 }
 
@@ -100,7 +100,7 @@
   display: grid;
   place-items: center;
   border-radius: 10px;
-  background: #dff2f7;
+  background: var(--tema-cyan-soft, #dff2f7);
   color: #1592b3;
 }
 
@@ -111,7 +111,7 @@
 
 .notif-card__title {
   margin: 0;
-  color: var(--connecto-navy);
+  color: var(--tema-ink, var(--connecto-navy));
   font-size: 13.5px;
   font-weight: 750;
   line-height: 1.25;
@@ -126,7 +126,7 @@
 }
 
 .notif-card__text strong {
-  color: var(--connecto-navy);
+  color: var(--tema-ink, var(--connecto-navy));
   font-weight: 650;
 }
 
@@ -169,7 +169,7 @@
   margin-top: 22px;
   padding: 40px 22px;
   border-radius: 18px;
-  background: #fff;
+  background: var(--tema-surface, #fff);
   box-shadow: var(--connecto-shadow);
   text-align: center;
 }
@@ -192,7 +192,7 @@
 
 .notif-empty__title {
   margin: 0 0 6px;
-  color: var(--connecto-navy);
+  color: var(--tema-ink, var(--connecto-navy));
   font-size: 16px;
   font-weight: 750;
 }
