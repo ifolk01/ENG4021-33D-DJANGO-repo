@@ -459,3 +459,20 @@ def perfil(request):
         "perfil.html",
         contexto
     )
+
+def esqueceu_senha(request):
+    return render(
+        request,
+        "Login.html",
+        {"erro": "Recuperação de senha ainda não disponível."}
+    )
+
+
+@login_required
+def duvidas_frequentes(request):
+    return render(request, "duvidas_frequentes.html")
+
+
+@login_required
+def notificacoes(request):
+    return redirect("home")

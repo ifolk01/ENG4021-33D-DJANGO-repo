@@ -32,10 +32,16 @@ urlpatterns = [
     path(
     "favoritar/<int:vaga_id>/",views.toggle_favorito,name="toggle_favorito"),
     path("notificacoes/", views.notificacoes, name="notificacoes"),
-    path("notificacoes/verificar/", views.verificar_notificacoes, name="notificacoes_verificar"),
+    #path("notificacoes/verificar/", views.verificar_notificacoes, name="notificacoes_verificar"),
 
     
     path("esqueceu-senha/", views.esqueceu_senha, name="esqueceu_senha"),
+
+    path(
+    "duvidas-frequentes/",
+    views.duvidas_frequentes,
+    name="duvidas_frequentes"
+),
 ]
 
 if settings.DEBUG:
