@@ -9,6 +9,7 @@ from django.utils.http import url_has_allowed_host_and_scheme
 from .forms import FotoPerfilForm
 from .models import (
     Candidatura,
+    Empresa,
     Conversa,
     Favorito,
     Mensagem,
@@ -20,22 +21,54 @@ from django.contrib import messages
 
 def login(request):
     if request.method == "POST":
-        matricula = request.POST.get("username", "").strip()
+        identificador = request.POST.get("username", "").strip()
         senha = request.POST.get("password", "")
+        tipo_usuario = request.POST.get("tipo_usuario", "aluno")
 
-        user = authenticate(request, username=matricula, password=senha)
-        if user is not None:
-            auth_login(request, user)
-            return redirect("home")
+        if tipo_usuario == "empregador":
+            empresa = Empresa.objects.filter(
+                email__iexact=identificador,
+                usuario__isnull=False,
+            ).select_related("usuario").first()
+
+            if empresa is not None:
+                user = authenticate(
+                    request,
+                    username=empresa.usuario.username,
+                    password=senha,
+                )
+
+                if user is not None:
+                    auth_login(request, user)
+                    return redirect("perfil_empresa")
+
+            erro = "Email ou senha incorretos. Tente novamente."
+
+        else:
+            user = authenticate(
+                request,
+                username=identificador,
+                password=senha,
+            )
+
+            if user is not None and not Empresa.objects.filter(
+                usuario=user
+            ).exists():
+                auth_login(request, user)
+                return redirect("home")
+
+            erro = "Matrícula ou senha incorretos. Tente novamente."
 
         return render(
             request,
             "Login.html",
-            {"erro": "Matrícula ou senha incorretos. Tente novamente."},
+            {
+                "erro": erro,
+                "tipo_usuario": tipo_usuario,
+            },
         )
 
     return render(request, "Login.html")
-
 
 def criar_conta(request):
     if request.method == "POST":
@@ -476,3 +509,13 @@ def duvidas_frequentes(request):
 @login_required
 def notificacoes(request):
     return redirect("home")
+
+@login_required
+def perfil_empresa(request):
+    empresa = get_object_or_404(Empresa, usuario=request.user)
+
+    return render(
+        request,
+        "perfil_empresa.html",
+        {"empresa": empresa},
+    )

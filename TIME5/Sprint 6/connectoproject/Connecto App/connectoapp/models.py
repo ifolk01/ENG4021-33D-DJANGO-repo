@@ -42,6 +42,13 @@ class PerfilUsuario(models.Model):
 
 
 class Empresa(models.Model):
+    usuario = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="empresa",
+        null=True,
+        blank=True
+    )
     nome = models.CharField(max_length=100)
     email = models.EmailField()
     descricao = models.TextField(blank=True)

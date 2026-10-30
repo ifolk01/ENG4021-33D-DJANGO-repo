@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil da Empresa | CONNECTO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 32px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #242c65;
+        }
+
+        .campo {
+            margin-top: 24px;
+        }
+
+        .campo strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .campo p {
+            margin: 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>{{ empresa.nome }}</h1>
+        <p>Perfil do empregador</p>
+
+        <div class="campo">
+            <strong>Email</strong>
+            <p>{{ empresa.email }}</p>
+        </div>
+
+        <div class="campo">
+            <strong>Descrição</strong>
+            <p>{{ empresa.descricao|default:"Nenhuma descrição cadastrada." }}</p>
+        </div>
+    </main>
+</body>
+</html>
