@@ -1,7 +1,7 @@
 body {
-  background-color: #F2F2ED;
+  background-color: var(--tema-bg, #F2F2ED);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: #33364F;
+  color: var(--tema-ink, #33364F);
   margin: 0;
   padding: 16px;
 }
@@ -21,7 +21,7 @@ body {
 
 .voltar {
   font-size: 30px;
-  color: #33364F;
+  color: var(--tema-ink, #33364F);
   text-decoration: none;
 }
 
@@ -36,11 +36,11 @@ body {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #6B6F80;
+  color: var(--tema-muted, #6B6F80);
 }
 
 .card {
-  background-color: #FFFFFF;
+  background-color: var(--tema-surface, #FFFFFF);
   border-radius: 14px;
   padding: 0 16px;
 }
@@ -51,14 +51,14 @@ body {
   align-items: center;
   gap: 12px;
   padding: 12px 0;
-  color: #33364F;
+  color: var(--tema-ink, #33364F);
   font-size: 15px;
   text-decoration: none;
   cursor: pointer;
 }
 
 .linha + .linha {
-  border-top: 1px solid #E4E4DD;
+  border-top: 1px solid var(--tema-line, #E4E4DD);
 }
 
 .icone {
@@ -70,7 +70,7 @@ body {
 .seta {
   margin-left: auto;
   font-size: 22px;
-  color: #6B6F80;
+  color: var(--tema-muted, #6B6F80);
 }
 
 /* Chave liga/desliga (checkbox) */
@@ -95,7 +95,7 @@ body {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background-color: #FFFFFF;
+  background-color: var(--tema-surface, #FFFFFF);
   transition: left 0.2s;
 }
 
@@ -119,7 +119,7 @@ body {
 }
 
 .botao-sair {
-  background-color: #F0E2E0;
+  background-color: var(--tema-red-soft, #F0E2E0);
   color: #C85A5A;
 }
 
@@ -127,5 +127,5 @@ body {
   margin: 12px 0 0 0;
   text-align: center;
   font-size: 12px;
-  color: #6B6F80;
+  color: var(--tema-muted, #6B6F80);
 }

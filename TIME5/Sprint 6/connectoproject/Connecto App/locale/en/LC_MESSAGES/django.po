@@ -1677,7 +1677,7 @@ msgstr "View all"
 
 #: .\template\includes\bottom_nav.html:7
 msgid "Vagas"
-msgstr ""
+msgstr "Jobs"
 
 #: .\template\includes\bottom_nav.html:17
 #, fuzzy

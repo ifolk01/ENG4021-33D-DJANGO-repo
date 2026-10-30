@@ -1,0 +1,20 @@
+{% load i18n %}
+<button type="button" id="alternar-tema" class="botao-tema" aria-pressed="false">
+  <span aria-hidden="true">🌙</span>
+  <span>{% trans "Modo noturno" %}</span>
+</button>
+<script>
+  (function () {
+    var botao = document.getElementById('alternar-tema');
+    var raiz = document.documentElement;
+    function escuro() { return raiz.getAttribute('data-theme') === 'dark'; }
+    function refletir() { botao.setAttribute('aria-pressed', escuro() ? 'true' : 'false'); }
+    botao.addEventListener('click', function () {
+      var novo = escuro() ? 'light' : 'dark';
+      raiz.setAttribute('data-theme', novo);
+      try { localStorage.setItem('connecto-tema', novo); } catch (e) {}
+      refletir();
+    });
+    refletir();
+  })();
+</script>

@@ -28,7 +28,7 @@
   border: 0;
   border-radius: 50%;
   background: transparent;
-  color: var(--connecto-navy);
+  color: var(--tema-ink, var(--connecto-navy));
   text-decoration: none;
 }
 
@@ -144,7 +144,7 @@
   overflow: hidden;
   border: 1px solid rgba(231,231,225,.9);
   border-radius: 15px;
-  background: #fff;
+  background: var(--tema-surface, #fff);
   box-shadow: var(--connecto-shadow);
 }
 
@@ -169,7 +169,7 @@
   display: grid;
   place-items: center;
   border-radius: 10px;
-  background: #dff2f7;
+  background: var(--tema-cyan-soft, #dff2f7);
   color: #1592b3;
 }
 
@@ -180,7 +180,7 @@
 
 .job-card__title {
   margin: 0 0 2px;
-  color: var(--connecto-navy);
+  color: var(--tema-ink, var(--connecto-navy));
   font-size: 14px;
   font-weight: 750;
   line-height: 1.22;
@@ -269,7 +269,7 @@
   margin-top: 22px;
   padding: 40px 22px;
   border-radius: 18px;
-  background: #fff;
+  background: var(--tema-surface, #fff);
   box-shadow: var(--connecto-shadow);
   text-align: center;
 }
@@ -312,7 +312,7 @@
 
     border-radius: 999px;
 
-    background: #ffffff;
+    background: var(--tema-surface, #ffffff);
 
     border: 1px solid #e5e6e8;
 

@@ -25,7 +25,7 @@ body.match-page {
 }
 
 .match-topbar strong {
-  color: var(--connecto-navy);
+  color: var(--tema-ink, var(--connecto-navy));
   font-size: clamp(18px, 4.8vw, 22px);
   line-height: 1.1;
   letter-spacing: -.02em;
@@ -80,7 +80,7 @@ body.match-page {
   flex-direction: column;
   padding: clamp(22px, 5vw, 29px) clamp(20px, 5.8vw, 28px) 21px;
   border-radius: 31px;
-  background: #fff;
+  background: var(--tema-surface, #fff);
   box-shadow: 0 22px 34px rgba(20, 22, 29, .25);
   cursor: grab;
   user-select: none;
@@ -100,7 +100,7 @@ body.match-page {
   display: grid;
   place-items: center;
   border-radius: 16px;
-  background: #e9eaf0;
+  background: var(--tema-surface-2, #e9eaf0);
   color: #555b7c;
 }
 
@@ -120,7 +120,7 @@ body.match-page {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   margin: 0 0 7px;
-  color: var(--connecto-navy);
+  color: var(--tema-ink, var(--connecto-navy));
   font-size: clamp(29px, 7.4vw, 39px);
   font-weight: 780;
   line-height: 1.08;
@@ -200,7 +200,7 @@ body.match-page {
   padding: 0;
   border: 1px solid #deddd6;
   border-radius: 50%;
-  background: #fff;
+  background: var(--tema-surface, #fff);
   box-shadow: 0 8px 21px rgba(31, 34, 48, .12);
   cursor: pointer;
 }
@@ -231,7 +231,7 @@ body.match-page {
   margin: auto 4px;
   padding: 42px 24px;
   border-radius: 28px;
-  background: #fff;
+  background: var(--tema-surface, #fff);
   box-shadow: var(--connecto-shadow);
   text-align: center;
 }

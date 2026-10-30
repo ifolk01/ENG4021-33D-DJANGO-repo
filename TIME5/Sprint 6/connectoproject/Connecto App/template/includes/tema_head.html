@@ -1,0 +1,11 @@
+{% load static %}
+<script>
+  (function () {
+    try {
+      var salvo = localStorage.getItem('connecto-tema');
+      var tema = salvo || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', tema);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="{% static 'tema.css' %}">
