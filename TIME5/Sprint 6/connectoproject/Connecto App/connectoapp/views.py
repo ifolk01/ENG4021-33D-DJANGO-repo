@@ -619,3 +619,9 @@ def perfil_empresa(request):
         "perfil_empresa.html",
         {"empresa": empresa},
     )
+@login_required
+def configuracoes(request):
+    return render(request, "configuracoes.html")
+
+
+
