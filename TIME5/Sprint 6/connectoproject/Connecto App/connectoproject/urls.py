@@ -16,6 +16,7 @@ urlpatterns = [
     path("home/", views.home, name="home"),
     path("busca/", views.busca, name="busca"),
     path("perfil/", views.perfil, name="perfil"),
+    path("editar-perfil/", views.editar_perfil, name="editar_perfil"),
     path("perfil-empresa/", views.perfil_empresa, name="perfil_empresa"),
 
     path("match/", views.match, name="match"),

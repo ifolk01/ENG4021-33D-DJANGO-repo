@@ -19,7 +19,7 @@
     <span class="espaco"></span>
   </div>
 
-  <form method="post">
+  <form method="post" action="{% url 'editar_perfil' %}">
     {% csrf_token %}
 
     <div class="foto">
@@ -31,17 +31,17 @@
       <h2>{% trans "Dados pessoais" %}</h2>
 
       <label for="nome">{% trans "Nome completo" %}</label>
-      <input type="text" id="nome" name="nome" value="Lucas Silva">
+      <input type="text" id="nome" name="nome" value="{{ nome }}" required>
 
       <label for="email">{% trans "E-mail" %}</label>
-      <input type="email" id="email" name="email" value="lucas.silva@email.com">
+      <input type="email" id="email" name="email" value="{{ email }}" required>
     </div>
 
     <div class="card">
       <h2>{% trans "Dados acadêmicos" %}</h2>
 
       <label for="matricula">{% trans "Matrícula" %}</label>
-      <input type="text" id="matricula" name="matricula" value="2510335" disabled>
+      <input type="text" id="matricula" name="matricula" value="{{ matricula }}" disabled>
 
       <div class="lado-a-lado">
         <div class="campo-curso">
