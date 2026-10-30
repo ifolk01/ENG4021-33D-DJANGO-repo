@@ -53,7 +53,7 @@
                   href="{% url 'home' %}?area={{ categoria|urlencode }}"
                   class="filter-chip {% if area_selecionada == categoria %}active{% endif %}"
               >
-                  {{ categoria }}
+                  {% trans categoria %}
               </a>
   
           {% endfor %}
@@ -98,7 +98,7 @@
             <div class="job-card__tags">
               {% if vaga.cidade %}<span class="job-chip job-chip--location">⌖&nbsp; {{ vaga.cidade }}</span>{% endif %}
               {% if vaga.modalidade %}<span class="job-chip job-chip--work">{{ vaga.modalidade }}</span>{% endif %}
-              {% if vaga.area %}<span class="job-chip job-chip--area">{{ vaga.area }}</span>{% endif %}
+              {% if vaga.area %}<span class="job-chip job-chip--area">{% trans vaga.area %}</span>{% endif %}
             </div>
 
             <div class="job-card__footer">{{ vaga.publicada }}</div>

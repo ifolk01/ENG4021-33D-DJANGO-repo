@@ -33,7 +33,7 @@ urlpatterns = [
     "favoritar/<int:vaga_id>/",views.toggle_favorito,name="toggle_favorito"),
     path("notificacoes/", views.notificacoes, name="notificacoes"),
     #path("notificacoes/verificar/", views.verificar_notificacoes, name="notificacoes_verificar"),
-
+    path("configuracoes/", views.configuracoes, name="configuracoes"),
     
     path("esqueceu-senha/", views.esqueceu_senha, name="esqueceu_senha"),
 

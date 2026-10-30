@@ -476,3 +476,7 @@ def duvidas_frequentes(request):
 @login_required
 def notificacoes(request):
     return redirect("home")
+
+@login_required
+def configuracoes(request):
+    return render(request, "configuracoes.html")
