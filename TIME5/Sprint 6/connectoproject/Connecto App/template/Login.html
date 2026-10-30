@@ -1,3 +1,4 @@
+
 {% load static %}
 {% load i18n %}
 <!DOCTYPE html>
@@ -10,35 +11,92 @@
 </head>
 <body>
   {% include 'includes/seletor_idioma.html' %}
+
   <div class="login-container">
     <div class="auth-logo-box">
-      
       <img src="{% static 'logo_icon.jpg' %}" alt="{% trans 'Logo Connecto' %}">
     </div>
-    
-    <div class="auth-subtitle">{% trans "Conectando talentos e oportunidades" %}</div>
+
+    <div class="auth-subtitle">
+      {% trans "Conectando talentos e oportunidades" %}
+    </div>
 
     <form class="auth-form" method="POST" action="{% url 'login' %}">
       {% csrf_token %}
-      
-      <input type="text" name="username" class="auth-input" placeholder="{% trans 'Matrícula' %}" required>
-      <input type="password" name="password" class="auth-input" placeholder="{% trans 'Senha' %}" required>
+
+      <div class="tipo-usuario">
+        <label>
+          <input type="radio" name="tipo_usuario" value="aluno" checked>
+          {% trans "Aluno" %}
+        </label>
+
+        <label>
+          <input type="radio" name="tipo_usuario" value="empregador">
+          {% trans "Empregador" %}
+        </label>
+      </div>
+
+      <input
+        type="text"
+        id="identificador"
+        name="username"
+        class="auth-input"
+        placeholder="{% trans 'Matrícula' %}"
+        required
+      >
+
+      <input
+        type="password"
+        name="password"
+        class="auth-input"
+        placeholder="{% trans 'Senha' %}"
+        required
+      >
 
       {% if erro %}
-        <p style="color: red; font-size: 14px; text-align: center; margin: 0;">{{ erro }}</p>
+        <p style="color: red; font-size: 14px; text-align: center; margin: 0;">
+          {{ erro }}
+        </p>
       {% endif %}
 
       <div class="auth-forgot">
-        <a href="{% url 'esqueceu_senha' %}">{% trans "Esqueceu a senha?" %}</a>
+        <a href="{% url 'esqueceu_senha' %}">
+          {% trans "Esqueceu a senha?" %}
+        </a>
       </div>
 
-      <button type="submit" class="auth-button">{% trans "Entrar" %}</button>
+      <button type="submit" class="auth-button">
+        {% trans "Entrar" %}
+      </button>
     </form>
   </div>
 
   <div class="auth-footer">
-    {% trans "Não tem conta?" %} <a href="{% url 'criar_conta' %}">{% trans "Criar conta" %}</a>
+    {% trans "Não tem conta?" %}
+    <a href="{% url 'criar_conta' %}">
+      {% trans "Criar conta" %}
+    </a>
   </div>
 
+  <script>
+    const identificador = document.getElementById("identificador");
+    const tiposUsuario = document.querySelectorAll('input[name="tipo_usuario"]');
+
+    tiposUsuario.forEach(function (opcao) {
+      opcao.addEventListener("change", function () {
+        if (this.value === "empregador") {
+          identificador.placeholder = "{% trans 'Email' %}";
+          identificador.type = "email";
+          identificador.autocomplete = "email";
+        } else {
+          identificador.placeholder = "{% trans 'Matrícula' %}";
+          identificador.type = "text";
+          identificador.autocomplete = "username";
+        }
+
+        identificador.value = "";
+      });
+    });
+  </script>
 </body>
 </html>

@@ -2,126 +2,83 @@
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>{% trans "Conversa" %} — Connecto</title>
-
     <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
     <link rel="stylesheet" href="{% static 'conversa.css' %}">
+    <script src="{% static 'conversa.js' %}" defer></script>
 </head>
-
 <body>
-
 <div class="app-shell conversa-shell">
-
     <header class="chat-header">
-
-        <a href="{% url 'mensagens' %}" class="chat-back">
-            ←
-        </a>
-
-        <div class="chat-avatar">
-            {{ conversa.oportunidade.empresa.nome|slice:":2"|upper }}
-        </div>
+        <a href="{% url 'mensagens' %}" class="chat-back" aria-label="{% trans 'Voltar para mensagens' %}">←</a>
 
         <div class="chat-header-info">
-
-            <strong>
-                {{ conversa.oportunidade.empresa.nome }}
-            </strong>
-
-            <span>
-                {{ conversa.oportunidade.titulo }}
-            </span>
-
+            <strong>{{ conversa.oportunidade.empresa.nome }}</strong>
+            <span>{{ conversa.oportunidade.titulo }}</span>
+            <small class="ai-status"><span class="ai-status-dot"></span> Connecto IA</small>
         </div>
 
+        <div class="chat-header-spacer" aria-hidden="true"></div>
     </header>
 
-
-    <main class="chat-content">
-
+    <main class="chat-content" id="chat-content">
         <section class="match-notice">
-
             <strong>{% trans "Você se candidatou a esta vaga" %}</strong>
-
-            <span>
-                {{ conversa.oportunidade.titulo }}
-            </span>
-
+            <span>{{ conversa.oportunidade.titulo }}</span>
         </section>
 
+        <section class="assistant-context" aria-label="{% trans 'Sobre o assistente' %}">
+            <div class="assistant-context-icon" aria-hidden="true">✦</div>
+            <div>
+                <strong>{% trans "Assistente da vaga" %}</strong>
+                <p>{% trans "Pergunte sobre esta oportunidade. As respostas usam somente as informações da descrição publicada da vaga." %}</p>
+            </div>
+        </section>
 
-        <div class="messages-list">
-
-            {% for mensagem in mensagens %}
-
-                {% if mensagem.remetente == request.user %}
-
+        <div class="messages-list" id="messages-list" aria-live="polite">
+            {% for mensagem in mensagens_conversa %}
+                {% if mensagem.autor == "candidato" %}
                     <div class="message-row message-row--user">
-
-                        <div class="message-bubble message-bubble--user">
-                            {{ mensagem.texto }}
-                        </div>
-
+                        <div class="message-bubble message-bubble--user">{{ mensagem.texto }}</div>
                     </div>
-
                 {% else %}
-
                     <div class="message-row message-row--company">
-
-                        <div class="message-bubble message-bubble--company">
-                            {{ mensagem.texto }}
+                        <div class="assistant-message-wrap">
+                            <span class="message-author">Connecto IA</span>
+                            <div class="message-bubble message-bubble--company">{{ mensagem.texto }}</div>
                         </div>
-
                     </div>
-
                 {% endif %}
-
-            {% empty %}
-
-                <div class="message-row message-row--company">
-
-                    <div class="message-bubble message-bubble--company">
-                        {% blocktrans trimmed with titulo=conversa.oportunidade.titulo %}
-                        Olá! Vimos seu perfil e ficamos muito interessados
-                        na sua candidatura para
-                        {{ titulo }}.
-                        Você tem disponibilidade pra uma conversa essa semana?
-                        {% endblocktrans %}
-                    </div>
-
-                </div>
-
             {% endfor %}
-
         </div>
 
+        <div class="chat-error" id="chat-error" role="alert" hidden></div>
     </main>
 
-
-    <form method="post" class="chat-form">
-
+    <form
+        method="post"
+        action="{% url 'assistente_vaga' conversa.id %}"
+        class="chat-form"
+        id="chat-form"
+        data-endpoint="{% url 'assistente_vaga' conversa.id %}"
+    >
         {% csrf_token %}
-
         <input
+            id="chat-input"
             type="text"
             name="mensagem"
-            placeholder="{% trans 'Digite uma mensagem...' %}"
+            maxlength="2000"
+            placeholder="{% trans 'Pergunte sobre a vaga...' %}"
             autocomplete="off"
             required
         >
-
-        <button type="submit">
-            ➤
-        </button>
-
+        <button id="chat-submit" type="submit" aria-label="{% trans 'Enviar mensagem' %}">➤</button>
     </form>
+
     {% include 'includes/bottom_nav.html' with pagina_ativa='mensagens' %}
 </div>
-
 </body>
 </html>
