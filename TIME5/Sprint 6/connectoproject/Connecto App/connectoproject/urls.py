@@ -16,6 +16,7 @@ urlpatterns = [
     path("home/", views.home, name="home"),
     path("busca/", views.busca, name="busca"),
     path("perfil/", views.perfil, name="perfil"),
+    path("perfil-empresa/", views.perfil_empresa, name="perfil_empresa"),
 
     path("match/", views.match, name="match"),
     path("match/<int:vaga_id>/acao/", views.match_acao, name="match_acao"),
