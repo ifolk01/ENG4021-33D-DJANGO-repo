@@ -82,6 +82,16 @@
 
   </main>
 
+  <script>
+    window.CONNECTO_VAPID_PUBLIC_KEY =
+        "{{ vapid_public_key|escapejs }}";
+</script>
+
+<script
+    src="{% static 'push_notifications.js' %}"
+    defer>
+</script>
+
   {% include 'includes/bottom_nav.html' with pagina_ativa='home' %}
 </body>
 </html>

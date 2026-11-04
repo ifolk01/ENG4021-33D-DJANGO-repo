@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 from connectoapp import views
 
@@ -28,27 +29,21 @@ urlpatterns = [
 
     path("mensagens/", views.mensagens, name="mensagens"),
     path("mensagens/<int:conversa_id>/", views.conversa, name="conversa"),
-    path(
-        "mensagens/<int:conversa_id>/assistente/",
-        views.assistente_vaga,
-        name="assistente_vaga",
-    ),
+    path("mensagens/<int:conversa_id>/assistente/",views.assistente_vaga,name="assistente_vaga"),
 
     path("vaga/", views.visualizacao_vaga, name="visualizacao_vaga"),
     path("vaga/<int:vaga_id>/", views.visualizacao_vaga, name="detalhe_vaga"),
     path(
     "favoritar/<int:vaga_id>/",views.toggle_favorito,name="toggle_favorito"),
     path("notificacoes/", views.notificacoes, name="notificacoes"),
-    #path("notificacoes/verificar/", views.verificar_notificacoes, name="notificacoes_verificar"),
+    path("notificacoes/verificar/", views.verificar_notificacoes, name="notificacoes_verificar"),
     path("configuracoes/", views.configuracoes, name="configuracoes"),
     
     path("esqueceu-senha/", views.esqueceu_senha, name="esqueceu_senha"),
 
-    path(
-    "duvidas-frequentes/",
-    views.duvidas_frequentes,
-    name="duvidas_frequentes"
-),
+    path("duvidas-frequentes/",views.duvidas_frequentes,name="duvidas_frequentes"),
+    path("notificacoes/push/subscribe/",views.push_subscribe,name="push_subscribe"),
+    path("service-worker.js",TemplateView.as_view(template_name="service-worker.js",content_type="application/javascript"),name="service_worker"),
 ]
 
 if settings.DEBUG:

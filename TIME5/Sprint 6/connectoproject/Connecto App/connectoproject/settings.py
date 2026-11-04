@@ -145,3 +145,21 @@ MEDIA_ROOT = BASE_DIR / "media"
 # variável de ambiente do sistema.
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
+
+
+# Web Push / VAPID
+
+VAPID_PRIVATE_KEY = os.environ.get(
+    "VAPID_PRIVATE_KEY",
+    ""
+)
+
+VAPID_PUBLIC_KEY = os.environ.get(
+    "VAPID_PUBLIC_KEY",
+    ""
+)
+
+VAPID_SUBJECT = os.environ.get(
+    "VAPID_SUBJECT",
+    ""
+)

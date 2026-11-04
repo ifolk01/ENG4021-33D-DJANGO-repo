@@ -7,6 +7,7 @@ from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 from django.utils.http import url_has_allowed_host_and_scheme
+from .webpush_service import enviar_push
 from .forms import FotoPerfilForm
 from .models import (
     Candidatura,
@@ -14,11 +15,14 @@ from .models import (
     Conversa,
     Favorito,
     Mensagem,
+    Notificacao,
     Oportunidade,
+    PushSubscription,
     VagaDescartada,
     PerfilUsuario,
 )
 from django.contrib import messages
+from django.conf import settings
 import json
 import logging
 
@@ -123,7 +127,10 @@ def _criar_candidatura_e_conversa(usuario, oportunidade, origem):
     candidatura, criada = Candidatura.objects.get_or_create(
         usuario=usuario,
         oportunidade=oportunidade,
-        defaults={"status": "Enviada", "origem": origem},
+        defaults={
+            "status": "Enviada",
+            "origem": origem,
+        },
     )
 
     conversa, conversa_criada = Conversa.objects.get_or_create(
@@ -131,9 +138,32 @@ def _criar_candidatura_e_conversa(usuario, oportunidade, origem):
         oportunidade=oportunidade,
     )
 
-    # Não criamos mais respostas prontas. A conversa começa vazia e as
-    # respostas são geradas pelo assistente Gemini somente quando o candidato
-    # envia uma pergunta.
+    # Só gera uma nova notificação quando a candidatura
+    # realmente foi criada agora.
+    if criada:
+        notificacao, _ = Notificacao.objects.get_or_create(
+            usuario=usuario,
+            candidatura=candidatura,
+        )
+
+        def enviar_depois_do_commit():
+            enviado = enviar_push(
+                usuario=usuario,
+                titulo="Candidatura enviada",
+                mensagem=(
+                    f'Sua candidatura para "{oportunidade.titulo}" '
+                    "foi registrada com sucesso."
+                ),
+                url=f"/mensagens/{conversa.id}/",
+            )
+
+            if enviado:
+                Notificacao.objects.filter(
+                    pk=notificacao.pk
+                ).update(entregue=True)
+
+        transaction.on_commit(enviar_depois_do_commit)
+
     return candidatura, criada, conversa
 
 
@@ -637,7 +667,48 @@ def duvidas_frequentes(request):
 
 @login_required
 def notificacoes(request):
-    return redirect("home")
+    notificacoes_usuario = list(
+        Notificacao.objects
+        .filter(usuario=request.user)
+        .select_related(
+            "candidatura__oportunidade__empresa"
+        )
+        .order_by("-criada_em")
+    )
+
+    oportunidades_ids = [
+        notificacao.candidatura.oportunidade_id
+        for notificacao in notificacoes_usuario
+    ]
+
+    conversas = {
+        conversa.oportunidade_id: conversa.id
+        for conversa in Conversa.objects.filter(
+            usuario=request.user,
+            oportunidade_id__in=oportunidades_ids,
+        )
+    }
+
+    for notificacao in notificacoes_usuario:
+        notificacao.conversa_id = conversas.get(
+            notificacao.candidatura.oportunidade_id
+        )
+
+    # Mantemos os objetos carregados com lida=False para o
+    # template poder destacar as novas.
+    Notificacao.objects.filter(
+        usuario=request.user,
+        lida=False,
+    ).update(lida=True)
+
+    return render(
+        request,
+        "notificacoes.html",
+        {
+            "notificacoes": notificacoes_usuario,
+            "vapid_public_key": settings.VAPID_PUBLIC_KEY,
+        },
+    )
 
 @login_required
 def perfil_empresa(request):
@@ -652,5 +723,52 @@ def perfil_empresa(request):
 def configuracoes(request):
     return render(request, "configuracoes.html")
 
+import json
 
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
+
+@require_POST
+@login_required
+def push_subscribe(request):
+
+    dados = json.loads(request.body)
+
+    endpoint = dados.get("endpoint")
+    keys = dados.get("keys", {})
+
+    if not endpoint:
+        return JsonResponse(
+            {"erro": "Subscription inválida"},
+            status=400
+        )
+
+    PushSubscription.objects.update_or_create(
+        endpoint=endpoint,
+        defaults={
+            "usuario": request.user,
+            "p256dh": keys.get("p256dh", ""),
+            "auth": keys.get("auth", ""),
+            "ativa": True,
+        }
+    )
+
+    return JsonResponse({
+        "ok": True
+    })
+
+
+@require_POST
+@login_required
+def verificar_notificacoes(request):
+    nao_lidas = Notificacao.objects.filter(
+        usuario=request.user,
+        lida=False,
+    ).count()
+
+    return JsonResponse({
+        "novas": [],
+        "nao_lidas": nao_lidas,
+    })
 
