@@ -169,6 +169,8 @@ VAPID_SUBJECT = os.environ.get(
 
 # Suporte Connecto - Envio de emails
 
+
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_HOST = "smtp.gmail.com"
@@ -183,7 +185,8 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SUPPORT_EMAIL = os.getenv(
     "SUPPORT_EMAIL",
-    "SuporteConnectoApp@gmail.com"
+    "suporteconnectoapp@gmail.com"
 )
 
 EMAIL_TIMEOUT = 20
+
