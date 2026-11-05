@@ -774,6 +774,7 @@ def verificar_notificacoes(request):
         "nao_lidas": nao_lidas,
     })
 
+
 @login_required
 def abrir_solicitacao(request):
     if request.method == "POST":
@@ -813,14 +814,20 @@ def abrir_solicitacao(request):
                 if enviados != 1:
                     raise SMTPException("O servidor não confirmou o envio.")
 
-            except (SMTPException, OSError):
+            except Exception as erro:
                 logger.exception("Erro ao enviar solicitação de suporte.")
+                print("ERRO NO SUPORTE:", type(erro).__name__, str(erro))
+
                 messages.error(
                     request,
                     "Não foi possível enviar sua solicitação. Tente novamente."
                 )
+
             else:
-                messages.success(request, "Sua solicitação foi enviada com sucesso!")
+                messages.success(
+                    request,
+                    "Sua solicitação foi enviada com sucesso!"
+                )
                 return redirect("abrir_solicitacao")
 
         return render(
@@ -830,3 +837,4 @@ def abrir_solicitacao(request):
         )
 
     return render(request, "abrir_solicitacao.html")
+
