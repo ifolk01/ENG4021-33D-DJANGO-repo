@@ -1,0 +1,83 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecto - {% trans "Cadastro do empregador" %}</title>
+  <link rel="stylesheet" href="{% static 'login.css' %}">
+  <link rel="stylesheet" href="{% static 'botao_idiomas.css' %}">
+  {% include 'includes/tema_head.html' %}
+</head>
+<body>
+  {% include 'includes/seletor_idioma.html' %}
+
+  <div class="cadastro-container">
+    <div class="cadastro-topbar">
+      <a href="{% url 'login' %}" class="back-button" aria-label="{% trans 'Voltar ao login' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </a>
+      <h2>{% trans "Cadastro" %}</h2>
+    </div>
+
+    <div class="cadastro-header">
+      <h1>{% trans "Criar conta" %}</h1>
+      <p>{% trans "Cadastro do empregador" %}</p>
+    </div>
+
+    <form class="auth-form" method="POST" action="{% url 'criar_conta_empresa' %}">
+      {% csrf_token %}
+
+      <input
+        type="text"
+        name="nome"
+        class="auth-input"
+        placeholder="{% trans 'Nome da empresa' %}"
+        maxlength="100"
+        required
+      >
+
+      <input
+        type="email"
+        name="email"
+        class="auth-input"
+        placeholder="{% trans 'E-mail' %}"
+        maxlength="150"
+        autocomplete="email"
+        required
+      >
+
+      <input
+        type="password"
+        name="password"
+        class="auth-input"
+        placeholder="{% trans 'Senha (mínimo 6 caracteres)' %}"
+        minlength="6"
+        required
+      >
+
+      <input
+        type="password"
+        name="confirmar_senha"
+        class="auth-input"
+        placeholder="{% trans 'Confirmar senha' %}"
+        minlength="6"
+        required
+      >
+
+      {% if erro %}
+        <p style="color: red; font-size: 14px; text-align: center; margin: 0;">
+          {{ erro }}
+        </p>
+      {% endif %}
+
+      <button type="submit" class="auth-button" style="margin-top: 16px;">
+        {% trans "Criar conta" %}
+      </button>
+    </form>
+  </div>
+</body>
+</html>
