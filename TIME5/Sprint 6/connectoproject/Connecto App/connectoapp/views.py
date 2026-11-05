@@ -772,3 +772,6 @@ def verificar_notificacoes(request):
         "nao_lidas": nao_lidas,
     })
 
+@login_required
+def abrir_solicitacao(request):
+    return render(request, "abrir_solicitacao.html")
