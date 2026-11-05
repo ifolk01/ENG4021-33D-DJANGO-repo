@@ -1,0 +1,37 @@
+/* Botão de configurações (⚙️) no topo da tela de Perfil */
+.profile-shell .botao-config,
+.profile-shell .botao-config:visited {
+  position: absolute;
+  top: 10px;
+  right: 61px;
+  width: 38px;
+  height: 38px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--tema-surface, #FFFFFF);
+  border: 2px solid #116A85;
+  border-radius: 50%;
+
+  font-size: 18px;
+  line-height: 1;
+  text-decoration: none;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: 0.2s;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.profile-shell .botao-config:hover {
+  background-color: #DDEEF4;
+  transform: scale(1.08) rotate(30deg);
+}
+
+.profile-shell .botao-config:focus-visible {
+  outline: 3px solid #33364F;
+  outline-offset: 3px;
+}
