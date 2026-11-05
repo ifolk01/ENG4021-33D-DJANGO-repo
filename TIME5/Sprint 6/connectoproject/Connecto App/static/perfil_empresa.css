@@ -1,0 +1,58 @@
+
+/* Identificação da empresa */
+.perfil-empresa .identificacao {
+    margin: 32px 0 24px;
+    text-align: center;
+}
+
+.perfil-empresa .identificacao h2 {
+    overflow-wrap: anywhere;
+}
+
+/* Botão de editar perfil */
+.perfil-empresa .botao-editar {
+    max-width: 220px;
+    margin: 20px auto 0;
+    background-color: #116A85;
+    color: #FFFFFF;
+    font-weight: 600;
+    opacity: 1;
+}
+
+.perfil-empresa .botao-editar:disabled {
+    cursor: default;
+}
+
+/* Informações da empresa */
+.perfil-empresa .dados {
+    background-color: var(--tema-surface, #FFFFFF);
+    border: 1px solid var(--tema-border, #E4E4DD);
+}
+
+.perfil-empresa .linha {
+    align-items: flex-start;
+}
+
+.perfil-empresa .linha > span:nth-child(2) {
+    flex-shrink: 0;
+}
+
+.perfil-empresa .valor {
+    min-width: 0;
+    text-align: right;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 380px) {
+    .perfil-empresa .linha {
+        flex-wrap: wrap;
+    }
+
+    .perfil-empresa .valor {
+        flex-basis: 100%;
+        margin-left: 32px;
+        text-align: left;
+    }
+}
