@@ -44,6 +44,7 @@ urlpatterns = [
     path("duvidas-frequentes/",views.duvidas_frequentes,name="duvidas_frequentes"),
     path("notificacoes/push/subscribe/",views.push_subscribe,name="push_subscribe"),
     path("service-worker.js",TemplateView.as_view(template_name="service-worker.js",content_type="application/javascript"),name="service_worker"),
+    path("suporte/abrir/", views.abrir_solicitacao, name="abrir_solicitacao"),
 ]
 
 if settings.DEBUG:
