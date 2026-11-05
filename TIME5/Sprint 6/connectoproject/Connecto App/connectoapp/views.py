@@ -1,128 +1,95 @@
-
-    return render(
-        request,
-        "notificacoes.html",
-        {
-            "notificacoes": notificacoes_usuario,
-            "vapid_public_key": settings.VAPID_PUBLIC_KEY,
-        },
-    )
-
-@login_required
-def perfil_empresa(request):
-    empresa = get_object_or_404(Empresa, usuario=request.user)
-
-    return render(
-        request,
-        "perfil_empresa.html",
-        {"empresa": empresa},
-    )
-@login_required
-def configuracoes(request):
-    return render(request, "configuracoes.html")
-
-import json
-
-from django.http import JsonResponse
+from django.shortcuts import render
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.db import transaction
+from django.http import Http404, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+from django.utils.http import url_has_allowed_host_and_scheme
+from .webpush_service import enviar_push
+from .forms import FotoPerfilForm
+from .models import (
+    Candidatura,
+    Empresa,
+    Conversa,
+    Favorito,
+    Mensagem,
+    Notificacao,
+    Oportunidade,
+    PushSubscription,
+    VagaDescartada,
+    PerfilUsuario,
+)
+from django.contrib import messages
+from django.conf import settings
+from django.core.mail import send_mail
+from smtplib import SMTPException
+import json
+import logging
 
+from .gemini_service import (
+    GeminiConfigurationError,
+    GeminiResponseError,
+    responder_sobre_vaga,
+)
 
-@require_POST
-@login_required
-def push_subscribe(request):
+logger = logging.getLogger(__name__)
 
-    dados = json.loads(request.body)
-
-    endpoint = dados.get("endpoint")
-    keys = dados.get("keys", {})
-
-    if not endpoint:
-        return JsonResponse(
-            {"erro": "Subscription inválida"},
-            status=400
-        )
-
-    PushSubscription.objects.update_or_create(
-        endpoint=endpoint,
-        defaults={
-            "usuario": request.user,
-            "p256dh": keys.get("p256dh", ""),
-            "auth": keys.get("auth", ""),
-            "ativa": True,
-        }
-    )
-
-    return JsonResponse({
-        "ok": True
-    })
-
-
-@require_POST
-@login_required
-def verificar_notificacoes(request):
-    nao_lidas = Notificacao.objects.filter(
-        usuario=request.user,
-        lida=False,
-    ).count()
-
-    return JsonResponse({
-        "novas": [],
-        "nao_lidas": nao_lidas,
-    })
-
-@login_required
-def abrir_solicitacao(request):
+def login(request):
     if request.method == "POST":
-        mensagem = request.POST.get("mensagem", "").strip()
+        identificador = request.POST.get("username", "").strip()
+        senha = request.POST.get("password", "")
+        tipo_usuario = request.POST.get("tipo_usuario", "aluno")
 
-        if not mensagem:
-            messages.error(request, "Digite uma mensagem antes de enviar.")
+        if tipo_usuario == "empregador":
+            empresa = Empresa.objects.filter(
+                email__iexact=identificador,
+                usuario__isnull=False,
+            ).select_related("usuario").first()
 
-        elif len(mensagem) > 3000:
-            messages.error(request, "A mensagem deve ter no máximo 3000 caracteres.")
+            if empresa is not None:
+                user = authenticate(
+                    request,
+                    username=empresa.usuario.username,
+                    password=senha,
+                )
 
-        elif not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD or not settings.SUPPORT_EMAIL:
-            messages.error(request, "O e-mail de suporte ainda não está configurado.")
+                if user is not None:
+                    auth_login(request, user)
+                    return redirect("perfil_empresa")
+
+            erro = "Email ou senha incorretos. Tente novamente."
 
         else:
-            usuario = request.user
-            nome = usuario.get_full_name().strip() or usuario.username
-
-            conteudo = (
-                "Nova solicitação de suporte - Connecto\n\n"
-                f"Nome: {nome}\n"
-                f"Matrícula: {usuario.username}\n"
-                f"E-mail: {usuario.email or 'Não informado'}\n\n"
-                "Mensagem:\n"
-                f"{mensagem}"
+            user = authenticate(
+                request,
+                username=identificador,
+                password=senha,
             )
 
-            try:
-                enviados = send_mail(
-                    subject="Nova solicitação de suporte - Connecto",
-                    message=conteudo,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.SUPPORT_EMAIL],
-                    fail_silently=False,
-                )
+            if user is not None and not Empresa.objects.filter(
+                usuario=user
+            ).exists():
+                auth_login(request, user)
+                return redirect("home")
 
-                if enviados != 1:
-                    raise SMTPException("O servidor não confirmou o envio.")
-
-            except (SMTPException, OSError):
-                logger.exception("Erro ao enviar solicitação de suporte.")
-                messages.error(
-                    request,
-                    "Não foi possível enviar sua solicitação. Tente novamente."
-                )
-            else:
-                messages.success(request, "Sua solicitação foi enviada com sucesso!")
-                return redirect("abrir_solicitacao")
+            erro = "Matrícula ou senha incorretos. Tente novamente."
 
         return render(
             request,
-            "abrir_solicitacao.html",
-            {"mensagem": mensagem}
+            "Login.html",
+            {
+                "erro": erro,
+                "tipo_usuario": tipo_usuario,
+            },
         )
 
-    return render(request, "abrir_solicitacao.html")
+    return render(request, "Login.html")
+
+def criar_conta(request):
+    if request.method == "POST":
+        nome = request.POST.get("nome", "").strip()
+        matricula = request.POST.get("username", "").strip()
+        senha = request.POST.get("password", "")
+        confirmar_senha = request.POST.get("confirmar_senha", "")
