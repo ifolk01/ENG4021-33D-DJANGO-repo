@@ -35,6 +35,25 @@ class PerfilUsuario(models.Model):
         blank=True
     )
 
+    curso = models.ForeignKey(
+        "Curso",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="perfis",
+    )
+
+    periodo = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+    )
+
+    instituicao = models.CharField(
+        max_length=150,
+        blank=True,
+        default="",
+    )
+
     def __str__(self):
         return self.usuario.username
 
