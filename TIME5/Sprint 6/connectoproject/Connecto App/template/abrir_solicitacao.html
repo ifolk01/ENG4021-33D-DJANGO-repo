@@ -1,0 +1,95 @@
+
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connecto - Abrir Solicitação</title>
+
+    <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+    <link rel="stylesheet" href="{% static 'abrir_solicitacao.css' %}">
+    {% include 'includes/tema_head.html' %}
+</head>
+
+<body class="connecto-page solicitacao-pagina">
+
+    <main class="standard-shell solicitacao-shell">
+
+        <div class="solicitacao-topo">
+            <a href="{% url 'duvidas_frequentes' %}" class="solicitacao-voltar">
+                ←
+            </a>
+
+            <h1>Abrir solicitação</h1>
+        </div>
+
+        <div class="solicitacao-card">
+
+            <h2>Como podemos ajudar?</h2>
+
+            <p class="solicitacao-subtitulo">
+                Preencha as informações abaixo para descrever
+                sua dúvida ou problema.
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="solicitacao-campo">
+                    <label for="assunto">Assunto</label>
+                    <input
+                        type="text"
+                        id="assunto"
+                        name="assunto"
+                        placeholder="Digite o assunto da solicitação"
+                        maxlength="150"
+                        required
+                    >
+                </div>
+
+                <div class="solicitacao-campo">
+                    <label for="categoria">Categoria</label>
+
+                    <select id="categoria" name="categoria" required>
+                        <option value="" selected disabled>
+                            Selecione uma categoria
+                        </option>
+                        <option value="conta">Conta e perfil</option>
+                        <option value="vagas">Vagas e candidaturas</option>
+                        <option value="mensagens">Mensagens</option>
+                        <option value="tecnico">Problema técnico</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="solicitacao-campo">
+                    <label for="descricao">Descrição</label>
+
+                    <textarea
+                        id="descricao"
+                        name="descricao"
+                        rows="6"
+                        placeholder="Descreva sua dúvida ou problema com o máximo de detalhes possível..."
+                        required
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="solicitacao-enviar" disabled>
+                    Enviar solicitação
+                </button>
+
+                <p class="solicitacao-aviso">
+                    O envio será habilitado quando a funcionalidade de suporte estiver integrada.
+                </p>
+
+            </form>
+        </div>
+
+    </main>
+
+    {% include 'includes/bottom_nav.html' with pagina_ativa='perfil' %}
+
+</body>
+</html>
