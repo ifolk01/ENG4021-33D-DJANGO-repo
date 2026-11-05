@@ -1,0 +1,48 @@
+/* Botão de idioma (seletor_idioma.html) nas telas de login, cadastro e esqueci a senha */
+.seletor-idioma {
+  position: relative;
+  align-self: flex-end;
+  margin: 0 0 12px 0;
+}
+
+/* Ícone de globo antes da lista */
+.seletor-idioma::before {
+  content: "🌐";
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.seletor-idioma select {
+  appearance: none;
+  -webkit-appearance: none;
+
+  padding: 8px 34px 8px 34px;
+  border: 1px solid var(--tema-line, #E4E4DD);
+  border-radius: 999px;
+
+  background-color: var(--tema-surface, #FFFFFF);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23116A85' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+
+  color: var(--tema-ink, #33364F);
+  font-family: inherit;
+  font-size: 14px;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.seletor-idioma select:hover {
+  border-color: #116A85;
+}
+
+.seletor-idioma select:focus-visible {
+  outline: 3px solid #116A85;
+  outline-offset: 2px;
+}
