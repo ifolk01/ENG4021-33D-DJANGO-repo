@@ -24,6 +24,9 @@ urlpatterns = [
     path("match/<int:vaga_id>/acao/", views.match_acao, name="match_acao"),
 
     path("candidaturas/", views.candidaturas, name="candidaturas"),
+    path("empresa/candidaturas/",views.candidaturas_empresa,name="candidaturas_empresa",),
+    path("empresa/candidaturas/<int:candidatura_id>/status/",views.atualizar_status_candidatura, name="atualizar_status_candidatura",),
+    
     path("favoritas/", views.favoritas, name="favoritas"),
     path("candidatar/<int:vaga_id>/", views.candidatar, name="candidatar"),
 
@@ -33,6 +36,7 @@ urlpatterns = [
 
     path("vaga/", views.visualizacao_vaga, name="visualizacao_vaga"),
     path("vaga/<int:vaga_id>/", views.visualizacao_vaga, name="detalhe_vaga"),
+    path("candidaturas/<int:candidatura_id>/",views.detalhe_candidatura,name="detalhe_candidatura"),
     path(
     "favoritar/<int:vaga_id>/",views.toggle_favorito,name="toggle_favorito"),
     path("notificacoes/", views.notificacoes, name="notificacoes"),
