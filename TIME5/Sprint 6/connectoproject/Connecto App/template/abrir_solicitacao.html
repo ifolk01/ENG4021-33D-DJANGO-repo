@@ -18,7 +18,8 @@
     <main class="standard-shell solicitacao-shell">
 
         <div class="solicitacao-topo">
-            <a href="{% url 'duvidas_frequentes' %}" class="solicitacao-voltar">
+            <a href="{% url 'duvidas_frequentes' %}"
+               class="solicitacao-voltar">
                 ←
             </a>
 
@@ -30,61 +31,40 @@
             <h2>Como podemos ajudar?</h2>
 
             <p class="solicitacao-subtitulo">
-                Preencha as informações abaixo para descrever
-                sua dúvida ou problema.
+                Descreva sua dúvida ou problema no Connecto.
+                Nossa equipe de suporte receberá sua mensagem.
             </p>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="aviso {{ message.tags }}" role="status">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
 
             <form method="POST">
                 {% csrf_token %}
 
                 <div class="solicitacao-campo">
-                    <label for="assunto">Assunto</label>
-                    <input
-                        type="text"
-                        id="assunto"
-                        name="assunto"
-                        placeholder="Digite o assunto da solicitação"
-                        maxlength="150"
-                        required
-                    >
-                </div>
-
-                <div class="solicitacao-campo">
-                    <label for="categoria">Categoria</label>
-
-                    <select id="categoria" name="categoria" required>
-                        <option value="" selected disabled>
-                            Selecione uma categoria
-                        </option>
-                        <option value="conta">Conta e perfil</option>
-                        <option value="vagas">Vagas e candidaturas</option>
-                        <option value="mensagens">Mensagens</option>
-                        <option value="tecnico">Problema técnico</option>
-                        <option value="outros">Outros</option>
-                    </select>
-                </div>
-
-                <div class="solicitacao-campo">
-                    <label for="descricao">Descrição</label>
+                    <label for="mensagem">Sua mensagem</label>
 
                     <textarea
-                        id="descricao"
-                        name="descricao"
-                        rows="6"
-                        placeholder="Descreva sua dúvida ou problema com o máximo de detalhes possível..."
+                        id="mensagem"
+                        name="mensagem"
+                        rows="7"
+                        maxlength="3000"
+                        placeholder="Digite sua mensagem aqui..."
                         required
-                    ></textarea>
+                    >{{ mensagem|default:"" }}</textarea>
                 </div>
 
-                <button type="submit" class="solicitacao-enviar" disabled>
+                <button type="submit" class="solicitacao-enviar">
                     Enviar solicitação
                 </button>
 
-                <p class="solicitacao-aviso">
-                    O envio será habilitado quando a funcionalidade de suporte estiver integrada.
-                </p>
-
             </form>
+
         </div>
 
     </main>
