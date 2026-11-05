@@ -31,6 +31,8 @@ from .gemini_service import (
     GeminiResponseError,
     responder_sobre_vaga,
 )
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 logger = logging.getLogger(__name__)
 
@@ -196,6 +198,66 @@ def criar_conta(request):
         },
     )
 
+def criar_conta_empresa(request):
+    if request.method == "POST":
+        nome = request.POST.get("nome", "").strip()
+        email = request.POST.get("email", "").strip().lower()
+        senha = request.POST.get("password", "")
+        confirmar_senha = request.POST.get("confirmar_senha", "")
+        try:
+            validate_email(email)
+            email_valido = True
+        except ValidationError:
+            email_valido = False
+
+        if not nome or not email or not senha or not confirmar_senha:
+            erro = "Preencha todos os campos obrigatórios."
+
+        elif len(nome) > 100:
+            erro = "O nome da empresa deve ter no máximo 100 caracteres."
+        
+        elif not email_valido:
+            erro = "Informe um e-mail válido."
+
+        elif len(email) > 150:
+            erro = "O e-mail deve ter no máximo 150 caracteres."
+
+        elif len(senha) < 6:
+            erro = "A senha deve ter no mínimo 6 caracteres."
+
+        elif senha != confirmar_senha:
+            erro = "As senhas não coincidem."
+
+        elif (
+            Empresa.objects.filter(email__iexact=email).exists()
+            or User.objects.filter(email__iexact=email).exists()
+            or User.objects.filter(username__iexact=email).exists()
+        ):
+            erro = "Este e-mail já está cadastrado."
+
+        else:
+            with transaction.atomic():
+                usuario = User.objects.create_user(
+                    username=email,
+                    email=email,
+                    password=senha,
+                )
+
+                Empresa.objects.create(
+                    usuario=usuario,
+                    nome=nome,
+                    email=email,
+                )
+
+            return redirect("login")
+
+        return render(
+            request,
+            "criar_conta_empresa.html",
+            {"erro": erro},
+        )
+
+    return render(request, "criar_conta_empresa.html")
 
 # chat
 @transaction.atomic
