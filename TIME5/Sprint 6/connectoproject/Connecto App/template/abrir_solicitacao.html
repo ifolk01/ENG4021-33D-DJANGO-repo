@@ -3,73 +3,66 @@
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connecto - Abrir Solicitação</title>
 
-    <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
-    <link rel="stylesheet" href="{% static 'abrir_solicitacao.css' %}">
-    {% include 'includes/tema_head.html' %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecto - {% trans "Dúvidas Frequentes" %}</title>
+  <link rel="stylesheet" href="{% static 'duvidas_frequentes.css' %}">
+  {% include 'includes/tema_head.html' %}
 </head>
 
-<body class="connecto-page solicitacao-pagina">
+<body>
 
-    <main class="standard-shell solicitacao-shell">
+  <div class="topo">
+    <a href="{% url 'perfil' %}" class="voltar">‹</a>
+    <h1>{% trans "Central de Ajuda" %}</h1>
+    <span class="icone-ajuda">🎧</span>
+  </div>
 
-        <div class="solicitacao-topo">
-            <a href="{% url 'duvidas_frequentes' %}"
-               class="solicitacao-voltar">
-                ←
-            </a>
+  <div class="busca">
+    <span class="lupa">🔍</span>
+    <input type="search" placeholder="{% trans 'Buscar uma dúvida...' %}">
+  </div>
 
-            <h1>Abrir solicitação</h1>
-        </div>
+  <h2 class="titulo-secao">{% trans "Dúvidas frequentes" %}</h2>
 
-        <div class="solicitacao-card">
+  <div class="card lista-duvidas">
+    <details>
+      <summary>{% trans "Como me candidato a uma vaga?" %}</summary>
+      <p>{% trans 'Abra a vaga que você quer e toque em "Candidatar-se". A candidatura aparece na aba "Minhas".' %}</p>
+    </details>
 
-            <h2>Como podemos ajudar?</h2>
+    <details>
+      <summary>{% trans "Como funciona o Match?" %}</summary>
+      <p>{% trans "O Match mostra vagas parecidas com o seu curso e as suas áreas de interesse. É só curtir ou pular cada vaga." %}</p>
+    </details>
 
-            <p class="solicitacao-subtitulo">
-                Descreva sua dúvida ou problema no Connecto.
-                Nossa equipe de suporte receberá sua mensagem.
-            </p>
+    <details>
+      <summary>{% trans "Como salvo uma vaga para ver depois?" %}</summary>
+      <p>{% trans 'Toque no coração da vaga. Ela fica guardada em "Salvas", no seu perfil.' %}</p>
+    </details>
 
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="aviso {{ message.tags }}" role="status">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
+    <details>
+      <summary>{% trans "Como altero meus dados?" %}</summary>
+      <p>{% trans 'No Perfil, toque em "Editar perfil", mude o que quiser e toque em "Salvar alterações".' %}</p>
+    </details>
 
-            <form method="POST">
-                {% csrf_token %}
+    <details>
+      <summary>{% trans "As empresas veem meu perfil?" %}</summary>
+      <p>{% trans "Só as empresas das vagas em que você se candidatou podem ver o seu perfil." %}</p>
+    </details>
+  </div>
 
-                <div class="solicitacao-campo">
-                    <label for="mensagem">Sua mensagem</label>
+  <div class="card ajuda">
+    <h3>{% trans "Ainda precisa de ajuda?" %}</h3>
+    <p>{% trans "Envie sua dúvida ou relate um problema no aplicativo." %}</p>
 
-                    <textarea
-                        id="mensagem"
-                        name="mensagem"
-                        rows="7"
-                        maxlength="3000"
-                        placeholder="Digite sua mensagem aqui..."
-                        required
-                    >{{ mensagem|default:"" }}</textarea>
-                </div>
-
-                <button type="submit" class="solicitacao-enviar">
-                    Enviar solicitação
-                </button>
-
-            </form>
-
-        </div>
-
-    </main>
-
-    {% include 'includes/bottom_nav.html' with pagina_ativa='perfil' %}
+    <a href="{% url 'abrir_solicitacao' %}" class="botao">
+      {% trans "Abrir solicitação" %}
+    </a>
+  </div>
 
 </body>
+
 </html>
