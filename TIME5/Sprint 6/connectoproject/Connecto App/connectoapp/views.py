@@ -687,14 +687,18 @@ def candidaturas(request):
         contexto,
     )
 
-
 @login_required
 def favoritas(request):
-    favoritas_usuario = (
+    favoritos_qs = (
         Favorito.objects.filter(usuario=request.user)
         .select_related("oportunidade__empresa")
+        .order_by("-criado_em")
     )
-    return render(request, "favoritas.html", {"favoritas": favoritas_usuario})
+    vagas_favoritas = [fav.oportunidade for fav in favoritos_qs]
+    
+    return render(request, 'favoritas.html', {
+        'vagas_favoritas': vagas_favoritas
+    })
 
 
 

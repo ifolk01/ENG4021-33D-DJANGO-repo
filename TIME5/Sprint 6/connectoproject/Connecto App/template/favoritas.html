@@ -1,45 +1,71 @@
-
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="utf-8">
-    <title>CONNECTO - Vagas Favoritas</title>
-    <link rel="stylesheet" href="{% static 'favoritas.css' %}">
-    {% include 'includes/tema_head.html' %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Connecto — {% trans "Vagas Salvas" %}</title>
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+  <link rel="stylesheet" href="{% static 'candidaturas.css' %}">
+  {% include 'includes/tema_head.html' %}
 </head>
+<body class="connecto-page applications-page">
+  <main class="standard-shell applications-shell">
+    <header class="applications-header">
+      <h2>{% trans "Minhas Vagas" %}</h2>
+    </header>
 
-<body>
+    <!-- Navegação por Abas (Candidaturas vs Salvas) -->
+    <nav class="applications-tabs" aria-label="{% trans 'Minhas vagas' %}">
+      <a href="{% url 'candidaturas' %}" class="applications-tab">{% trans "Candidaturas" %}</a>
+      <a href="{% url 'favoritas' %}" class="applications-tab active">{% trans "Salvas" %}</a>
+    </nav>
 
-    <div class="cabecalho">
-        <img src="{% static 'logo_icon.jpg' %}" alt="Logo CONNECTO">
-        <h1>Vagas Favoritas</h1>
-    </div>
+    {% if vagas_favoritas %}
+      <section class="applications-list" aria-label="{% trans 'Vagas salvas' %}">
+        {% for vaga in vagas_favoritas %}
+          <a href="{% url 'detalhe_vaga' vaga.id %}" class="application-card">
+            <div class="application-company-icon" aria-hidden="true">
+              {{ vaga.empresa.iniciais }}
+            </div>
 
-    <div class="vaga">
-        <h2>Estágio em Desenvolvimento de Software</h2>
-        <p><strong>Empresa:</strong> Empresa ABC</p>
-        <p><strong>Localização:</strong> Rio de Janeiro - Botafogo</p>
-        <p><strong>Área:</strong> Tecnologia e Desenvolvimento</p>
-        <p class="detalhes">Mais detalhes</p>
-    </div>
+            <div class="application-content">
+              <h2>{{ vaga.titulo }}</h2>
+              <p class="application-company">
+                {{ vaga.empresa.nome }}
+                {% if vaga.cidade %} · {{ vaga.cidade }}{% endif %}
+              </p>
 
-    <div class="vaga">
-        <h2>Estágio em Análise de Investimentos</h2>
-        <p><strong>Empresa:</strong> Empresa XYZ</p>
-        <p><strong>Localização:</strong> São Paulo - Itaim Bibi</p>
-        <p><strong>Área:</strong> Mercado Financeiro</p>
-        <p class="detalhes">Mais detalhes</p>
-    </div>
+              <div class="application-tags">
+                {% if vaga.modalidade %}
+                  <span class="application-tag application-tag--mode">{{ vaga.modalidade }}</span>
+                {% endif %}
+                {% if vaga.area %}
+                  <span class="application-tag application-tag--area">{{ vaga.area }}</span>
+                {% endif %}
+              </div>
+            </div>
 
-    <div class="vaga">
-        <h2>Estágio em Desenvolvimento Comercial</h2>
-        <p><strong>Empresa:</strong> Empresa 123</p>
-        <p><strong>Localização:</strong> Porto Alegre - A distância</p>
-        <p><strong>Área:</strong> Vendas e Comercial</p>
-        <p class="detalhes">Mais detalhes</p>
-    </div>
+            <span class="application-chevron" aria-hidden="true">›</span>
+          </a>
+        {% endfor %}
+      </section>
+    {% else %}
+      <!-- Estado Vazio (Nenhuma vaga salva) -->
+      <section class="applications-empty">
+        <div class="applications-empty__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h2>{% trans "Nenhuma vaga salva" %}</h2>
+        <p>{% trans "Guarde as vagas que mais te interessam para se candidatar depois." %}</p>
+        <a href="{% url 'match' %}" class="applications-primary">{% trans "Explorar vagas" %}</a>
+      </section>
+    {% endif %}
+  </main>
 
+  {% include 'includes/bottom_nav.html' with pagina_ativa='favoritas' %}
 </body>
 </html>
