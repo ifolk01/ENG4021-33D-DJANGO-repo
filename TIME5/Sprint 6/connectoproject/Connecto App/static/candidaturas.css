@@ -35,6 +35,65 @@
   text-decoration: none;
 }
 
+.applications-status-filters {
+  display: flex;
+  gap: 8px;
+
+  margin-bottom: 18px;
+
+  overflow-x: auto;
+
+  padding-bottom: 4px;
+
+  scrollbar-width: none;
+}
+
+
+.applications-status-filters::-webkit-scrollbar {
+  display: none;
+}
+
+
+.status-filter {
+  flex-shrink: 0;
+
+  padding: 8px 12px;
+
+  border-radius: 999px;
+
+  background: var(
+      --tema-surface,
+      #ffffff
+  );
+
+  color: var(
+      --connecto-muted,
+      #6b6f80
+  );
+
+  border: 1px solid rgba(
+      48,
+      53,
+      79,
+      .08
+  );
+
+  font-size: 12px;
+  font-weight: 750;
+
+  text-decoration: none;
+}
+
+
+.status-filter.active {
+  background: var(
+      --connecto-navy,
+      #30354f
+  );
+
+  color: #ffffff;
+}
+
 .applications-tab.active {
   background: var(--tema-surface, #fff);
   color: var(--tema-ink, var(--connecto-navy));
@@ -72,10 +131,14 @@
   display: grid;
   place-items: center;
   border-radius: 18px;
-  background: #e8e9f0;
-  color: var(--tema-ink, var(--connecto-navy));
-  font-size: 18px;
-  font-weight: 800;
+  background-color: var(--tema-cyan-soft, rgba(21, 146, 179, 0.15)) !important;
+  color: #1592b3 !important;
+}
+
+.application-company-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
 }
 
 .application-content {
@@ -93,13 +156,62 @@
 .application-status {
   display: inline-flex;
   align-items: center;
+
   min-height: 24px;
+
   padding: 0 9px;
+
   border-radius: 999px;
-  background: var(--connecto-green-soft);
-  color: var(--connecto-green);
+
   font-size: 11px;
   font-weight: 800;
+}
+
+.application-status--enviada {
+  background: var(
+      --tema-cyan-soft,
+      #dfeefa
+  );
+
+  color: #34738c;
+}
+
+
+.application-status--em_analise {
+  background: var(
+      --tema-amber-soft,
+      #fff1c7
+  );
+
+  color: #88702a;
+}
+
+
+.application-status--entrevista {
+  background: #e8e7fa;
+  color: #6257a8;
+}
+
+
+.application-status--aprovada {
+  background: #e2f3e8;
+  color: #397950;
+}
+
+
+.application-status--nao_selecionada {
+  background: var(
+      --tema-red-soft,
+      #fde8ec
+  );
+
+  color: #a34f61;
+}
+
+
+.application-status--retirada {
+  background: #ececef;
+  color: #6f7078;
 }
 
 .application-status-row time {
@@ -114,7 +226,6 @@
   font-size: 17px;
   line-height: 1.22;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 

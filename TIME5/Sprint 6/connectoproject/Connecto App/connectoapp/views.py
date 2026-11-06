@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -12,6 +11,7 @@ from .forms import FotoPerfilForm
 from .models import (
     Candidatura,
     Empresa,
+    Curso,
     Conversa,
     Favorito,
     Mensagem,
@@ -20,6 +20,7 @@ from .models import (
     PushSubscription,
     VagaDescartada,
     PerfilUsuario,
+    HistoricoStatusCandidatura,
 )
 from django.contrib import messages
 from django.conf import settings
@@ -33,6 +34,8 @@ from .gemini_service import (
     GeminiResponseError,
     responder_sobre_vaga,
 )
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 logger = logging.getLogger(__name__)
 
@@ -88,40 +91,176 @@ def login(request):
     return render(request, "Login.html")
 
 def criar_conta(request):
+    cursos = Curso.objects.all().order_by("nome")
+
     if request.method == "POST":
         nome = request.POST.get("nome", "").strip()
         matricula = request.POST.get("username", "").strip()
         senha = request.POST.get("password", "")
-        confirmar_senha = request.POST.get("confirmar_senha", "")
+        confirmar_senha = request.POST.get(
+            "confirmar_senha",
+            "",
+        )
 
-        # Senhas precisam ser iguais
+        curso_id = request.POST.get("curso")
+        periodo = request.POST.get("periodo")
+        instituicao = request.POST.get(
+            "instituicao",
+            "",
+        ).strip()
+
         if senha != confirmar_senha:
             return render(
                 request,
                 "criar_conta.html",
-                {"erro": "As senhas não coincidem!"}
+                {
+                    "erro": "As senhas não coincidem!",
+                    "cursos": cursos,
+                },
             )
 
-        # Matrícula não pode estar cadastrada
-        if User.objects.filter(username=matricula).exists():
+        if User.objects.filter(
+            username=matricula
+        ).exists():
             return render(
                 request,
                 "criar_conta.html",
-                {"erro": "Esta matrícula já está registada."}
+                {
+                    "erro": "Esta matrícula já está registada.",
+                    "cursos": cursos,
+                },
             )
 
-        # Cria o usuário
-        User.objects.create_user(
-            username=matricula,
-            password=senha,
-            first_name=nome
+        if not curso_id:
+            return render(
+                request,
+                "criar_conta.html",
+                {
+                    "erro": "Selecione seu curso.",
+                    "cursos": cursos,
+                },
+            )
+
+        try:
+            curso = Curso.objects.get(
+                pk=curso_id
+            )
+        except Curso.DoesNotExist:
+            return render(
+                request,
+                "criar_conta.html",
+                {
+                    "erro": "Curso inválido.",
+                    "cursos": cursos,
+                },
+            )
+
+        try:
+            periodo_numero = (
+                int(periodo)
+                if periodo
+                else None
+            )
+        except ValueError:
+            periodo_numero = None
+
+        partes_nome = nome.split(
+            maxsplit=1
         )
+
+        with transaction.atomic():
+            user = User.objects.create_user(
+                username=matricula,
+                password=senha,
+                first_name=(
+                    partes_nome[0]
+                    if partes_nome
+                    else ""
+                ),
+                last_name=(
+                    partes_nome[1]
+                    if len(partes_nome) > 1
+                    else ""
+                ),
+            )
+
+            PerfilUsuario.objects.create(
+                usuario=user,
+                curso=curso,
+                periodo=periodo_numero,
+                instituicao=instituicao,
+            )
 
         return redirect("login")
 
-    
-    return render(request, "criar_conta.html")
+    return render(
+        request,
+        "criar_conta.html",
+        {
+            "cursos": cursos,
+        },
+    )
 
+def criar_conta_empresa(request):
+    if request.method == "POST":
+        nome = request.POST.get("nome", "").strip()
+        email = request.POST.get("email", "").strip().lower()
+        senha = request.POST.get("password", "")
+        confirmar_senha = request.POST.get("confirmar_senha", "")
+        try:
+            validate_email(email)
+            email_valido = True
+        except ValidationError:
+            email_valido = False
+
+        if not nome or not email or not senha or not confirmar_senha:
+            erro = "Preencha todos os campos obrigatórios."
+
+        elif len(nome) > 100:
+            erro = "O nome da empresa deve ter no máximo 100 caracteres."
+        
+        elif not email_valido:
+            erro = "Informe um e-mail válido."
+
+        elif len(email) > 150:
+            erro = "O e-mail deve ter no máximo 150 caracteres."
+
+        elif len(senha) < 6:
+            erro = "A senha deve ter no mínimo 6 caracteres."
+
+        elif senha != confirmar_senha:
+            erro = "As senhas não coincidem."
+
+        elif (
+            Empresa.objects.filter(email__iexact=email).exists()
+            or User.objects.filter(email__iexact=email).exists()
+            or User.objects.filter(username__iexact=email).exists()
+        ):
+            erro = "Este e-mail já está cadastrado."
+
+        else:
+            with transaction.atomic():
+                usuario = User.objects.create_user(
+                    username=email,
+                    email=email,
+                    password=senha,
+                )
+
+                Empresa.objects.create(
+                    usuario=usuario,
+                    nome=nome,
+                    email=email,
+                )
+
+            return redirect("login")
+
+        return render(
+            request,
+            "criar_conta_empresa.html",
+            {"erro": erro},
+        )
+
+    return render(request, "criar_conta_empresa.html")
 
 # chat
 @transaction.atomic
@@ -130,7 +269,7 @@ def _criar_candidatura_e_conversa(usuario, oportunidade, origem):
         usuario=usuario,
         oportunidade=oportunidade,
         defaults={
-            "status": "Enviada",
+            "status": Candidatura.STATUS_ENVIADA,
             "origem": origem,
         },
     )
@@ -174,6 +313,138 @@ def _ids_candidatados(usuario):
         "oportunidade_id", flat=True
     )
 
+@login_required
+def candidaturas_empresa(request):
+    empresa = get_object_or_404(
+        Empresa,
+        usuario=request.user,
+    )
+
+    candidaturas_recebidas = (
+        Candidatura.objects
+        .filter(oportunidade__empresa=empresa)
+        .select_related(
+            "usuario",
+            "oportunidade",
+            "oportunidade__empresa",
+        )
+        .order_by("-data_candidatura")
+    )
+
+    return render(
+        request,
+        "candidaturas_empresa.html",
+        {
+            "empresa": empresa,
+            "candidaturas": candidaturas_recebidas,
+            "status_opcoes": Candidatura.STATUS_CHOICES,
+        },
+    )
+
+
+@login_required
+def detalhe_candidatura(request, candidatura_id):
+    candidatura = get_object_or_404(
+        Candidatura.objects
+        .select_related("oportunidade__empresa")
+        .prefetch_related("historico_status"),
+        id=candidatura_id,
+        usuario=request.user,
+    )
+
+    conversa = Conversa.objects.filter(
+        usuario=request.user,
+        oportunidade=candidatura.oportunidade,
+    ).first()
+
+    return render(
+        request,
+        "detalhe_candidatura.html",
+        {
+            "candidatura": candidatura,
+            "conversa": conversa,
+        },
+    )
+
+
+@require_POST
+@login_required
+def atualizar_status_candidatura(request, candidatura_id):
+    candidatura = get_object_or_404(
+        Candidatura.objects.select_related("oportunidade__empresa"),
+        id=candidatura_id,
+        oportunidade__empresa__usuario=request.user,
+    )
+
+    novo_status = request.POST.get("status", "").strip()
+    observacao = request.POST.get("observacao", "").strip()
+
+    status_validos = {
+        valor
+        for valor, _ in Candidatura.STATUS_CHOICES
+    }
+
+    if novo_status not in status_validos:
+        messages.error(request, "Status inválido.")
+        return redirect("candidaturas_empresa")
+
+    status_anterior = candidatura.status
+
+    if status_anterior == novo_status:
+        messages.info(
+            request,
+            "A candidatura já possui esse status.",
+        )
+        return redirect("candidaturas_empresa")
+
+    with transaction.atomic():
+        candidatura.status = novo_status
+        candidatura.save(
+            update_fields=[
+                "status",
+                "status_atualizado_em",
+            ]
+        )
+
+        HistoricoStatusCandidatura.objects.create(
+            candidatura=candidatura,
+            status_anterior=status_anterior,
+            status_novo=novo_status,
+            alterado_por=request.user,
+            observacao=observacao,
+        )
+
+        notificacao = Notificacao.objects.create(
+            usuario=candidatura.usuario,
+            candidatura=candidatura,
+        )
+
+        status_legivel = candidatura.get_status_display()
+
+        def enviar_depois_do_commit():
+            enviado = enviar_push(
+                usuario=candidatura.usuario,
+                titulo="Candidatura atualizada",
+                mensagem=(
+                    f'Sua candidatura para "{candidatura.oportunidade.titulo}" '
+                    f'agora está como "{status_legivel}".'
+                ),
+                url=f"/candidaturas/{candidatura.id}/",
+            )
+
+            if enviado:
+                Notificacao.objects.filter(
+                    pk=notificacao.pk
+                ).update(entregue=True)
+
+        transaction.on_commit(enviar_depois_do_commit)
+
+    messages.success(
+        request,
+        "Status atualizado com sucesso.",
+    )
+
+    return redirect("candidaturas_empresa")
 
 
 # Home / busca / vaga
@@ -208,13 +479,13 @@ def home(request):
 
     # Categorias que queremos exibir na interface
     categorias = (
-    Oportunidade.objects
-    .filter(ativa=True)
-    .exclude(area="")
-    .values_list("area", flat=True)
-    .distinct()
-    .order_by("area")
-)
+        Oportunidade.objects
+        .filter(ativa=True)
+        .exclude(area="")
+        .values_list("area", flat=True)
+        .distinct()
+        .order_by("area")
+    )
 
     favoritos_ids = set(
         Favorito.objects.filter(
@@ -374,24 +645,62 @@ def match_acao(request, vaga_id):
 # Minhas candidaturas / favoritos
 @login_required
 def candidaturas(request):
+    status_selecionado = request.GET.get(
+        "status",
+        "",
+    ).strip()
+
     candidaturas_usuario = (
-        Candidatura.objects.filter(usuario=request.user)
-        .select_related("oportunidade__empresa")
+        Candidatura.objects
+        .filter(
+            usuario=request.user
+        )
+        .select_related(
+            "oportunidade__empresa"
+        )
     )
+
+    status_validos = {
+        valor
+        for valor, _ in Candidatura.STATUS_CHOICES
+    }
+
+    if status_selecionado in status_validos:
+        candidaturas_usuario = (
+            candidaturas_usuario.filter(
+                status=status_selecionado
+            )
+        )
+
+    contexto = {
+        "candidaturas":
+            candidaturas_usuario,
+
+        "status_selecionado":
+            status_selecionado,
+
+        "status_opcoes":
+            Candidatura.STATUS_CHOICES,
+    }
+
     return render(
         request,
         "candidaturas.html",
-        {"candidaturas": candidaturas_usuario},
+        contexto,
     )
-
 
 @login_required
 def favoritas(request):
-    favoritas_usuario = (
+    favoritos_qs = (
         Favorito.objects.filter(usuario=request.user)
         .select_related("oportunidade__empresa")
+        .order_by("-criado_em")
     )
-    return render(request, "favoritas.html", {"favoritas": favoritas_usuario})
+    vagas_favoritas = [fav.oportunidade for fav in favoritos_qs]
+    
+    return render(request, 'favoritas.html', {
+        'vagas_favoritas': vagas_favoritas
+    })
 
 
 
@@ -456,96 +765,147 @@ def conversa(request, conversa_id):
 @require_POST
 @login_required
 def assistente_vaga(request, conversa_id):
-    conversa_atual = get_object_or_404(
-        Conversa.objects.select_related("oportunidade__empresa"),
-        pk=conversa_id,
+    conversa = get_object_or_404(
+        Conversa.objects.select_related(
+            "oportunidade",
+            "oportunidade__empresa",
+        ),
+        id=conversa_id,
         usuario=request.user,
     )
 
     try:
-        if request.content_type == "application/json":
-            payload = json.loads(request.body or b"{}")
-            texto = str(payload.get("mensagem", "")).strip()
-        else:
-            texto = request.POST.get("mensagem", "").strip()
+        dados = json.loads(request.body or b"{}")
     except (json.JSONDecodeError, UnicodeDecodeError):
         return JsonResponse(
-            {"ok": False, "erro": "Requisição inválida."},
+            {
+                "ok": False,
+                "erro": "Requisição inválida.",
+            },
             status=400,
         )
 
-    if not texto:
+    # Compatível com versões do frontend que usam "pergunta" ou "mensagem".
+    pergunta = str(
+        dados.get("pergunta")
+        or dados.get("mensagem")
+        or ""
+    ).strip()
+
+    if not pergunta:
         return JsonResponse(
-            {"ok": False, "erro": "Digite uma pergunta antes de enviar."},
+            {
+                "ok": False,
+                "erro": "Digite uma pergunta para o assistente.",
+            },
             status=400,
         )
 
-    if len(texto) > 2000:
+    if len(pergunta) > 2000:
         return JsonResponse(
-            {"ok": False, "erro": "A mensagem deve ter no máximo 2000 caracteres."},
+            {
+                "ok": False,
+                "erro": "A mensagem deve ter no máximo 2000 caracteres.",
+            },
             status=400,
         )
 
+    # Últimas 8 mensagens, em ordem cronológica.
     historico = list(
-        conversa_atual.mensagens
+        conversa.mensagens
         .exclude(texto__startswith=MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO)
-        .order_by("criada_em", "id")
-        .values("autor", "texto")
-    )[-8:]
+        .order_by("-criada_em", "-id")
+        .values("autor", "texto")[:8]
+    )
+    historico.reverse()
 
     try:
         resposta = responder_sobre_vaga(
-            vaga=conversa_atual.oportunidade,
-            pergunta=texto,
+            vaga=conversa.oportunidade,
+            usuario=request.user,
+            pergunta=pergunta,
             historico=historico,
         )
+
     except GeminiConfigurationError:
         logger.exception("Gemini não está configurado para o Connecto.")
         return JsonResponse(
             {
-                "ok": False,
-                "erro": "O assistente ainda não está configurado no servidor.",
-            },
-            status=503,
+                "ok": True,
+                "resposta": (
+                    "O assistente está temporariamente indisponível. "
+                    "Tente novamente em alguns instantes."
+                ),
+                "degradada": True,
+            }
         )
+
     except GeminiResponseError:
         logger.exception("A Gemini API não retornou uma resposta utilizável.")
         return JsonResponse(
             {
-                "ok": False,
-                "erro": "Não foi possível obter uma resposta agora. Tente novamente.",
-            },
-            status=503,
+                "ok": True,
+                "resposta": (
+                    "Não consegui concluir essa resposta agora. "
+                    "Tente novamente em alguns instantes."
+                ),
+                "degradada": True,
+            }
         )
+
     except Exception:
-        logger.exception("Falha ao consultar a Gemini API.")
+        logger.exception("Falha inesperada ao consultar a Gemini API.")
         return JsonResponse(
             {
-                "ok": False,
-                "erro": "Não foi possível obter uma resposta agora. Tente novamente.",
-            },
-            status=503,
+                "ok": True,
+                "resposta": (
+                    "O assistente está temporariamente indisponível. "
+                    "Tente novamente em alguns instantes."
+                ),
+                "degradada": True,
+            }
+        )
+
+    # Nunca permite None ou string vazia no banco.
+    resposta = str(resposta or "").strip()
+
+    if not resposta:
+        logger.error(
+            "Connecto IA retornou resposta vazia. "
+            "A gravação da mensagem foi bloqueada."
+        )
+        return JsonResponse(
+            {
+                "ok": True,
+                "resposta": (
+                    "Não consegui concluir essa resposta agora. "
+                    "Tente novamente em alguns instantes."
+                ),
+                "degradada": True,
+            }
         )
 
     with transaction.atomic():
-        mensagem_candidato = Mensagem.objects.create(
-            conversa=conversa_atual,
+        Mensagem.objects.create(
+            conversa=conversa,
             autor="candidato",
-            texto=texto,
+            texto=pergunta,
         )
+
         mensagem_assistente = Mensagem.objects.create(
-            conversa=conversa_atual,
+            conversa=conversa,
             autor="empresa",
             texto=resposta,
         )
-        conversa_atual.save(update_fields=["atualizada_em"])
+
+        conversa.save(update_fields=["atualizada_em"])
 
     return JsonResponse(
         {
             "ok": True,
             "resposta": resposta,
-            "mensagem_candidato_id": mensagem_candidato.id,
-            "mensagem_assistente_id": mensagem_assistente.id,
+            "degradada": False,
+            "mensagem_id": mensagem_assistente.id,
         }
     )
 
@@ -557,29 +917,96 @@ def assistente_vaga(request, conversa_id):
 def editar_perfil(request):
     usuario = request.user
 
+    perfil_usuario, _ = PerfilUsuario.objects.get_or_create(
+        usuario=usuario
+    )
+
+    cursos = Curso.objects.all().order_by("nome")
+
     if request.method == "POST":
         nome = request.POST.get("nome", "").strip()
         email = request.POST.get("email", "").strip()
 
+        curso_id = request.POST.get("curso")
+        periodo = request.POST.get("periodo")
+        instituicao = request.POST.get(
+            "instituicao",
+            "",
+        ).strip()
+
         if not nome or not email:
-            messages.error(request, "Preencha nome e e-mail.")
+            messages.error(
+                request,
+                "Preencha nome e e-mail.",
+            )
+
         else:
             partes_nome = nome.split(maxsplit=1)
-            usuario.first_name = partes_nome[0]
-            usuario.last_name = partes_nome[1] if len(partes_nome) > 1 else ""
-            usuario.email = email
-            usuario.save(update_fields=["first_name", "last_name", "email"])
 
-            messages.success(request, "Perfil atualizado com sucesso!")
+            usuario.first_name = partes_nome[0]
+            usuario.last_name = (
+                partes_nome[1]
+                if len(partes_nome) > 1
+                else ""
+            )
+
+            usuario.email = email
+
+            usuario.save(
+                update_fields=[
+                    "first_name",
+                    "last_name",
+                    "email",
+                ]
+            )
+
+            # Curso
+            if curso_id:
+                perfil_usuario.curso = get_object_or_404(
+                    Curso,
+                    pk=curso_id,
+                )
+            else:
+                perfil_usuario.curso = None
+
+            # Período
+            if periodo:
+                try:
+                    perfil_usuario.periodo = int(periodo)
+                except ValueError:
+                    perfil_usuario.periodo = None
+            else:
+                perfil_usuario.periodo = None
+
+            # Instituição
+            perfil_usuario.instituicao = instituicao
+
+            perfil_usuario.save()
+
+            messages.success(
+                request,
+                "Perfil atualizado com sucesso!",
+            )
+
             return redirect("perfil")
 
-    nome = usuario.get_full_name().strip() or usuario.username
+    nome = (
+        usuario.get_full_name().strip()
+        or usuario.username
+    )
 
-    return render(request, "editar_perfil.html", {
-        "nome": nome,
-        "email": usuario.email,
-        "matricula": usuario.username,
-    })
+    return render(
+        request,
+        "editar_perfil.html",
+        {
+            "nome": nome,
+            "email": usuario.email,
+            "matricula": usuario.username,
+
+            "perfil_usuario": perfil_usuario,
+            "cursos": cursos,
+        },
+    )
     
 
 @login_required
@@ -625,8 +1052,22 @@ def perfil(request):
 
     # O User padrão do Django não possui campo curso.
     # Por enquanto mantemos esses dados no contexto.
-    curso = "Ciência da Computação"
-    instituicao = "PUC-Rio"
+    curso = (
+        perfil_usuario.curso.nome
+        if perfil_usuario.curso
+        else "Não informado"
+)
+
+    periodo = (
+        perfil_usuario.periodo
+        if perfil_usuario.periodo
+        else "Não informado"
+)
+
+    instituicao = (
+        perfil_usuario.instituicao
+        or "Não informado"
+)
 
     contexto = {
         "nome": nome,
@@ -634,6 +1075,7 @@ def perfil(request):
         "matricula": matricula,
         "email": email,
         "curso": curso,
+        "periodo": periodo,
         "instituicao": instituicao,
         "foto": perfil_usuario.foto,
         "foto_form": form,
@@ -724,12 +1166,6 @@ def perfil_empresa(request):
 @login_required
 def configuracoes(request):
     return render(request, "configuracoes.html")
-
-import json
-
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-
 
 @require_POST
 @login_required

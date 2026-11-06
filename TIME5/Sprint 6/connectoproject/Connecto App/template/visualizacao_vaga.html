@@ -156,22 +156,35 @@
         <!-- CANDIDATAR -->
         <section class="vaga-action">
 
-            <form
-                method="post"
-                action="{% url 'candidatar' vaga.id %}"
-            >
-
-                {% csrf_token %}
-
-                <button
-                    type="submit"
-                    class="candidatar-button"
+            {% if ja_candidatado %}
+        
+                <a
+                    href="{% url 'candidaturas' %}"
+                    class="candidatar-button candidatura-existente"
                 >
-                    {% trans "Candidatar-se" %}
-                </button>
-
-            </form>
-
+                    {% trans "Ver minha candidatura" %}
+                </a>
+        
+            {% else %}
+        
+                <form
+                    method="post"
+                    action="{% url 'candidatar' vaga.id %}"
+                >
+        
+                    {% csrf_token %}
+        
+                    <button
+                        type="submit"
+                        class="candidatar-button"
+                    >
+                        {% trans "Candidatar-se" %}
+                    </button>
+        
+                </form>
+        
+            {% endif %}
+        
         </section>
 
     </main>

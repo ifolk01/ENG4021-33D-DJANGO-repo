@@ -174,3 +174,42 @@ body {
   font-size: 15px;
   margin: 0 0 32px 0;
 }
+
+/* CONTAINER DE SENHA */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper .auth-input {
+  padding-right: 48px; /* Dá espaço para o ícone do olho não sobrepor o texto */
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password:hover {
+  color: var(--connecto-primary-dark);
+}
+
+.toggle-password svg {
+  width: 22px;
+  height: 22px;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:focus {
+  outline: none;
+}

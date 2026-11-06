@@ -145,8 +145,43 @@ MEDIA_ROOT = BASE_DIR / "media"
 # Gemini API
 # A chave deve permanecer somente no backend. Configure-a em .env ou como
 # variável de ambiente do sistema.
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
+# Gemini API
+GEMINI_API_KEY = os.environ.get(
+    "GEMINI_API_KEY",
+    "",
+)
+
+GEMINI_MODEL = os.environ.get(
+    "GEMINI_MODEL",
+    "gemini-3.8-flash",
+)
+
+GEMINI_FALLBACK_MODELS = [
+    "gemini-3.6-flash",
+]
+
+GEMINI_REQUEST_TIMEOUT_MS = int(
+    os.environ.get(
+        "GEMINI_REQUEST_TIMEOUT_MS",
+        "12000",
+    )
+)
+
+# Tempo máximo que consideramos razoável para tentar um fallback.
+GEMINI_TOTAL_BUDGET_MS = int(
+    os.environ.get(
+        "GEMINI_TOTAL_BUDGET_MS",
+        "16000",
+    )
+)
+
+# Quantidade máxima de mensagens anteriores enviadas como contexto.
+GEMINI_HISTORY_LIMIT = int(
+    os.environ.get(
+        "GEMINI_HISTORY_LIMIT",
+        "6",
+    )
+)
 
 
 # Web Push / VAPID
@@ -190,3 +225,6 @@ SUPPORT_EMAIL = os.getenv(
 
 EMAIL_TIMEOUT = 20
 
+GEMINI_REQUEST_TIMEOUT_MS = int(
+    os.environ.get("GEMINI_REQUEST_TIMEOUT_MS", "12000")
+)

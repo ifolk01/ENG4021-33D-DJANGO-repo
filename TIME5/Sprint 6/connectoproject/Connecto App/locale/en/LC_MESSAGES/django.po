@@ -1692,7 +1692,15 @@ msgstr "Profile"
 
 #: .\template\includes\seletor_idioma.html:8
 msgid "Idioma"
-msgstr ""
+msgstr "Language"
+
+#: .\template\includes\alternar_tema.html:4
+msgid "Modo noturno"
+msgstr "Dark mode"
+
+#: .\template\configuracoes.html:36
+msgid "Preferências"
+msgstr "Preferences"
 
 #: .\template\match.html:15
 #, python-format
@@ -1896,5 +1904,3 @@ msgstr "Apply"
 #~ msgid "Educação"
 #~ msgstr "Education"
 
-#~ msgid "Modo noturno"
-#~ msgstr "Dark mode"
