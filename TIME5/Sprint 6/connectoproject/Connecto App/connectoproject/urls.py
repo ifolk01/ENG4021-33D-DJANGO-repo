@@ -13,6 +13,7 @@ urlpatterns = [
 
     path("", views.login, name="login"),
     path("criar-conta/", views.criar_conta, name="criar_conta"),
+    path("criar-conta-empresa/", views.criar_conta_empresa, name="criar_conta_empresa"),
 
     path("home/", views.home, name="home"),
     path("busca/", views.busca, name="busca"),
