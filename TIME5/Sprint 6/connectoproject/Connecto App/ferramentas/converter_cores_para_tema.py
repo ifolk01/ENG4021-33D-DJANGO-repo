@@ -6,10 +6,10 @@ APLICAR = "--aplicar" in sys.argv
 FIM = r"(\s*(?:;|!important|}))"
 
 BRANCO = r"(?:#fff(?:fff)?|white)"
-TEXTO  = r"(?:#33364f|#30354f|#262a3e|#1c1c1c|#17191f|#111(?:111)?)"
-MUDO   = r"(?:#6b6f80|#73757d)"
-FUNDO  = r"(?:#f2f2ed|#f5f5ef)"
-BORDA  = r"(?:#e4e4dd|#e8e7df|#dcdcd3|#e9e9e4|#eae9e4)"
+TEXTO  = r"(?:#33364f|#30354f|#262a3e|#1c1c1c|#17191f|#111(?:111)?|#183b56|#17324d)"
+MUDO   = r"(?:#6b6f80|#73757d|#6e7f8d|#586b79|#798895)"
+FUNDO  = r"(?:#f2f2ed|#f5f5ef|#f7f8fa)"
+BORDA  = r"(?:#e4e4dd|#e8e7df|#dcdcd3|#e9e9e4|#eae9e4|#edf0f3|#eceff1|#eef1f3)"
 CINZA  = r"(?:#fafaf7|#f7f8fa|#f6f5f0|#efefeb|#ededeb|#efefea|#e9e9e4|#e8e8e4|#edf0f3|#eceff1|#eef1f3|#e6e6f2|#e5e6e8|#dededb|#e6e7e8|#e9eaf0)"
 CIANO  = r"(?:#ddeef4|#dff2f7|#e4f3f8|#dfeefa|#e4f4f8)"
 VERM   = r"(?:#f0e2e0|#f8e7e5|#fde8ec|#f9e8e7)"
@@ -71,8 +71,8 @@ for css in sorted(PASTA.glob("*.css")):
         n_arq += n
     assert novo.count("{") == novo.count("}"), f"chaves desbalanceadas em {css.name}"
     limpo = re.sub(r"/\*.*?\*/", "", novo, flags=re.S)
-    limpo = re.sub(r"var\(--tema-[a-z0-9-]+,\s*#[0-9a-fA-F]{3,8}\)", "", limpo)   # já tratadas
-    limpo = re.sub(r"--[\w-]+\s*:\s*#[0-9a-fA-F]{3,8}", "", limpo)                 # definições de variável
+    limpo = re.sub(r"var\(--tema-[a-z0-9-]+,\s*#[0-9a-fA-F]{3,8}\)", "", limpo)
+    limpo = re.sub(r"--[\w-]+\s*:\s*#[0-9a-fA-F]{3,8}", "", limpo)
     for h in re.findall(r"#[0-9a-fA-F]{3,8}\b", limpo):
         restantes[css.name][h.lower()] += 1
     print(f"{css.name:26s} {n_arq:3d} substituições")
