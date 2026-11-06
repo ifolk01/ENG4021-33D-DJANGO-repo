@@ -17,6 +17,7 @@ body {
 .topo h1 {
   margin: 0;
   font-size: 18px;
+  color: var(--tema-ink, #33364F);
 }
 
 .voltar {
@@ -59,10 +60,12 @@ body {
 .titulo-secao {
   margin: 22px 0 10px 0;
   font-size: 16px;
+  color: var(--tema-ink, #33364F);
 }
 
 .card {
   background-color: var(--tema-surface, #FFFFFF);
+  border: 1px solid var(--tema-line, #E4E4DD);
   border-radius: 14px;
   padding: 4px 16px;
   margin-bottom: 14px;
@@ -81,6 +84,7 @@ summary {
   cursor: pointer;
   font-size: 15px;
   list-style: none;
+  color: var(--tema-ink, #33364F);
 }
 
 summary::-webkit-details-marker {
@@ -114,6 +118,7 @@ details p {
 .ajuda h3 {
   margin: 0 0 6px 0;
   font-size: 16px;
+  color: var(--tema-ink, #33364F);
 }
 
 .ajuda p {

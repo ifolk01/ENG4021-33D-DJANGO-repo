@@ -131,10 +131,14 @@
   display: grid;
   place-items: center;
   border-radius: 18px;
-  background: #e8e9f0;
-  color: var(--tema-ink, var(--connecto-navy));
-  font-size: 18px;
-  font-weight: 800;
+  background-color: var(--tema-cyan-soft, rgba(21, 146, 179, 0.15)) !important;
+  color: #1592b3 !important;
+}
+
+.application-company-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
 }
 
 .application-content {
@@ -222,7 +226,6 @@
   font-size: 17px;
   line-height: 1.22;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 

@@ -1,10 +1,9 @@
-
 :root {
-    --cor-fundo: #F2F2ED;
-    --cor-card: #FFFFFF;
-    --cor-texto: #33364F;
-    --cor-secundaria: #6B6F80;
-    --cor-borda: #E4E4DD;
+    --cor-fundo: var(--tema-bg, #F2F2ED);
+    --cor-card: var(--tema-surface, #FFFFFF);
+    --cor-texto: var(--tema-ink, #33364F);
+    --cor-secundaria: var(--tema-muted, #6B6F80);
+    --cor-borda: var(--tema-line, #E4E4DD);
 
     --borda-card: 16px;
     --espaco-cards: 16px;
@@ -21,6 +20,7 @@ body {
 h1 {
     text-align: center;
     font-size: 18px;
+    color: var(--tema-ink, #33364F);
 }
 
 /* Avatar, nome e curso */
@@ -31,7 +31,7 @@ h1 {
     margin: 0 auto 12px auto;
     border-radius: 50%;
     background-color: var(--tema-surface-2, #E6E6F2);
-    color: #464B71;
+    color: var(--tema-ink, #464B71);
     font-size: 30px;
 
     display: flex;
@@ -61,6 +61,7 @@ h1 {
     margin: 0;
     font-size: 22px;
     font-weight: 500;
+    color: var(--tema-ink, #33364F);
 }
 
 .curso {
@@ -79,7 +80,8 @@ h1 {
 .contador {
     flex: 1;
     min-width: 0;
-    background-color: var(--cor-card);
+    background-color: var(--tema-surface, #FFFFFF);
+    border: 1px solid var(--tema-line, #E4E4DD);
     border-radius: var(--borda-card);
     padding: 18px 12px;
     text-align: center;
@@ -89,6 +91,7 @@ h1 {
     margin: 0;
     font-size: 22px;
     font-weight: 500;
+    color: var(--tema-ink, #33364F);
 }
 
 .contador p {
@@ -100,7 +103,8 @@ h1 {
 /* Lista de dados */
 
 .dados {
-    background-color: var(--cor-card);
+    background-color: var(--tema-surface, #FFFFFF);
+    border: 1px solid var(--tema-line, #E4E4DD);
     border-radius: var(--borda-card);
     padding: 0 18px;
     margin-bottom: var(--espaco-cards);
@@ -111,10 +115,11 @@ h1 {
     align-items: center;
     gap: 12px;
     padding: 18px 0;
+    color: var(--tema-ink, #33364F);
 }
 
 .linha + .linha {
-    border-top: 1px solid var(--cor-borda);
+    border-top: 1px solid var(--tema-line, #E4E4DD);
 }
 
 .icone {
@@ -152,55 +157,6 @@ h1 {
     color: #C85A5A;
 }
 
-/* Menu inferior */
-
-.menu {
-    position: fixed;
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
-    display: flex;
-    justify-content: space-around;
-    background-color: var(--tema-surface-2, #FAFAF7);
-    border-radius: 40px;
-    padding: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
-
-.menu a {
-    flex: 1;
-    text-align: center;
-    font-size: 11px;
-    color: var(--tema-ink, #1C1C1C);
-    text-decoration: none;
-    padding: 6px 0;
-    border-radius: 30px;
-}
-
-.menu a.ativo {
-    background-color: var(--tema-surface-2, #E9E9E4);
-    color: #464B71;
-}
-
-.aviso {
-    padding: 12px 16px;
-    margin: 15px auto;
-    border-radius: 10px;
-    max-width: 450px;
-    text-align: center;
-    font-size: 14px;
-}
-
-.aviso.success {
-    background-color: #E4F3E8;
-    color: #267342;
-}
-
-.aviso.error {
-    background-color: #FBE7E7;
-    color: #B63D3D;
-}
-
 .profile-shell {
     position: relative;
 }
@@ -210,78 +166,24 @@ h1 {
     position: absolute;
     top: 10px;
     right: 15px;
-
     width: 38px;
     height: 38px;
     box-sizing: border-box;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background-color: #116A85;
     color: #FFFFFF;
-
     border: 2px solid #116A85;
     border-radius: 50%;
-
-    font-family: Arial, sans-serif;
     font-size: 21px;
     font-weight: 700;
     line-height: 1;
     text-decoration: none;
-
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
     transition: all 0.2s ease;
     cursor: pointer;
     z-index: 2;
-}
-
-.profile-shell .botao-ajuda:hover {
-    background-color: var(--tema-surface, #FFFFFF);
-    color: #116A85;
-    transform: scale(1.08);
-}
-
-.profile-shell .botao-ajuda:focus-visible {
-    outline: 3px solid #33364F;
-    outline-offset: 3px;
-}
-
-
-.profile-shell {
-    position: relative;
-}
-
-.profile-shell .botao-ajuda {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    width: 38px;
-    height: 38px;
-    box-sizing: border-box;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background-color: #116A85;
-    color: #FFFFFF;
-    border: 2px solid #116A85;
-    border-radius: 50%;
-
-    font-size: 21px;
-    font-weight: bold;
-    line-height: 1;
-    text-decoration: none;
-
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-    transition: 0.2s;
-    cursor: pointer;
-}
-
-.profile-shell .botao-ajuda:visited {
-    color: #FFFFFF;
 }
 
 .profile-shell .botao-ajuda:hover {
