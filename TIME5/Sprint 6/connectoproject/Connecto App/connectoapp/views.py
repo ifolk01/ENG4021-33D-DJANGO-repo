@@ -20,6 +20,7 @@ from .models import (
     PushSubscription,
     VagaDescartada,
     PerfilUsuario,
+    HistoricoStatusCandidatura,
 )
 from django.contrib import messages
 from django.conf import settings
@@ -204,7 +205,7 @@ def _criar_candidatura_e_conversa(usuario, oportunidade, origem):
         usuario=usuario,
         oportunidade=oportunidade,
         defaults={
-            "status": "Enviada",
+            "status": Candidatura.STATUS_ENVIADA,
             "origem": origem,
         },
     )
@@ -248,6 +249,138 @@ def _ids_candidatados(usuario):
         "oportunidade_id", flat=True
     )
 
+@login_required
+def candidaturas_empresa(request):
+    empresa = get_object_or_404(
+        Empresa,
+        usuario=request.user,
+    )
+
+    candidaturas_recebidas = (
+        Candidatura.objects
+        .filter(oportunidade__empresa=empresa)
+        .select_related(
+            "usuario",
+            "oportunidade",
+            "oportunidade__empresa",
+        )
+        .order_by("-data_candidatura")
+    )
+
+    return render(
+        request,
+        "candidaturas_empresa.html",
+        {
+            "empresa": empresa,
+            "candidaturas": candidaturas_recebidas,
+            "status_opcoes": Candidatura.STATUS_CHOICES,
+        },
+    )
+
+
+@login_required
+def detalhe_candidatura(request, candidatura_id):
+    candidatura = get_object_or_404(
+        Candidatura.objects
+        .select_related("oportunidade__empresa")
+        .prefetch_related("historico_status"),
+        id=candidatura_id,
+        usuario=request.user,
+    )
+
+    conversa = Conversa.objects.filter(
+        usuario=request.user,
+        oportunidade=candidatura.oportunidade,
+    ).first()
+
+    return render(
+        request,
+        "detalhe_candidatura.html",
+        {
+            "candidatura": candidatura,
+            "conversa": conversa,
+        },
+    )
+
+
+@require_POST
+@login_required
+def atualizar_status_candidatura(request, candidatura_id):
+    candidatura = get_object_or_404(
+        Candidatura.objects.select_related("oportunidade__empresa"),
+        id=candidatura_id,
+        oportunidade__empresa__usuario=request.user,
+    )
+
+    novo_status = request.POST.get("status", "").strip()
+    observacao = request.POST.get("observacao", "").strip()
+
+    status_validos = {
+        valor
+        for valor, _ in Candidatura.STATUS_CHOICES
+    }
+
+    if novo_status not in status_validos:
+        messages.error(request, "Status inválido.")
+        return redirect("candidaturas_empresa")
+
+    status_anterior = candidatura.status
+
+    if status_anterior == novo_status:
+        messages.info(
+            request,
+            "A candidatura já possui esse status.",
+        )
+        return redirect("candidaturas_empresa")
+
+    with transaction.atomic():
+        candidatura.status = novo_status
+        candidatura.save(
+            update_fields=[
+                "status",
+                "status_atualizado_em",
+            ]
+        )
+
+        HistoricoStatusCandidatura.objects.create(
+            candidatura=candidatura,
+            status_anterior=status_anterior,
+            status_novo=novo_status,
+            alterado_por=request.user,
+            observacao=observacao,
+        )
+
+        notificacao = Notificacao.objects.create(
+            usuario=candidatura.usuario,
+            candidatura=candidatura,
+        )
+
+        status_legivel = candidatura.get_status_display()
+
+        def enviar_depois_do_commit():
+            enviado = enviar_push(
+                usuario=candidatura.usuario,
+                titulo="Candidatura atualizada",
+                mensagem=(
+                    f'Sua candidatura para "{candidatura.oportunidade.titulo}" '
+                    f'agora está como "{status_legivel}".'
+                ),
+                url=f"/candidaturas/{candidatura.id}/",
+            )
+
+            if enviado:
+                Notificacao.objects.filter(
+                    pk=notificacao.pk
+                ).update(entregue=True)
+
+        transaction.on_commit(enviar_depois_do_commit)
+
+    messages.success(
+        request,
+        "Status atualizado com sucesso.",
+    )
+
+    return redirect("candidaturas_empresa")
 
 
 # Home / busca / vaga
@@ -282,13 +415,13 @@ def home(request):
 
     # Categorias que queremos exibir na interface
     categorias = (
-    Oportunidade.objects
-    .filter(ativa=True)
-    .exclude(area="")
-    .values_list("area", flat=True)
-    .distinct()
-    .order_by("area")
-)
+        Oportunidade.objects
+        .filter(ativa=True)
+        .exclude(area="")
+        .values_list("area", flat=True)
+        .distinct()
+        .order_by("area")
+    )
 
     favoritos_ids = set(
         Favorito.objects.filter(
@@ -448,14 +581,48 @@ def match_acao(request, vaga_id):
 # Minhas candidaturas / favoritos
 @login_required
 def candidaturas(request):
+    status_selecionado = request.GET.get(
+        "status",
+        "",
+    ).strip()
+
     candidaturas_usuario = (
-        Candidatura.objects.filter(usuario=request.user)
-        .select_related("oportunidade__empresa")
+        Candidatura.objects
+        .filter(
+            usuario=request.user
+        )
+        .select_related(
+            "oportunidade__empresa"
+        )
     )
+
+    status_validos = {
+        valor
+        for valor, _ in Candidatura.STATUS_CHOICES
+    }
+
+    if status_selecionado in status_validos:
+        candidaturas_usuario = (
+            candidaturas_usuario.filter(
+                status=status_selecionado
+            )
+        )
+
+    contexto = {
+        "candidaturas":
+            candidaturas_usuario,
+
+        "status_selecionado":
+            status_selecionado,
+
+        "status_opcoes":
+            Candidatura.STATUS_CHOICES,
+    }
+
     return render(
         request,
         "candidaturas.html",
-        {"candidaturas": candidaturas_usuario},
+        contexto,
     )
 
 
