@@ -1,0 +1,140 @@
+
+.solicitacao-pagina {
+    background-color: #F2F2ED;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: #33364F;
+}
+
+.solicitacao-shell {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 20px 16px 110px;
+    box-sizing: border-box;
+}
+
+.solicitacao-topo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.solicitacao-topo h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: #33364F;
+}
+
+.solicitacao-voltar {
+    position: absolute;
+    left: 0;
+    color: #116A85;
+    font-size: 28px;
+    text-decoration: none;
+}
+
+.solicitacao-card {
+    background-color: #202130;
+    color: #FFFFFF;
+    border-radius: 18px;
+    padding: 28px;
+}
+
+.solicitacao-card h2 {
+    margin: 0 0 10px;
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.solicitacao-subtitulo {
+    margin: 0 0 28px;
+    color: #A6A7B8;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.solicitacao-campo {
+    margin-bottom: 22px;
+}
+
+.solicitacao-campo label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.solicitacao-campo input,
+.solicitacao-campo select,
+.solicitacao-campo textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #2A2B3B;
+    color: #FFFFFF;
+    border: 1px solid #45465A;
+    border-radius: 10px;
+    padding: 14px 15px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+.solicitacao-campo input::placeholder,
+.solicitacao-campo textarea::placeholder {
+    color: #9293A5;
+}
+
+.solicitacao-campo input:focus,
+.solicitacao-campo select:focus,
+.solicitacao-campo textarea:focus {
+    border-color: #1684A1;
+}
+
+.solicitacao-campo textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+.solicitacao-enviar {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background-color: #166F89;
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.solicitacao-enviar:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.solicitacao-aviso {
+    color: #A6A7B8;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 14px 0 0;
+}
+
+@media (max-width: 480px) {
+    .solicitacao-shell {
+        padding: 16px 12px 110px;
+    }
+
+    .solicitacao-card {
+        padding: 20px;
+    }
+
+    .solicitacao-topo h1 {
+        font-size: 19px;
+    }
+}

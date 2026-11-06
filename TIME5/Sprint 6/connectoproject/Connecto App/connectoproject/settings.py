@@ -1,3 +1,4 @@
+
 """
 Django settings for connectoproject project.
 
@@ -131,6 +132,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -198,6 +200,30 @@ VAPID_SUBJECT = os.environ.get(
     "VAPID_SUBJECT",
     ""
 )
+
+
+# Suporte Connecto - Envio de emails
+
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+SUPPORT_EMAIL = os.getenv(
+    "SUPPORT_EMAIL",
+    "suporteconnectoapp@gmail.com"
+)
+
+EMAIL_TIMEOUT = 20
 
 GEMINI_REQUEST_TIMEOUT_MS = int(
     os.environ.get("GEMINI_REQUEST_TIMEOUT_MS", "12000")

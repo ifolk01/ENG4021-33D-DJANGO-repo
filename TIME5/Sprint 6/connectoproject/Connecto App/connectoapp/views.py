@@ -24,6 +24,8 @@ from .models import (
 )
 from django.contrib import messages
 from django.conf import settings
+from django.core.mail import send_mail
+from smtplib import SMTPException
 import json
 import logging
 
@@ -1207,4 +1209,68 @@ def verificar_notificacoes(request):
         "novas": [],
         "nao_lidas": nao_lidas,
     })
+
+
+@login_required
+def abrir_solicitacao(request):
+    if request.method == "POST":
+        mensagem = request.POST.get("mensagem", "").strip()
+
+        if not mensagem:
+            messages.error(request, "Digite uma mensagem antes de enviar.")
+
+        elif len(mensagem) > 3000:
+            messages.error(request, "A mensagem deve ter no máximo 3000 caracteres.")
+
+        elif not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD or not settings.SUPPORT_EMAIL:
+            messages.error(request, "O e-mail de suporte ainda não está configurado.")
+
+        else:
+            usuario = request.user
+            nome = usuario.get_full_name().strip() or usuario.username
+
+            conteudo = (
+                "Nova solicitação de suporte - Connecto\n\n"
+                f"Nome: {nome}\n"
+                f"Matrícula: {usuario.username}\n"
+                f"E-mail: {usuario.email or 'Não informado'}\n\n"
+                "Mensagem:\n"
+                f"{mensagem}"
+            )
+
+            try:
+                enviados = send_mail(
+                    subject="Nova solicitação de suporte - Connecto",
+                    message=conteudo,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[settings.SUPPORT_EMAIL],
+                    fail_silently=False,
+                )
+
+                if enviados != 1:
+                    raise SMTPException("O servidor não confirmou o envio.")
+
+            except Exception as erro:
+                logger.exception("Erro ao enviar solicitação de suporte.")
+                print("ERRO NO SUPORTE:", type(erro).__name__, str(erro))
+
+                messages.error(
+                    request,
+                    "Não foi possível enviar sua solicitação. Tente novamente."
+                )
+
+            else:
+                messages.success(
+                    request,
+                    "Sua solicitação foi enviada com sucesso!"
+                )
+                return redirect("abrir_solicitacao")
+
+        return render(
+            request,
+            "abrir_solicitacao.html",
+            {"mensagem": mensagem}
+        )
+
+    return render(request, "abrir_solicitacao.html")
 
