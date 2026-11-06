@@ -146,7 +146,7 @@ body {
 }
 
 .match-notice::before {
-    content: "🤝";
+    content: "ðŸ¤";
     margin-right: 3px;
 }
 
@@ -420,4 +420,64 @@ body {
     .chat-form {
         width: calc(100% - 20px);
     }
+}
+
+/* Connecto IA - estados de latencia e recuperacao */
+.typing-bubble--slow {
+    min-width: 205px;
+}
+
+.typing-bubble--very-slow {
+    min-width: 265px;
+}
+
+.typing-bubble--slow .typing-label,
+.typing-bubble--very-slow .typing-label {
+    color: #737682;
+}
+
+.assistant-retry-row {
+    margin-top: -4px;
+}
+
+.assistant-error-bubble {
+    max-width: 100%;
+    padding: 13px 14px;
+    border-radius: 18px;
+    border-bottom-left-radius: 6px;
+    background: #fde9e7;
+    border: 1px solid rgba(243, 119, 111, 0.22);
+    color: #87433f;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.assistant-error-text {
+    display: block;
+}
+
+.assistant-retry-button {
+    appearance: none;
+    border: 0;
+    border-radius: 999px;
+    padding: 8px 12px;
+    background: #333957;
+    color: #ffffff;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.assistant-retry-button:hover {
+    opacity: 0.92;
+}
+
+.assistant-retry-button:active {
+    transform: scale(0.97);
 }

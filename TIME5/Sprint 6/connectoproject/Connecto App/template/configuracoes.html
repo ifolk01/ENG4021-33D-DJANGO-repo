@@ -21,7 +21,7 @@
 
   <h2 class="titulo-secao">{% trans "Conta" %}</h2>
   <div class="card">
-    <a href="#" class="linha">
+    <a href="{% url 'editar_perfil' %}" class="linha">
       <span class="icone">👤</span>
       <span>{% trans "Editar perfil" %}</span>
       <span class="seta">›</span>
@@ -31,6 +31,16 @@
       <span>{% trans "Alterar senha" %}</span>
       <span class="seta">›</span>
     </a>
+  </div>
+
+  <h2 class="titulo-secao">{% trans "Preferências" %}</h2>
+  <div class="card card-preferencias">
+    <div class="linha linha-idioma">
+      <span class="icone">🌐</span>
+      <span>{% trans "Idioma" %}</span>
+      {% include 'includes/seletor_idioma.html' %}
+    </div>
+    {% include 'includes/alternar_tema.html' %}
   </div>
 
   <h2 class="titulo-secao">{% trans "Notificações" %}</h2>

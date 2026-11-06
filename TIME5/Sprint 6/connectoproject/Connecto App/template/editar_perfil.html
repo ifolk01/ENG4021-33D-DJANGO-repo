@@ -22,56 +22,106 @@
   <form method="post" action="{% url 'editar_perfil' %}">
     {% csrf_token %}
 
+    {% if messages %}
+      <div class="mensagens-feedback">
+        {% for message in messages %}
+          <div class="mensagem-feedback {{ message.tags }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     <div class="foto">
-      <div class="avatar">LS</div>
-      <a href="#" class="alterar-foto">{% trans "Alterar foto" %}</a>
+      <div class="avatar">
+        {{ nome|default:matricula|slice:":2"|upper }}
+      </div>
+
+      <a href="{% url 'perfil' %}" class="alterar-foto">
+        {% trans "Alterar foto" %}
+      </a>
     </div>
 
     <div class="card">
       <h2>{% trans "Dados pessoais" %}</h2>
 
       <label for="nome">{% trans "Nome completo" %}</label>
-      <input type="text" id="nome" name="nome" value="{{ nome }}" required>
+      <input
+        type="text"
+        id="nome"
+        name="nome"
+        value="{{ nome }}"
+        required
+      >
 
       <label for="email">{% trans "E-mail" %}</label>
-      <input type="email" id="email" name="email" value="{{ email }}" required>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        value="{{ email }}"
+        required
+      >
     </div>
 
     <div class="card">
       <h2>{% trans "Dados acadêmicos" %}</h2>
 
       <label for="matricula">{% trans "Matrícula" %}</label>
-      <input type="text" id="matricula" name="matricula" value="{{ matricula }}" disabled>
+      <input
+        type="text"
+        id="matricula"
+        value="{{ matricula }}"
+        disabled
+      >
 
-      <div class="lado-a-lado">
-        <div class="campo-curso">
-          <label for="curso">{% trans "Curso" %}</label>
-          <select id="curso" name="curso">
-            <option>{% trans "Administração" %}</option>
-            <option selected>{% trans "Ciência da Computação" %}</option>
-            <option>{% trans "Design" %}</option>
-            <option>{% trans "Direito" %}</option>
-            <option>{% trans "Economia" %}</option>
-            <option>{% trans "Engenharia de Produção" %}</option>
-            <option>{% trans "Engenharia Civil" %}</option>
-          </select>
-        </div>
-        <div class="campo-periodo">
-          <label for="periodo">{% trans "Período" %}</label>
-          <select id="periodo" name="periodo">
-            <option>{% trans "1º" %}</option>
-            <option>{% trans "2º" %}</option>
-            <option>{% trans "3º" %}</option>
-            <option>{% trans "4º" %}</option>
-            <option selected>{% trans "5º" %}</option>
-            <option>{% trans "6º" %}</option>
-            <option>{% trans "7º" %}</option>
-            <option>{% trans "8º" %}</option>
-            <option>{% trans "9º" %}</option>
-            <option>{% trans "10º" %}</option>
-          </select>
-        </div>
-      </div>
+      <label for="curso">{% trans "Curso" %}</label>
+      <select name="curso" id="curso">
+        <option value="">
+          {% trans "Selecione seu curso" %}
+        </option>
+
+        {% for curso_item in cursos %}
+          <option
+            value="{{ curso_item.id }}"
+            {% if perfil_usuario.curso_id == curso_item.id %}selected{% endif %}
+          >
+            {{ curso_item.nome }}
+          </option>
+        {% empty %}
+          <option value="" disabled>
+            {% trans "Nenhum curso cadastrado" %}
+          </option>
+        {% endfor %}
+      </select>
+
+      <label for="periodo">{% trans "Período" %}</label>
+      <select id="periodo" name="periodo">
+        <option value="">
+          {% trans "Selecione seu período" %}
+        </option>
+
+        <option value="1" {% if perfil_usuario.periodo == 1 %}selected{% endif %}>1º</option>
+        <option value="2" {% if perfil_usuario.periodo == 2 %}selected{% endif %}>2º</option>
+        <option value="3" {% if perfil_usuario.periodo == 3 %}selected{% endif %}>3º</option>
+        <option value="4" {% if perfil_usuario.periodo == 4 %}selected{% endif %}>4º</option>
+        <option value="5" {% if perfil_usuario.periodo == 5 %}selected{% endif %}>5º</option>
+        <option value="6" {% if perfil_usuario.periodo == 6 %}selected{% endif %}>6º</option>
+        <option value="7" {% if perfil_usuario.periodo == 7 %}selected{% endif %}>7º</option>
+        <option value="8" {% if perfil_usuario.periodo == 8 %}selected{% endif %}>8º</option>
+        <option value="9" {% if perfil_usuario.periodo == 9 %}selected{% endif %}>9º</option>
+        <option value="10" {% if perfil_usuario.periodo == 10 %}selected{% endif %}>10º</option>
+      </select>
+
+      <label for="instituicao">{% trans "Instituição" %}</label>
+      <input
+        type="text"
+        id="instituicao"
+        name="instituicao"
+        maxlength="150"
+        value="{{ perfil_usuario.instituicao|default:'' }}"
+        placeholder="{% trans 'Ex.: PUC-Rio' %}"
+      >
     </div>
 
     <div class="card">
@@ -98,11 +148,14 @@
       </div>
     </div>
 
-    <button type="submit" class="botao botao-salvar">{% trans "Salvar alterações" %}</button>
-    <a href="{% url 'perfil' %}" class="botao botao-cancelar">{% trans "Cancelar" %}</a>
+    <button type="submit" class="botao botao-salvar">
+      {% trans "Salvar alterações" %}
+    </button>
 
+    <a href="{% url 'perfil' %}" class="botao botao-cancelar">
+      {% trans "Cancelar" %}
+    </a>
   </form>
 
 </body>
-
 </html>
