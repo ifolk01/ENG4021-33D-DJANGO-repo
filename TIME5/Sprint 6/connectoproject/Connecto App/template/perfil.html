@@ -77,7 +77,18 @@
     </div>
 
     <a href="{% url 'login' %}" class="botao botao-sair">{% trans "Sair da conta" %}</a>
-    <button class="botao botao-excluir">{% trans "Excluir conta" %}</button>
+
+<form method="POST"
+      action="{% url 'sair_da_conta' %}"
+      onsubmit="return confirm('Tem certeza de que deseja sair da sua conta?');">
+
+    {% csrf_token %}
+
+    <button type="submit" class="botao-sair">
+        Sair da conta
+    </button>
+
+</form>
   </main>
 
   {% include 'includes/bottom_nav.html' with pagina_ativa='perfil' %}
