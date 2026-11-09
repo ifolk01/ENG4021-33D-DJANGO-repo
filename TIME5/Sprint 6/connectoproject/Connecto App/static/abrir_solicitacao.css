@@ -4,216 +4,210 @@
 }
 
 body.suporte-page {
-    --suporte-fundo: #f5f6f7;
-    --suporte-card: #ffffff;
-    --suporte-texto: #353a54;
-    --suporte-secundario: #74798b;
-    --suporte-borda: #dfe3e8;
-    --suporte-campo: #ffffff;
-    --suporte-primaria: #176d88;
+    --fundo: #f3f3ef;
+    --card: #ffffff;
+    --texto: #343a55;
+    --texto-secundario: #70768a;
+    --borda: #deded8;
+    --campo: #ffffff;
+    --botao: #156d87;
 
     margin: 0;
     min-height: 100vh;
-    background: var(--suporte-fundo);
-    color: var(--suporte-texto);
+    background-color: var(--fundo);
+    color: var(--texto);
     font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Cabeçalho */
 
-.topo {
+.suporte-page .topo {
     display: flex;
     align-items: center;
     gap: 18px;
-    padding: 28px 5%;
+    padding: 24px 20px;
 }
 
-.voltar {
+.suporte-page .voltar {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: var(--suporte-card);
-    color: var(--suporte-texto);
+    width: 35px;
+    height: 35px;
     text-decoration: none;
-    font-size: 32px;
-    border: 1px solid var(--suporte-borda);
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--texto);
 }
 
-.topo-texto {
+.suporte-page .topo-texto {
     flex: 1;
+    text-align: center;
 }
 
-.topo h1 {
+.suporte-page .topo h1 {
     margin: 0;
-    font-size: 27px;
+    font-size: 23px;
     font-weight: 700;
+    color: var(--texto);
 }
 
-.topo p {
+.suporte-page .topo p {
     margin: 6px 0 0;
-    color: var(--suporte-secundario);
     font-size: 14px;
+    color: var(--texto-secundario);
 }
 
-.icone-ajuda {
-    font-size: 27px;
+.suporte-page .icone-ajuda {
+    font-size: 24px;
 }
 
-/* Conteúdo */
+/* Área principal */
 
-.conteudo-suporte {
+.suporte-page .conteudo-suporte {
     width: 100%;
-    max-width: 850px;
-    margin: 12px auto 60px;
+    max-width: 900px;
+    margin: 10px auto 50px;
     padding: 0 20px;
 }
 
-.card-solicitacao {
-    background: var(--suporte-card);
-    border: 1px solid var(--suporte-borda);
-    border-radius: 20px;
-    padding: 35px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.035);
+.suporte-page .card-solicitacao {
+    background: var(--card);
+    border: 1px solid var(--borda);
+    border-radius: 16px;
+    padding: 30px;
 }
 
-.cabecalho-card {
-    margin-bottom: 30px;
+/* Título do formulário */
+
+.suporte-page .cabecalho-card {
+    margin-bottom: 28px;
 }
 
-.cabecalho-card h2 {
+.suporte-page .cabecalho-card h2 {
     margin: 0 0 10px;
-    font-size: 24px;
+    font-size: 23px;
     font-weight: 700;
+    color: var(--texto);
 }
 
-.cabecalho-card p {
+.suporte-page .cabecalho-card p {
     margin: 0;
     font-size: 15px;
     line-height: 1.6;
-    color: var(--suporte-secundario);
+    color: var(--texto-secundario);
 }
 
 /* Formulário */
 
-.form-solicitacao {
+.suporte-page .form-solicitacao {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 24px;
 }
 
-.campo-formulario {
+.suporte-page .campo-formulario {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.campo-formulario label {
+.suporte-page .campo-formulario label {
     font-size: 15px;
     font-weight: 600;
-    color: var(--suporte-texto);
+    color: var(--texto);
 }
 
-.campo-formulario input,
-.campo-formulario textarea {
+.suporte-page .campo-formulario input,
+.suporte-page .campo-formulario textarea {
     width: 100%;
-    padding: 15px 16px;
-    background: var(--suporte-campo);
-    color: var(--suporte-texto);
-    border: 1px solid var(--suporte-borda);
+    padding: 15px;
+    background: var(--campo);
+    border: 1px solid var(--borda);
     border-radius: 10px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
+    color: var(--texto);
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.campo-formulario textarea {
-    min-height: 190px;
+.suporte-page .campo-formulario input::placeholder,
+.suporte-page .campo-formulario textarea::placeholder {
+    color: #9498a5;
+}
+
+.suporte-page .campo-formulario input:focus,
+.suporte-page .campo-formulario textarea:focus {
+    border-color: var(--botao);
+    box-shadow: 0 0 0 3px rgba(21, 109, 135, 0.12);
+}
+
+.suporte-page .campo-formulario textarea {
+    min-height: 180px;
     resize: vertical;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
-.campo-formulario input::placeholder,
-.campo-formulario textarea::placeholder {
-    color: #9ca3af;
-}
-
-.campo-formulario input:focus,
-.campo-formulario textarea:focus {
-    border-color: var(--suporte-primaria);
-    box-shadow: 0 0 0 3px rgba(23, 109, 136, 0.12);
-}
-
-.texto-auxiliar {
+.suporte-page .texto-auxiliar {
     margin: 0;
-    color: var(--suporte-secundario);
     font-size: 12px;
+    color: var(--texto-secundario);
 }
 
 /* Botões */
 
-.acoes-formulario {
+.suporte-page .acoes-formulario {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    margin-top: 5px;
 }
 
-.botao-cancelar,
-.botao-enviar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 48px;
-    padding: 12px 22px;
+.suporte-page .botao-enviar {
+    background-color: var(--botao);
+    color: white;
+    padding: 14px 24px;
+    border: none;
     border-radius: 10px;
-    font-family: inherit;
     font-size: 15px;
     font-weight: 600;
-    text-decoration: none;
+    font-family: inherit;
     cursor: pointer;
 }
 
-.botao-cancelar {
-    background: transparent;
-    color: var(--suporte-texto);
-    border: 1px solid var(--suporte-borda);
+.suporte-page .botao-enviar:hover {
+    background-color: #115a72;
 }
 
-.botao-enviar {
-    background: var(--suporte-primaria);
-    color: white;
-    border: 1px solid var(--suporte-primaria);
-}
-
-.botao-enviar:hover {
-    background: #115a71;
-}
-
-/* Mensagens */
-
-.avisos {
-    margin-bottom: 24px;
-}
-
-.mensagem-sistema {
-    padding: 14px 16px;
+.suporte-page .botao-cancelar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    background: var(--card);
+    border: 1px solid var(--borda);
     border-radius: 10px;
-    margin-bottom: 10px;
+    color: var(--texto);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Mensagens de confirmação */
+
+.suporte-page .mensagem-sistema {
+    padding: 14px;
+    margin-bottom: 15px;
+    border-radius: 10px;
     background: #fff3e6;
     color: #885000;
-    font-size: 14px;
 }
 
-.mensagem-sistema.success {
-    background: #e5f5eb;
+.suporte-page .mensagem-sistema.success {
+    background: #e6f5ec;
     color: #21643b;
 }
 
-.mensagem-sistema.error {
+.suporte-page .mensagem-sistema.error {
     background: #fdeaea;
     color: #a12c2c;
 }
@@ -222,47 +216,44 @@ body.suporte-page {
 
 html[data-theme="dark"] body.suporte-page,
 body.suporte-page[data-theme="dark"],
-body.suporte-page.dark-mode,
 html.dark-mode body.suporte-page {
-    --suporte-fundo: #171b26;
-    --suporte-card: #252b39;
-    --suporte-texto: #f0f2f7;
-    --suporte-secundario: #b1b8c6;
-    --suporte-borda: #41495b;
-    --suporte-campo: #1c2230;
-    --suporte-primaria: #176d88;
+    --fundo: #171b26;
+    --card: #252b39;
+    --texto: #f0f2f7;
+    --texto-secundario: #b1b8c6;
+    --borda: #41495b;
+    --campo: #1c2230;
 }
 
-/* Responsividade */
+/* Celular */
 
 @media (max-width: 600px) {
-    .topo {
-        padding: 22px 18px;
+    .suporte-page .topo {
+        padding: 18px 15px;
     }
 
-    .topo h1 {
-        font-size: 22px;
+    .suporte-page .topo h1 {
+        font-size: 20px;
     }
 
-    .conteudo-suporte {
+    .suporte-page .conteudo-suporte {
         padding: 0 14px;
     }
 
-    .card-solicitacao {
-        padding: 24px 18px;
-        border-radius: 16px;
+    .suporte-page .card-solicitacao {
+        padding: 22px 18px;
     }
 
-    .cabecalho-card h2 {
+    .suporte-page .cabecalho-card h2 {
         font-size: 21px;
     }
 
-    .acoes-formulario {
+    .suporte-page .acoes-formulario {
         flex-direction: column-reverse;
     }
 
-    .botao-cancelar,
-    .botao-enviar {
+    .suporte-page .botao-enviar,
+    .suporte-page .botao-cancelar {
         width: 100%;
     }
 }
