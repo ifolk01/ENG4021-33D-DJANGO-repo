@@ -12,68 +12,92 @@
   {% include 'includes/tema_head.html' %}
 </head>
 
-<body>
+<body class="suporte-page">
 
-  <div class="topo">
-    <a href="{% url 'duvidas_frequentes' %}" class="voltar">‹</a>
-    <h1>{% trans "Abrir Solicitação" %}</h1>
+  <header class="topo">
+    <a href="{% url 'duvidas_frequentes' %}" class="voltar" aria-label="Voltar">‹</a>
+
+    <div class="topo-texto">
+      <h1>{% trans "Abrir solicitação" %}</h1>
+      <p>{% trans "Central de Ajuda Connecto" %}</p>
+    </div>
+
     <span class="icone-ajuda">🎧</span>
-  </div>
+  </header>
 
-  <div class="card ajuda">
-    <h2>{% trans "Como podemos ajudar?" %}</h2>
-    <p>
-      {% trans "Descreva sua dúvida ou problema para nossa equipe de suporte." %}
-    </p>
+  <main class="conteudo-suporte">
 
-    {% if messages %}
-      {% for message in messages %}
-        <p class="mensagem-sistema">
-          {{ message }}
+    <div class="card-solicitacao">
+
+      <div class="cabecalho-card">
+        <h2>{% trans "Como podemos ajudar?" %}</h2>
+        <p>
+          {% trans "Preencha as informações abaixo para enviar sua dúvida ou relatar um problema." %}
         </p>
-      {% endfor %}
-    {% endif %}
-
-    <form method="POST" action="{% url 'abrir_solicitacao' %}">
-      {% csrf_token %}
-
-      <div class="campo-assunto">
-        <label for="assunto">
-          {% trans "Assunto da solicitação" %}
-        </label>
-
-        <input
-          type="text"
-          id="assunto"
-          name="assunto"
-          placeholder="{% trans 'Ex: Problema ao acessar minha conta' %}"
-          maxlength="120"
-          value="{{ assunto|default:'' }}"
-          required
-        >
       </div>
 
-      <div class="campo-mensagem">
-        <label for="mensagem">
-          {% trans "Descreva seu problema" %}
-        </label>
+      {% if messages %}
+        <div class="avisos">
+          {% for message in messages %}
+            <div class="mensagem-sistema {{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
 
-        <textarea
-          id="mensagem"
-          name="mensagem"
-          rows="7"
-          maxlength="3000"
-          placeholder="{% trans 'Digite sua dúvida ou descreva o problema encontrado...' %}"
-          required
-        >{{ mensagem|default:'' }}</textarea>
-      </div>
+      <form method="POST" action="{% url 'abrir_solicitacao' %}" class="form-solicitacao">
+        {% csrf_token %}
 
-      <button type="submit" class="botao">
-        {% trans "Enviar solicitação" %}
-      </button>
+        <div class="campo-formulario">
+          <label for="assunto">
+            {% trans "Assunto da solicitação" %}
+          </label>
 
-    </form>
-  </div>
+          <input
+            type="text"
+            id="assunto"
+            name="assunto"
+            maxlength="120"
+            placeholder="{% trans 'Ex: Problema ao acessar minha conta' %}"
+            value="{{ assunto|default:'' }}"
+            required
+          >
+        </div>
+
+        <div class="campo-formulario">
+          <label for="mensagem">
+            {% trans "Descreva seu problema" %}
+          </label>
+
+          <textarea
+            id="mensagem"
+            name="mensagem"
+            rows="7"
+            maxlength="3000"
+            placeholder="{% trans 'Conte o que aconteceu ou descreva sua dúvida...' %}"
+            required
+          >{{ mensagem|default:'' }}</textarea>
+
+          <p class="texto-auxiliar">
+            {% trans "Máximo de 3.000 caracteres." %}
+          </p>
+        </div>
+
+        <div class="acoes-formulario">
+          <a href="{% url 'duvidas_frequentes' %}" class="botao-cancelar">
+            {% trans "Cancelar" %}
+          </a>
+
+          <button type="submit" class="botao-enviar">
+            {% trans "Enviar solicitação" %}
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </main>
 
 </body>
 </html>
