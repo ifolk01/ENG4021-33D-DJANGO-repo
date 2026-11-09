@@ -1,96 +1,188 @@
+
 {% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
   <title>Connecto - {% trans "Perfil" %}</title>
+
   <link rel="stylesheet" href="{% static 'perfil.css' %}">
   <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
   <link rel="stylesheet" href="{% static 'botao_configuracoes.css' %}">
+  <link rel="stylesheet" href="{% static 'modal_sair.css' %}">
+
   {% include 'includes/tema_head.html' %}
 </head>
+
 <body class="connecto-page">
+
   <main class="standard-shell profile-shell">
+
     <h1>{% trans "Perfil" %}</h1>
 
-    <a href="{% url 'duvidas_frequentes' %}" class="botao-ajuda" title="{% trans 'Dúvidas frequentes' %}" aria-label="{% trans 'Dúvidas frequentes' %}">?</a>
-    <a href="{% url 'configuracoes' %}" class="botao-config" title="{% trans 'Configurações' %}" aria-label="{% trans 'Configurações' %}">⚙️</a>
-    
-{% if messages %}
-    {% for message in messages %}
+    <a href="{% url 'duvidas_frequentes' %}"
+       class="botao-ajuda"
+       title="{% trans 'Dúvidas frequentes' %}"
+       aria-label="{% trans 'Dúvidas frequentes' %}">?</a>
+
+    <a href="{% url 'configuracoes' %}"
+       class="botao-config"
+       title="{% trans 'Configurações' %}"
+       aria-label="{% trans 'Configurações' %}">⚙️</a>
+
+    {% if messages %}
+      {% for message in messages %}
         <div class="aviso {{ message.tags }}" role="status">
-            {{ message }}
+          {{ message }}
         </div>
-    {% endfor %}
-{% endif %}
+      {% endfor %}
+    {% endif %}
 
-<div class="identificacao">
+    <div class="identificacao">
 
-    <form method="POST" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         <label for="foto-perfil" class="avatar">
-            {% if foto %}
-                <img src="{{ foto.url }}" alt="{% trans 'Foto de perfil' %}">
-            {% else %}
-                {{ iniciais }}
-            {% endif %}
+          {% if foto %}
+            <img src="{{ foto.url }}" alt="{% trans 'Foto de perfil' %}">
+          {% else %}
+            {{ iniciais }}
+          {% endif %}
         </label>
 
         <input
-            type="file"
-            id="foto-perfil"
-            name="foto"
-            accept="image/*"
-            hidden
+          type="file"
+          id="foto-perfil"
+          name="foto"
+          accept="image/*"
+          hidden
         >
 
-        <button type="submit">{% trans "Salvar foto" %}</button>
-    </form>
+        <button type="submit">
+          {% trans "Salvar foto" %}
+        </button>
+      </form>
 
-    <h2>{{ nome }}</h2>
-    <p class="curso">{{ curso }}</p>
+      <h2>{{ nome }}</h2>
 
-    <a href="{% url 'editar_perfil' %}" class="botao botao-editar">
-      {% trans "Editar perfil" %}
-    </a>
+      <p class="curso">{{ curso }}</p>
 
-</div>
+      <a href="{% url 'editar_perfil' %}" class="botao botao-editar">
+        {% trans "Editar perfil" %}
+      </a>
+
+    </div>
 
     <div class="contadores">
-      <div class="contador"><h3>{{ total_candidaturas }}</h3><p>{% trans "Candidaturas" %}</p></div>
-      <div class="contador"><h3>{{ total_salvas }}</h3><p>{% trans "Salvas" %}</p></div>
-      <div class="contador"><h3>{{ total_conversas }}</h3><p>{% trans "Conversas" %}</p></div>
+
+      <div class="contador">
+        <h3>{{ total_candidaturas }}</h3>
+        <p>{% trans "Candidaturas" %}</p>
+      </div>
+
+      <div class="contador">
+        <h3>{{ total_salvas }}</h3>
+        <p>{% trans "Salvas" %}</p>
+      </div>
+
+      <div class="contador">
+        <h3>{{ total_conversas }}</h3>
+        <p>{% trans "Conversas" %}</p>
+      </div>
+
     </div>
 
     <div class="dados">
-      <div class="linha"><span class="icone">🪪</span><span>{% trans "Matrícula" %}</span><span class="valor">{{ matricula }}</span></div>
-      <div class="linha"><span class="icone">🎓</span><span>{% trans "Curso" %}</span><span class="valor">{{ curso }}</span></div>
-      <div class="linha"><span class="icone">🏫</span><span>{% trans "Instituição" %}</span><span class="valor">{{ instituicao }}</span></div>
+
+      <div class="linha">
+        <span class="icone">🪪</span>
+        <span>{% trans "Matrícula" %}</span>
+        <span class="valor">{{ matricula }}</span>
+      </div>
+
+      <div class="linha">
+        <span class="icone">🎓</span>
+        <span>{% trans "Curso" %}</span>
+        <span class="valor">{{ curso }}</span>
+      </div>
+
+      <div class="linha">
+        <span class="icone">🏫</span>
+        <span>{% trans "Instituição" %}</span>
+        <span class="valor">{{ instituicao }}</span>
+      </div>
+
     </div>
 
     <div class="dados">
-      <div class="linha"><span class="icone">📞</span><span>{% trans "Telefone" %}</span><span class="valor">{{ telefone|default:_("Não informado") }}</span></div>
-      <div class="linha"><span class="icone">📧</span><span>{% trans "E-mail" %}</span><span class="valor">{{ email }}</span></div>
+
+      <div class="linha">
+        <span class="icone">📞</span>
+        <span>{% trans "Telefone" %}</span>
+        <span class="valor">
+          {{ telefone|default:_("Não informado") }}
+        </span>
+      </div>
+
+      <div class="linha">
+        <span class="icone">📧</span>
+        <span>{% trans "E-mail" %}</span>
+        <span class="valor">{{ email }}</span>
+      </div>
+
     </div>
 
-    <a href="{% url 'login' %}" class="botao botao-sair">{% trans "Sair da conta" %}</a>
-
-<form method="POST"
+    <form
+      id="form-sair"
+      class="form-sair"
+      method="POST"
       action="{% url 'sair_da_conta' %}"
-      onsubmit="return confirm('Tem certeza de que deseja sair da sua conta?');">
+    >
+      {% csrf_token %}
 
-    {% csrf_token %}
+      <button
+        type="button"
+        id="abrir-modal-sair"
+        class="botao botao-sair"
+      >
+        {% trans "Sair da conta" %}
+      </button>
+    </form>
 
-    <button type="submit" class="botao-sair">
-        Sair da conta
+    <button type="button" class="botao botao-excluir">
+      {% trans "Excluir conta" %}
     </button>
 
-</form>
   </main>
 
+  {% include 'includes/modal_sair.html' %}
+
   {% include 'includes/bottom_nav.html' with pagina_ativa='perfil' %}
+
+  <script>
+    const botaoSair = document.getElementById("abrir-modal-sair");
+    const modalSair = document.getElementById("modal-sair");
+    const cancelarSair = document.getElementById("cancelar-sair");
+
+    botaoSair.addEventListener("click", function () {
+      modalSair.showModal();
+    });
+
+    cancelarSair.addEventListener("click", function () {
+      modalSair.close();
+    });
+
+    modalSair.addEventListener("click", function (event) {
+      if (event.target === modalSair) {
+        modalSair.close();
+      }
+    });
+  </script>
+
 </body>
 </html>
