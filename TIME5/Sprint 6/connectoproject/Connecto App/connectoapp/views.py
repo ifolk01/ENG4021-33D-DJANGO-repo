@@ -36,6 +36,7 @@ from .gemini_service import (
 )
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.contrib.auth import logout as auth_logout
 
 logger = logging.getLogger(__name__)
 
