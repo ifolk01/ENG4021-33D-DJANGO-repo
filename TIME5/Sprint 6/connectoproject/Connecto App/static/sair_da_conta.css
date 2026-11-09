@@ -59,3 +59,14 @@
 .modal-confirmar:hover {
     background: #115a72;
 }
+.form-sair {
+    width: 100%;
+    margin: 0;
+}
+
+.form-sair .botao-sair {
+    display: block;
+    width: 100%;
+    font-family: inherit;
+    cursor: pointer;
+}
