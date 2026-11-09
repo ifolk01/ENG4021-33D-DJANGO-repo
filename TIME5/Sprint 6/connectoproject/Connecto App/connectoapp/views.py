@@ -37,7 +37,6 @@ from .gemini_service import (
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth import logout as auth_logout
-
 logger = logging.getLogger(__name__)
 
 def login(request):
@@ -1287,4 +1286,10 @@ def abrir_solicitacao(request):
         )
 
     return render(request, "abrir_solicitacao.html")
+@require_POST
+@login_required
+
+def sair_da_conta(request):
+    auth_logout(request)
+    return redirect("login")
 
