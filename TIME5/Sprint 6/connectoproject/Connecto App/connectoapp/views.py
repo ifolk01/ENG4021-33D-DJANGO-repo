@@ -36,7 +36,7 @@ from .gemini_service import (
 )
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth import logout as auth_logout
 logger = logging.getLogger(__name__)
 
 def login(request):
@@ -1211,12 +1211,23 @@ def verificar_notificacoes(request):
     })
 
 
+
 @login_required
 def abrir_solicitacao(request):
     if request.method == "POST":
+        assunto = request.POST.get("assunto", "").strip()
         mensagem = request.POST.get("mensagem", "").strip()
 
-        if not mensagem:
+        if not assunto:
+            messages.error(request, "Digite o assunto da solicitação.")
+
+        elif len(assunto) > 120:
+            messages.error(request, "O assunto deve ter no máximo 120 caracteres.")
+
+        elif "\n" in assunto or "\r" in assunto:
+            messages.error(request, "O assunto deve conter apenas uma linha.")
+
+        elif not mensagem:
             messages.error(request, "Digite uma mensagem antes de enviar.")
 
         elif len(mensagem) > 3000:
@@ -1231,6 +1242,7 @@ def abrir_solicitacao(request):
 
             conteudo = (
                 "Nova solicitação de suporte - Connecto\n\n"
+                f"Assunto: {assunto}\n"
                 f"Nome: {nome}\n"
                 f"Matrícula: {usuario.username}\n"
                 f"E-mail: {usuario.email or 'Não informado'}\n\n"
@@ -1240,7 +1252,7 @@ def abrir_solicitacao(request):
 
             try:
                 enviados = send_mail(
-                    subject="Nova solicitação de suporte - Connecto",
+                    subject=f"Connecto - Suporte: {assunto}",
                     message=conteudo,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[settings.SUPPORT_EMAIL],
@@ -1250,10 +1262,8 @@ def abrir_solicitacao(request):
                 if enviados != 1:
                     raise SMTPException("O servidor não confirmou o envio.")
 
-            except Exception as erro:
+            except (SMTPException, OSError):
                 logger.exception("Erro ao enviar solicitação de suporte.")
-                print("ERRO NO SUPORTE:", type(erro).__name__, str(erro))
-
                 messages.error(
                     request,
                     "Não foi possível enviar sua solicitação. Tente novamente."
@@ -1269,8 +1279,17 @@ def abrir_solicitacao(request):
         return render(
             request,
             "abrir_solicitacao.html",
-            {"mensagem": mensagem}
+            {
+                "assunto": assunto,
+                "mensagem": mensagem
+            }
         )
 
     return render(request, "abrir_solicitacao.html")
+@require_POST
+@login_required
+
+def sair_da_conta(request):
+    auth_logout(request)
+    return redirect("login")
 

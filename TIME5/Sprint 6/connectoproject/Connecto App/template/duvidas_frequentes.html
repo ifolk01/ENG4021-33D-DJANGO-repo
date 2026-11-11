@@ -1,3 +1,4 @@
+
 {% load static %}
 {% load i18n %}
 <!DOCTYPE html>
@@ -31,18 +32,22 @@
       <summary>{% trans "Como me candidato a uma vaga?" %}</summary>
       <p>{% trans 'Abra a vaga que você quer e toque em "Candidatar-se". A candidatura aparece na aba "Minhas".' %}</p>
     </details>
+
     <details>
       <summary>{% trans "Como funciona o Match?" %}</summary>
       <p>{% trans "O Match mostra vagas parecidas com o seu curso e as suas áreas de interesse. É só curtir ou pular cada vaga." %}</p>
     </details>
+
     <details>
       <summary>{% trans "Como salvo uma vaga para ver depois?" %}</summary>
       <p>{% trans 'Toque no coração da vaga. Ela fica guardada em "Salvas", no seu perfil.' %}</p>
     </details>
+
     <details>
       <summary>{% trans "Como altero meus dados?" %}</summary>
       <p>{% trans 'No Perfil, toque em "Editar perfil", mude o que quiser e toque em "Salvar alterações".' %}</p>
     </details>
+
     <details>
       <summary>{% trans "As empresas veem meu perfil?" %}</summary>
       <p>{% trans "Só as empresas das vagas em que você se candidatou podem ver o seu perfil." %}</p>
@@ -52,7 +57,10 @@
   <div class="card ajuda">
     <h3>{% trans "Ainda precisa de ajuda?" %}</h3>
     <p>{% trans "Envie sua dúvida ou relate um problema no aplicativo." %}</p>
-    <a href="#" class="botao">{% trans "Abrir solicitação" %}</a>
+
+    <a href="{% url 'abrir_solicitacao' %}" class="botao">
+      {% trans "Abrir solicitação" %}
+    </a>
   </div>
 
 </body>

@@ -1,140 +1,259 @@
 
-.solicitacao-pagina {
-    background-color: #F2F2ED;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    color: #33364F;
-}
-
-.solicitacao-shell {
-    max-width: 750px;
-    margin: 0 auto;
-    padding: 20px 16px 110px;
+* {
     box-sizing: border-box;
 }
 
-.solicitacao-topo {
+body.suporte-page {
+    --fundo: #f3f3ef;
+    --card: #ffffff;
+    --texto: #343a55;
+    --texto-secundario: #70768a;
+    --borda: #deded8;
+    --campo: #ffffff;
+    --botao: #156d87;
+
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--fundo);
+    color: var(--texto);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Cabeçalho */
+
+.suporte-page .topo {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 24px 20px;
+}
+
+.suporte-page .voltar {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    margin-bottom: 30px;
-}
-
-.solicitacao-topo h1 {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 600;
-    color: #33364F;
-}
-
-.solicitacao-voltar {
-    position: absolute;
-    left: 0;
-    color: #116A85;
-    font-size: 28px;
+    width: 35px;
+    height: 35px;
     text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--texto);
 }
 
-.solicitacao-card {
-    background-color: #202130;
-    color: #FFFFFF;
-    border-radius: 18px;
-    padding: 28px;
+.suporte-page .topo-texto {
+    flex: 1;
+    text-align: center;
 }
 
-.solicitacao-card h2 {
-    margin: 0 0 10px;
-    font-size: 21px;
-    font-weight: 600;
+.suporte-page .topo h1 {
+    margin: 0;
+    font-size: 23px;
+    font-weight: 700;
+    color: var(--texto);
 }
 
-.solicitacao-subtitulo {
-    margin: 0 0 28px;
-    color: #A6A7B8;
+.suporte-page .topo p {
+    margin: 6px 0 0;
     font-size: 14px;
-    line-height: 1.6;
+    color: var(--texto-secundario);
 }
 
-.solicitacao-campo {
-    margin-bottom: 22px;
+.suporte-page .icone-ajuda {
+    font-size: 24px;
 }
 
-.solicitacao-campo label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #FFFFFF;
-}
+/* Área principal */
 
-.solicitacao-campo input,
-.solicitacao-campo select,
-.solicitacao-campo textarea {
-    display: block;
+.suporte-page .conteudo-suporte {
     width: 100%;
-    box-sizing: border-box;
-    background-color: #2A2B3B;
-    color: #FFFFFF;
-    border: 1px solid #45465A;
+    max-width: 900px;
+    margin: 10px auto 50px;
+    padding: 0 20px;
+}
+
+.suporte-page .card-solicitacao {
+    background: var(--card);
+    border: 1px solid var(--borda);
+    border-radius: 16px;
+    padding: 30px;
+}
+
+/* Título do formulário */
+
+.suporte-page .cabecalho-card {
+    margin-bottom: 28px;
+}
+
+.suporte-page .cabecalho-card h2 {
+    margin: 0 0 10px;
+    font-size: 23px;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.suporte-page .cabecalho-card p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--texto-secundario);
+}
+
+/* Formulário */
+
+.suporte-page .form-solicitacao {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.suporte-page .campo-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.suporte-page .campo-formulario label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+.suporte-page .campo-formulario input,
+.suporte-page .campo-formulario textarea {
+    width: 100%;
+    padding: 15px;
+    background: var(--campo);
+    border: 1px solid var(--borda);
     border-radius: 10px;
-    padding: 14px 15px;
-    font-family: inherit;
-    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    color: var(--texto);
     outline: none;
 }
 
-.solicitacao-campo input::placeholder,
-.solicitacao-campo textarea::placeholder {
-    color: #9293A5;
+.suporte-page .campo-formulario input::placeholder,
+.suporte-page .campo-formulario textarea::placeholder {
+    color: #9498a5;
 }
 
-.solicitacao-campo input:focus,
-.solicitacao-campo select:focus,
-.solicitacao-campo textarea:focus {
-    border-color: #1684A1;
+.suporte-page .campo-formulario input:focus,
+.suporte-page .campo-formulario textarea:focus {
+    border-color: var(--botao);
+    box-shadow: 0 0 0 3px rgba(21, 109, 135, 0.12);
 }
 
-.solicitacao-campo textarea {
+.suporte-page .campo-formulario textarea {
+    min-height: 180px;
     resize: vertical;
-    min-height: 140px;
+    line-height: 1.5;
 }
 
-.solicitacao-enviar {
-    width: 100%;
-    padding: 16px;
+.suporte-page .texto-auxiliar {
+    margin: 0;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+/* Botões */
+
+.suporte-page .acoes-formulario {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.suporte-page .botao-enviar {
+    background-color: var(--botao);
+    color: white;
+    padding: 14px 24px;
     border: none;
-    border-radius: 12px;
-    background-color: #166F89;
-    color: #FFFFFF;
-    font-family: inherit;
-    font-size: 16px;
+    border-radius: 10px;
+    font-size: 15px;
     font-weight: 600;
+    font-family: inherit;
     cursor: pointer;
 }
 
-.solicitacao-enviar:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
+.suporte-page .botao-enviar:hover {
+    background-color: #115a72;
 }
 
-.solicitacao-aviso {
-    color: #A6A7B8;
-    text-align: center;
-    font-size: 12px;
-    line-height: 1.5;
-    margin: 14px 0 0;
+.suporte-page .botao-cancelar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    background: var(--card);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    color: var(--texto);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
 }
 
-@media (max-width: 480px) {
-    .solicitacao-shell {
-        padding: 16px 12px 110px;
+/* Mensagens de confirmação */
+
+.suporte-page .mensagem-sistema {
+    padding: 14px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background: #fff3e6;
+    color: #885000;
+}
+
+.suporte-page .mensagem-sistema.success {
+    background: #e6f5ec;
+    color: #21643b;
+}
+
+.suporte-page .mensagem-sistema.error {
+    background: #fdeaea;
+    color: #a12c2c;
+}
+
+/* Modo escuro */
+
+html[data-theme="dark"] body.suporte-page,
+body.suporte-page[data-theme="dark"],
+html.dark-mode body.suporte-page {
+    --fundo: #171b26;
+    --card: #252b39;
+    --texto: #f0f2f7;
+    --texto-secundario: #b1b8c6;
+    --borda: #41495b;
+    --campo: #1c2230;
+}
+
+/* Celular */
+
+@media (max-width: 600px) {
+    .suporte-page .topo {
+        padding: 18px 15px;
     }
 
-    .solicitacao-card {
-        padding: 20px;
+    .suporte-page .topo h1 {
+        font-size: 20px;
     }
 
-    .solicitacao-topo h1 {
-        font-size: 19px;
+    .suporte-page .conteudo-suporte {
+        padding: 0 14px;
+    }
+
+    .suporte-page .card-solicitacao {
+        padding: 22px 18px;
+    }
+
+    .suporte-page .cabecalho-card h2 {
+        font-size: 21px;
+    }
+
+    .suporte-page .acoes-formulario {
+        flex-direction: column-reverse;
+    }
+
+    .suporte-page .botao-enviar,
+    .suporte-page .botao-cancelar {
+        width: 100%;
     }
 }

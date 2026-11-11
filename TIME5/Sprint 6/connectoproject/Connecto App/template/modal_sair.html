@@ -1,0 +1,20 @@
+
+{% load i18n %}
+
+<dialog id="modal-sair" class="modal-sair">
+  <div class="modal-conteudo">
+    <h2>{% trans "Sair da conta?" %}</h2>
+
+    <p>{% trans "Tem certeza de que deseja sair da sua conta?" %}</p>
+
+    <div class="modal-acoes">
+      <button type="button" id="cancelar-sair" class="modal-cancelar">
+        {% trans "Cancelar" %}
+      </button>
+
+      <button type="submit" form="form-sair" class="modal-confirmar">
+        {% trans "Sim, sair" %}
+      </button>
+    </div>
+  </div>
+</dialog>

@@ -50,6 +50,7 @@ urlpatterns = [
     path("notificacoes/push/subscribe/",views.push_subscribe,name="push_subscribe"),
     path("service-worker.js",TemplateView.as_view(template_name="service-worker.js",content_type="application/javascript"),name="service_worker"),
     path("suporte/abrir/", views.abrir_solicitacao, name="abrir_solicitacao"),
+    path("sair/", views.sair_da_conta, name="sair_da_conta"),
 ]
 
 if settings.DEBUG:

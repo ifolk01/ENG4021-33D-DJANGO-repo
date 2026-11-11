@@ -7,62 +7,97 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connecto - {% trans "Dúvidas Frequentes" %}</title>
-  <link rel="stylesheet" href="{% static 'duvidas_frequentes.css' %}">
+  <title>Connecto - {% trans "Abrir Solicitação" %}</title>
+  <link rel="stylesheet" href="{% static 'abrir_solicitacao.css' %}">
   {% include 'includes/tema_head.html' %}
 </head>
 
-<body>
+<body class="suporte-page">
 
-  <div class="topo">
-    <a href="{% url 'perfil' %}" class="voltar">‹</a>
-    <h1>{% trans "Central de Ajuda" %}</h1>
+  <header class="topo">
+    <a href="{% url 'duvidas_frequentes' %}" class="voltar" aria-label="Voltar">‹</a>
+
+    <div class="topo-texto">
+      <h1>{% trans "Abrir solicitação" %}</h1>
+      <p>{% trans "Central de Ajuda Connecto" %}</p>
+    </div>
+
     <span class="icone-ajuda">🎧</span>
-  </div>
+  </header>
 
-  <div class="busca">
-    <span class="lupa">🔍</span>
-    <input type="search" placeholder="{% trans 'Buscar uma dúvida...' %}">
-  </div>
+  <main class="conteudo-suporte">
 
-  <h2 class="titulo-secao">{% trans "Dúvidas frequentes" %}</h2>
+    <div class="card-solicitacao">
 
-  <div class="card lista-duvidas">
-    <details>
-      <summary>{% trans "Como me candidato a uma vaga?" %}</summary>
-      <p>{% trans 'Abra a vaga que você quer e toque em "Candidatar-se". A candidatura aparece na aba "Minhas".' %}</p>
-    </details>
+      <div class="cabecalho-card">
+        <h2>{% trans "Como podemos ajudar?" %}</h2>
+        <p>
+          {% trans "Preencha as informações abaixo para enviar sua dúvida ou relatar um problema." %}
+        </p>
+      </div>
 
-    <details>
-      <summary>{% trans "Como funciona o Match?" %}</summary>
-      <p>{% trans "O Match mostra vagas parecidas com o seu curso e as suas áreas de interesse. É só curtir ou pular cada vaga." %}</p>
-    </details>
+      {% if messages %}
+        <div class="avisos">
+          {% for message in messages %}
+            <div class="mensagem-sistema {{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
 
-    <details>
-      <summary>{% trans "Como salvo uma vaga para ver depois?" %}</summary>
-      <p>{% trans 'Toque no coração da vaga. Ela fica guardada em "Salvas", no seu perfil.' %}</p>
-    </details>
+      <form method="POST" action="{% url 'abrir_solicitacao' %}" class="form-solicitacao">
+        {% csrf_token %}
 
-    <details>
-      <summary>{% trans "Como altero meus dados?" %}</summary>
-      <p>{% trans 'No Perfil, toque em "Editar perfil", mude o que quiser e toque em "Salvar alterações".' %}</p>
-    </details>
+        <div class="campo-formulario">
+          <label for="assunto">
+            {% trans "Assunto da solicitação" %}
+          </label>
 
-    <details>
-      <summary>{% trans "As empresas veem meu perfil?" %}</summary>
-      <p>{% trans "Só as empresas das vagas em que você se candidatou podem ver o seu perfil." %}</p>
-    </details>
-  </div>
+          <input
+            type="text"
+            id="assunto"
+            name="assunto"
+            maxlength="120"
+            placeholder="{% trans 'Ex: Problema ao acessar minha conta' %}"
+            value="{{ assunto|default:'' }}"
+            required
+          >
+        </div>
 
-  <div class="card ajuda">
-    <h3>{% trans "Ainda precisa de ajuda?" %}</h3>
-    <p>{% trans "Envie sua dúvida ou relate um problema no aplicativo." %}</p>
+        <div class="campo-formulario">
+          <label for="mensagem">
+            {% trans "Descreva seu problema" %}
+          </label>
 
-    <a href="{% url 'abrir_solicitacao' %}" class="botao">
-      {% trans "Abrir solicitação" %}
-    </a>
-  </div>
+          <textarea
+            id="mensagem"
+            name="mensagem"
+            rows="7"
+            maxlength="3000"
+            placeholder="{% trans 'Conte o que aconteceu ou descreva sua dúvida...' %}"
+            required
+          >{{ mensagem|default:'' }}</textarea>
+
+          <p class="texto-auxiliar">
+            {% trans "Máximo de 3.000 caracteres." %}
+          </p>
+        </div>
+
+        <div class="acoes-formulario">
+          <a href="{% url 'duvidas_frequentes' %}" class="botao-cancelar">
+            {% trans "Cancelar" %}
+          </a>
+
+          <button type="submit" class="botao-enviar">
+            {% trans "Enviar solicitação" %}
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </main>
 
 </body>
-
 </html>
