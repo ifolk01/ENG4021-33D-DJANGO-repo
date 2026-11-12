@@ -4,19 +4,19 @@
 }
 
 body.suporte-page {
-    --fundo: #f3f3ef;
-    --card: #ffffff;
-    --texto: #343a55;
-    --texto-secundario: #70768a;
-    --borda: #deded8;
-    --campo: #ffffff;
-    --botao: #156d87;
+    --fundo: var(--connecto-bg, #f5f5ef);
+    --card: var(--tema-surface, #ffffff);
+    --texto: var(--tema-ink, var(--connecto-navy, #30354f));
+    --texto-secundario: var(--tema-muted, #70768a);
+    --borda: var(--tema-line, #deded8);
+    --campo: var(--tema-surface, #ffffff);
+    --botao: var(--connecto-navy, #333957);
 
     margin: 0;
     min-height: 100vh;
     background-color: var(--fundo);
     color: var(--texto);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* Cabeçalho */
@@ -32,12 +32,21 @@ body.suporte-page {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 35px;
-    height: 35px;
+    width: 38px;
+    height: 38px;
     text-decoration: none;
-    font-size: 30px;
+    font-size: 26px;
     font-weight: bold;
     color: var(--texto);
+    border-radius: 50%;
+    background: var(--card);
+    border: 1px solid var(--borda);
+    box-shadow: var(--connecto-shadow, 0 3px 10px rgba(0,0,0,0.04));
+    transition: transform 0.15s ease;
+}
+
+.suporte-page .voltar:active {
+    transform: scale(0.94);
 }
 
 .suporte-page .topo-texto {
@@ -74,8 +83,9 @@ body.suporte-page {
 .suporte-page .card-solicitacao {
     background: var(--card);
     border: 1px solid var(--borda);
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 30px;
+    box-shadow: var(--connecto-shadow, 0 3px 12px rgba(0,0,0,0.05));
 }
 
 /* Título do formulário */
@@ -121,25 +131,26 @@ body.suporte-page {
 .suporte-page .campo-formulario input,
 .suporte-page .campo-formulario textarea {
     width: 100%;
-    padding: 15px;
+    padding: 14px 16px;
     background: var(--campo);
     border: 1px solid var(--borda);
-    border-radius: 10px;
-    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 12px;
+    font-family: inherit;
     font-size: 15px;
     color: var(--texto);
     outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .suporte-page .campo-formulario input::placeholder,
 .suporte-page .campo-formulario textarea::placeholder {
-    color: #9498a5;
+    color: var(--texto-secundario);
 }
 
 .suporte-page .campo-formulario input:focus,
 .suporte-page .campo-formulario textarea:focus {
     border-color: var(--botao);
-    box-shadow: 0 0 0 3px rgba(21, 109, 135, 0.12);
+    box-shadow: 0 0 0 3px rgba(51, 57, 87, 0.12);
 }
 
 .suporte-page .campo-formulario textarea {
@@ -164,32 +175,43 @@ body.suporte-page {
 
 .suporte-page .botao-enviar {
     background-color: var(--botao);
-    color: white;
-    padding: 14px 24px;
+    color: #ffffff;
+    padding: 13px 24px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
     font-family: inherit;
     cursor: pointer;
+    box-shadow: var(--connecto-shadow, 0 4px 14px rgba(45, 51, 82, 0.18));
+    transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .suporte-page .botao-enviar:hover {
-    background-color: #115a72;
+    opacity: 0.92;
+}
+
+.suporte-page .botao-enviar:active {
+    transform: scale(0.97);
 }
 
 .suporte-page .botao-cancelar {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 14px 24px;
+    padding: 13px 24px;
     background: var(--card);
     border: 1px solid var(--borda);
-    border-radius: 10px;
+    border-radius: 12px;
     color: var(--texto);
     font-size: 15px;
     font-weight: 600;
     text-decoration: none;
+    transition: transform 0.15s ease;
+}
+
+.suporte-page .botao-cancelar:active {
+    transform: scale(0.97);
 }
 
 /* Mensagens de confirmação */
@@ -197,7 +219,7 @@ body.suporte-page {
 .suporte-page .mensagem-sistema {
     padding: 14px;
     margin-bottom: 15px;
-    border-radius: 10px;
+    border-radius: 12px;
     background: #fff3e6;
     color: #885000;
 }
@@ -217,12 +239,13 @@ body.suporte-page {
 html[data-theme="dark"] body.suporte-page,
 body.suporte-page[data-theme="dark"],
 html.dark-mode body.suporte-page {
-    --fundo: #171b26;
-    --card: #252b39;
-    --texto: #f0f2f7;
-    --texto-secundario: #b1b8c6;
-    --borda: #41495b;
-    --campo: #1c2230;
+    --fundo: var(--connecto-bg, #14161f);
+    --card: var(--tema-surface, #1e2130);
+    --texto: var(--tema-ink, #e8e9f0);
+    --texto-secundario: var(--tema-muted, #9a9eb0);
+    --borda: var(--tema-line, #2e3247);
+    --campo: var(--tema-surface, #1e2130);
+    --botao: var(--connecto-navy, #3f4a7a);
 }
 
 /* Celular */

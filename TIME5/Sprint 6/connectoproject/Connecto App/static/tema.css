@@ -12,7 +12,7 @@ html[data-theme="light"] { color-scheme: light; }
 html[data-theme="dark"] {
   color-scheme: dark;
 
-  --tema-bg:         #f2f2ed;
+  --tema-bg:         #14161f;
   --tema-surface:    #1e2130;
   --tema-surface-2:  #262a3d;
   --tema-ink:        #e8e9f0;
