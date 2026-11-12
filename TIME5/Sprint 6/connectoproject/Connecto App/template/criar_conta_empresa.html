@@ -50,23 +50,47 @@
         required
       >
 
-      <input
-        type="password"
-        name="password"
-        class="auth-input"
-        placeholder="{% trans 'Senha (mínimo 6 caracteres)' %}"
-        minlength="6"
-        required
-      >
+      <div class="password-wrapper">
+        <input
+          type="password"
+          name="password"
+          class="auth-input"
+          placeholder="{% trans 'Senha (mínimo 6 caracteres)' %}"
+          minlength="6"
+          required
+        >
+        <button type="button" class="toggle-password" aria-label="{% trans 'Exibir senha' %}">
+          <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+          </svg>
+          <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
 
-      <input
-        type="password"
-        name="confirmar_senha"
-        class="auth-input"
-        placeholder="{% trans 'Confirmar senha' %}"
-        minlength="6"
-        required
-      >
+      <div class="password-wrapper">
+        <input
+          type="password"
+          name="confirmar_senha"
+          class="auth-input"
+          placeholder="{% trans 'Confirmar senha' %}"
+          minlength="6"
+          required
+        >
+        <button type="button" class="toggle-password" aria-label="{% trans 'Exibir senha' %}">
+          <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+          </svg>
+          <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
 
       {% if erro %}
         <p style="color: red; font-size: 14px; text-align: center; margin: 0;">
@@ -79,5 +103,28 @@
       </button>
     </form>
   </div>
+
+  <script>
+    document.querySelectorAll('.toggle-password').forEach(function (botao) {
+      botao.addEventListener('click', function () {
+        const campo = botao.parentElement.querySelector('input');
+        const iconEyeOff = botao.querySelector('.icon-eye-off');
+        const iconEye = botao.querySelector('.icon-eye');
+
+        if (campo.type === 'password') {
+          campo.type = 'text';
+          iconEyeOff.style.display = 'none';
+          iconEye.style.display = 'block';
+          botao.setAttribute('aria-label', "{% trans 'Ocultar senha' %}");
+        } else {
+          campo.type = 'password';
+          iconEyeOff.style.display = 'block';
+          iconEye.style.display = 'none';
+          botao.setAttribute('aria-label', "{% trans 'Exibir senha' %}");
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
