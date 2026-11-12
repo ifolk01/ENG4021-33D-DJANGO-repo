@@ -1106,7 +1106,14 @@ def esqueceu_senha(request):
 
 @login_required
 def duvidas_frequentes(request):
-    return render(request, "duvidas_frequentes.html")
+    # Empresa usa a mesma tela; muda só o botão de voltar
+    empresa = Empresa.objects.filter(usuario=request.user).first()
+
+    return render(
+        request,
+        "duvidas_frequentes.html",
+        {"empresa": empresa},
+    )
 
 
 @login_required
@@ -1158,14 +1165,111 @@ def notificacoes(request):
 def perfil_empresa(request):
     empresa = get_object_or_404(Empresa, usuario=request.user)
 
+    total_vagas = empresa.oportunidades.filter(ativa=True).count()
+    total_candidaturas = Candidatura.objects.filter(
+        oportunidade__empresa=empresa
+    ).count()
+
     return render(
         request,
         "perfil_empresa.html",
-        {"empresa": empresa},
+        {
+            "empresa": empresa,
+            "total_vagas": total_vagas,
+            "total_candidaturas": total_candidaturas,
+        },
     )
+
+
+@login_required
+def editar_perfil_empregador(request):
+    empresa = Empresa.objects.filter(usuario=request.user).first()
+
+    # Aluno não tem perfil de empresa: vai para o editar perfil dele
+    if empresa is None:
+        return redirect("editar_perfil")
+
+    erro = None
+
+    if request.method == "POST":
+        nome = request.POST.get("nome", "").strip()
+        email = request.POST.get("email", "").strip().lower()
+        descricao = request.POST.get("descricao", "").strip()
+
+        try:
+            validate_email(email)
+            email_valido = True
+        except ValidationError:
+            email_valido = False
+
+        if not nome or not email:
+            erro = "Preencha o nome da empresa e o e-mail."
+
+        elif len(nome) > 100:
+            erro = "O nome da empresa deve ter no máximo 100 caracteres."
+
+        elif not email_valido:
+            erro = "Informe um e-mail válido."
+
+        elif len(email) > 150:
+            erro = "O e-mail deve ter no máximo 150 caracteres."
+
+        elif len(descricao) > 1000:
+            erro = "A descrição deve ter no máximo 1000 caracteres."
+
+        elif (
+            Empresa.objects.filter(email__iexact=email)
+            .exclude(pk=empresa.pk)
+            .exists()
+            or User.objects.filter(email__iexact=email)
+            .exclude(pk=request.user.pk)
+            .exists()
+            or User.objects.filter(username__iexact=email)
+            .exclude(pk=request.user.pk)
+            .exists()
+        ):
+            erro = "Este e-mail já está cadastrado."
+
+        else:
+            with transaction.atomic():
+                empresa.nome = nome
+                empresa.email = email
+                empresa.descricao = descricao
+                empresa.save(update_fields=["nome", "email", "descricao"])
+
+                # O login do empregador procura a empresa pelo e-mail,
+                # então o e-mail do usuário acompanha o da empresa
+                request.user.email = email
+                request.user.save(update_fields=["email"])
+
+            messages.success(request, "Perfil atualizado com sucesso!")
+            return redirect("perfil_empresa")
+
+        # Se deu erro, a tela volta com o que a pessoa digitou
+        empresa.nome = nome
+        empresa.email = email
+        empresa.descricao = descricao
+
+    return render(
+        request,
+        "editar_perfil_empregador.html",
+        {
+            "empresa": empresa,
+            "erro": erro,
+        },
+    )
+
+
 @login_required
 def configuracoes(request):
-    return render(request, "configuracoes.html")
+    # Empresa usa a mesma tela, com os links do empregador
+    empresa = Empresa.objects.filter(usuario=request.user).first()
+
+    return render(
+        request,
+        "configuracoes.html",
+        {"empresa": empresa},
+    )
 
 @require_POST
 @login_required

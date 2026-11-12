@@ -1,0 +1,87 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Connecto — {% trans "Candidaturas recebidas" %}</title>
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+  <link rel="stylesheet" href="{% static 'candidaturas.css' %}">
+  <link rel="stylesheet" href="{% static 'candidaturas_empresa.css' %}">
+  {% include 'includes/tema_head.html' %}
+</head>
+<body class="connecto-page applications-page">
+  <main class="standard-shell applications-shell">
+    <header class="applications-header">
+      <h2>{% trans "Candidaturas recebidas" %}</h2>
+      <p class="empresa-subtitulo">{{ empresa.nome }}</p>
+    </header>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="aviso-empresa {{ message.tags }}" role="status">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    {% if candidaturas %}
+      <section class="lista-recebidas" aria-label="{% trans 'Candidaturas recebidas' %}">
+        {% for candidatura in candidaturas %}
+          <article class="card-recebida">
+            <div class="card-recebida-topo">
+              <div class="candidato-avatar" aria-hidden="true">
+                {% if candidatura.usuario.first_name %}{{ candidatura.usuario.first_name|slice:":1"|upper }}{{ candidatura.usuario.last_name|slice:":1"|upper }}{% else %}{{ candidatura.usuario.username|slice:":2"|upper }}{% endif %}
+              </div>
+
+              <div class="candidato-info">
+                <h3>{{ candidatura.usuario.get_full_name|default:candidatura.usuario.username }}</h3>
+                <p>{{ candidatura.oportunidade.titulo }}</p>
+              </div>
+
+              <span class="application-status application-status--{{ candidatura.status }}">
+                {{ candidatura.get_status_display }}
+              </span>
+            </div>
+
+            <p class="candidatura-data">
+              {% trans "Recebida em" %} {{ candidatura.data_candidatura|date:"d/m/Y" }}
+            </p>
+
+            <form method="POST" action="{% url 'atualizar_status_candidatura' candidatura.id %}" class="form-status">
+              {% csrf_token %}
+
+              <label for="status-{{ candidatura.id }}">{% trans "Mudar status" %}</label>
+              <div class="form-status-linha">
+                <select id="status-{{ candidatura.id }}" name="status">
+                  {% for valor, nome in status_opcoes %}
+                    <option value="{{ valor }}" {% if candidatura.status == valor %}selected{% endif %}>{{ nome }}</option>
+                  {% endfor %}
+                </select>
+
+                <button type="submit" class="botao-atualizar">{% trans "Atualizar" %}</button>
+              </div>
+
+              <input
+                type="text"
+                name="observacao"
+                maxlength="255"
+                placeholder="{% trans 'Observação para o aluno (opcional)' %}"
+                aria-label="{% trans 'Observação para o aluno' %}"
+              >
+            </form>
+          </article>
+        {% endfor %}
+      </section>
+    {% else %}
+      <div class="connecto-empty-state">
+        <p class="connecto-empty-state__texto">
+          {% trans "Nenhuma candidatura recebida ainda. Quando um aluno se candidatar a uma vaga da sua empresa, ela aparece aqui." %}
+        </p>
+        <a href="{% url 'perfil_empresa' %}" class="primary-link">{% trans "Voltar ao perfil" %}</a>
+      </div>
+    {% endif %}
+  </main>
+
+  {% include 'includes/bottom_nav_empresa.html' with pagina_ativa='candidaturas' %}
+</body>
+</html>

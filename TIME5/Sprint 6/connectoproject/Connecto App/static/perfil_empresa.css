@@ -9,6 +9,19 @@
     overflow-wrap: anywhere;
 }
 
+/* Logo da empresa (iniciais) */
+.perfil-empresa .logo-empresa {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 12px;
+    border-radius: 18px;
+    background-color: #116A85;
+    color: #FFFFFF;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 72px;
+}
+
 /* Botão de editar perfil */
 .perfil-empresa .botao-editar {
     max-width: 220px;
@@ -19,14 +32,36 @@
     opacity: 1;
 }
 
-.perfil-empresa .botao-editar:disabled {
-    cursor: default;
+.perfil-empresa .botao-editar:hover {
+    background-color: #0D5469;
+}
+
+/* Contador de candidaturas leva para a lista de candidaturas */
+.perfil-empresa .contador-link {
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.2s;
+}
+
+.perfil-empresa .contador-link:hover {
+    border-color: #116A85;
+}
+
+/* Aviso de perfil atualizado */
+.perfil-empresa .aviso {
+    margin: 12px 0 0;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background-color: var(--tema-cyan-soft, #DDEEF4);
+    color: #116A85;
+    font-size: 14px;
+    text-align: center;
 }
 
 /* Informações da empresa */
 .perfil-empresa .dados {
     background-color: var(--tema-surface, #FFFFFF);
-    border: 1px solid var(--tema-border, #E4E4DD);
+    border: 1px solid var(--tema-line, #E4E4DD);
 }
 
 .perfil-empresa .linha {

@@ -20,6 +20,7 @@ urlpatterns = [
     path("perfil/", views.perfil, name="perfil"),
     path("editar-perfil/", views.editar_perfil, name="editar_perfil"),
     path("perfil-empresa/", views.perfil_empresa, name="perfil_empresa"),
+    path("perfil-empresa/editar/", views.editar_perfil_empregador, name="editar_perfil_empregador"),
 
     path("match/", views.match, name="match"),
     path("match/<int:vaga_id>/acao/", views.match_acao, name="match_acao"),

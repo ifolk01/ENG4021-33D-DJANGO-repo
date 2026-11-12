@@ -1,14 +1,16 @@
-
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Perfil da Empresa | CONNECTO</title>
+    <title>{% trans "Perfil da Empresa" %} | CONNECTO</title>
 
     <link rel="stylesheet" href="{% static 'perfil.css' %}">
     <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+    <link rel="stylesheet" href="{% static 'botao_configuracoes.css' %}">
+    <link rel="stylesheet" href="{% static 'modal_sair.css' %}">
     <link rel="stylesheet" href="{% static 'perfil_empresa.css' %}">
 
     {% include 'includes/tema_head.html' %}
@@ -16,32 +18,95 @@
 
 <body class="connecto-page">
     <main class="standard-shell profile-shell perfil-empresa">
-        <h1>Perfil</h1>
+        <h1>{% trans "Perfil" %}</h1>
+
+        <a href="{% url 'duvidas_frequentes' %}"
+           class="botao-ajuda"
+           title="{% trans 'Dúvidas frequentes' %}"
+           aria-label="{% trans 'Dúvidas frequentes' %}">?</a>
+
+        <a href="{% url 'configuracoes' %}"
+           class="botao-config"
+           title="{% trans 'Configurações' %}"
+           aria-label="{% trans 'Configurações' %}">⚙️</a>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="aviso {{ message.tags }}" role="status">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
         <div class="identificacao">
-            <h2>{{ empresa.nome }}</h2>
-            <p class="curso">Perfil do empregador</p>
+            <div class="logo-empresa" aria-hidden="true">{{ empresa.iniciais }}</div>
 
-            <button class="botao botao-editar" type="button" disabled>
-                Editar perfil
-            </button>
+            <h2>{{ empresa.nome }}</h2>
+            <p class="curso">{% trans "Perfil do empregador" %}</p>
+
+            <a href="{% url 'editar_perfil_empregador' %}" class="botao botao-editar">
+                {% trans "Editar perfil" %}
+            </a>
+        </div>
+
+        <div class="contadores">
+            <div class="contador">
+                <h3>{{ total_vagas }}</h3>
+                <p>{% trans "Vagas ativas" %}</p>
+            </div>
+
+            <a href="{% url 'candidaturas_empresa' %}" class="contador contador-link">
+                <h3>{{ total_candidaturas }}</h3>
+                <p>{% trans "Candidaturas" %}</p>
+            </a>
         </div>
 
         <div class="dados">
             <div class="linha">
                 <span class="icone">📧</span>
-                <span>E-mail</span>
+                <span>{% trans "E-mail" %}</span>
                 <span class="valor">{{ empresa.email }}</span>
             </div>
 
             <div class="linha">
                 <span class="icone">🏢</span>
-                <span>Descrição</span>
+                <span>{% trans "Descrição" %}</span>
                 <span class="valor">
-                    {{ empresa.descricao|default:"Nenhuma descrição cadastrada." }}
+                    {{ empresa.descricao|default:_("Nenhuma descrição cadastrada.") }}
                 </span>
             </div>
         </div>
+
+        <form id="form-sair" class="form-sair" method="POST" action="{% url 'sair_da_conta' %}">
+            {% csrf_token %}
+
+            <button type="button" id="abrir-modal-sair" class="botao botao-sair">
+                {% trans "Sair da conta" %}
+            </button>
+        </form>
     </main>
+
+    {% include 'modal_sair.html' %}
+    {% include 'includes/bottom_nav_empresa.html' with pagina_ativa='perfil' %}
+
+    <script>
+        const botaoSair = document.getElementById("abrir-modal-sair");
+        const modalSair = document.getElementById("modal-sair");
+        const cancelarSair = document.getElementById("cancelar-sair");
+
+        botaoSair.addEventListener("click", function () {
+            modalSair.showModal();
+        });
+
+        cancelarSair.addEventListener("click", function () {
+            modalSair.close();
+        });
+
+        modalSair.addEventListener("click", function (event) {
+            if (event.target === modalSair) {
+                modalSair.close();
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,141 @@
+/* Tela de candidaturas recebidas pelo empregador */
+.empresa-subtitulo {
+  margin: -14px 0 18px;
+  color: var(--tema-muted, #6B6F80);
+  font-size: 14px;
+}
+
+.aviso-empresa {
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background-color: var(--tema-cyan-soft, #DDEEF4);
+  color: #116A85;
+  font-size: 14px;
+}
+
+.aviso-empresa.error {
+  background-color: var(--tema-red-soft, #F9E8E7);
+  color: #C85A5A;
+}
+
+.lista-recebidas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Card de cada candidatura */
+.card-recebida {
+  padding: 16px;
+  border: 1px solid var(--tema-line, #E4E4DD);
+  border-radius: 18px;
+  background-color: var(--tema-surface, #FFFFFF);
+}
+
+.card-recebida-topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.candidato-avatar {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: var(--tema-surface-2, #E6E6F2);
+  color: #464B71;
+  font-weight: 600;
+  line-height: 46px;
+  text-align: center;
+}
+
+html[data-theme="dark"] .candidato-avatar {
+  color: var(--tema-ink, #E8E9F0);
+}
+
+.candidato-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.candidato-info h3 {
+  margin: 0;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.candidato-info p {
+  margin: 2px 0 0;
+  color: var(--tema-muted, #6B6F80);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.card-recebida .application-status {
+  flex-shrink: 0;
+}
+
+.candidatura-data {
+  margin: 10px 0 0;
+  color: var(--tema-muted, #6B6F80);
+  font-size: 13px;
+}
+
+/* Formulário para mudar o status */
+.form-status {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--tema-line, #E4E4DD);
+}
+
+.form-status label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--tema-muted, #6B6F80);
+  font-size: 13px;
+}
+
+.form-status-linha {
+  display: flex;
+  gap: 8px;
+}
+
+.form-status select,
+.form-status input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--tema-line, #E4E4DD);
+  border-radius: 10px;
+  background-color: var(--tema-surface-2, #FAFAF7);
+  color: var(--tema-ink, #33364F);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-status input {
+  margin-top: 8px;
+}
+
+.form-status select:focus,
+.form-status input:focus {
+  outline: none;
+  border-color: #116A85;
+}
+
+.botao-atualizar {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #116A85;
+  color: #FFFFFF;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao-atualizar:hover {
+  background-color: #0D5469;
+}
