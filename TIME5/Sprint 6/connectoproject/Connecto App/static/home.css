@@ -1,29 +1,7 @@
-/* FORÇA O FUNDO ESCURO NO BODY E CONTAINER PRINCIPAL */
-body.connecto-page,
-[data-theme="dark"] body.connecto-page,
-[data-theme="dark"] .connecto-page {
-  background-color: var(--tema-bg, #121212) !important;
-  color: var(--tema-ink, #f8f9fa);
-}
-
 .home-shell {
   padding: max(14px, env(safe-area-inset-top)) 14px 8px;
-  background-color: var(--tema-bg, #121212);
-  min-height: 100vh;
 }
 
-/* AJUSTE DO CABEÇALHO E ÍCONES NO MODO ESCURO */
-.home-bell {
-  color: var(--tema-ink, #ffffff);
-}
-
-.home-bell svg {
-  fill: var(--tema-ink, currentColor);
-}
-
-.home-section-title {
-  color: var(--tema-muted, #a0a0a0);
-}
 .home-topbar {
   min-height: 68px;
   display: flex;
@@ -50,7 +28,7 @@ body.connecto-page,
   border: 0;
   border-radius: 50%;
   background: transparent;
-  color: var(--tema-ink, #30354f);
+  color: var(--tema-ink, var(--connecto-navy, #30354f));
   text-decoration: none;
 }
 
@@ -65,7 +43,7 @@ body.connecto-page,
   right: 6px;
   width: 7px;
   height: 7px;
-  border: 2px solid var(--tema-bg, #f2f2ed);
+  border: 2px solid var(--connecto-bg, var(--tema-bg, #f2f2ed));
   border-radius: 50%;
   background: #e6aa28;
 }
@@ -144,7 +122,7 @@ body.connecto-page,
 }
 
 .filter-chip:hover {
-  border-color: var(--tema-ink, #333957);
+  border-color: var(--connecto-navy, #333957);
 }
 
 .filter-chip:active {
@@ -152,8 +130,8 @@ body.connecto-page,
 }
 
 .filter-chip.active {
-  background: var(--tema-ink, #333957);
-  border-color: var(--tema-ink, #333957);
+  background: var(--connecto-navy, #333957);
+  border-color: var(--connecto-navy, #333957);
   color: #ffffff;
 }
 
@@ -204,7 +182,7 @@ body.connecto-page,
   place-items: center;
   border-radius: 14px;
   background: var(--tema-cyan-soft, #dff2f7);
-  color: var(--tema-ink, #1592b3);
+  color: var(--connecto-cyan, #1592b3);
 }
 
 .job-card__icon svg {
@@ -329,10 +307,4 @@ body.connecto-page,
   .job-card__title {
     font-size: 14px;
   }
-}
-
-html, 
-body.connecto-page, 
-.home-shell {
-    background-color: var(--tema-bg, #121212) !important;
 }

@@ -11,7 +11,7 @@
     <script src="{% static 'conversa.js' %}" defer></script>
     {% include 'includes/tema_head.html' %}
 </head>
-<body>
+<body class="connecto-page chat-page">
 <div class="app-shell conversa-shell">
     <header class="chat-header">
         <a href="{% url 'mensagens' %}" class="chat-back" aria-label="{% trans 'Voltar para mensagens' %}">←</a>
@@ -27,6 +27,7 @@
 
     <main class="chat-content" id="chat-content">
         <section class="match-notice">
+            <span class="match-notice-icon" aria-hidden="true">📋</span>
             <strong>{% trans "Você se candidatou a esta vaga" %}</strong>
             <span>{{ conversa.oportunidade.titulo }}</span>
         </section>

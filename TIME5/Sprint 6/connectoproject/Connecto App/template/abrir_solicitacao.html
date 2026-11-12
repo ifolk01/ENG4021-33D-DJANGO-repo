@@ -8,11 +8,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connecto - {% trans "Abrir Solicitação" %}</title>
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
   <link rel="stylesheet" href="{% static 'abrir_solicitacao.css' %}">
   {% include 'includes/tema_head.html' %}
 </head>
 
-<body class="suporte-page">
+<body class="connecto-page suporte-page">
 
   <header class="topo">
     <a href="{% url 'duvidas_frequentes' %}" class="voltar" aria-label="Voltar">‹</a>
