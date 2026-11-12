@@ -1,0 +1,93 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecto - {% trans "Editar perfil da empresa" %}</title>
+  <link rel="stylesheet" href="{% static 'editar_perfil_empregador.css' %}">
+  {% include 'includes/tema_head.html' %}
+</head>
+
+<body>
+
+  <div class="topo">
+    <a href="{% url 'perfil_empresa' %}" class="voltar" aria-label="{% trans 'Voltar' %}">‹</a>
+    <h1>{% trans "Editar perfil" %}</h1>
+    <span class="espaco"></span>
+  </div>
+
+  <form method="post" action="{% url 'editar_perfil_empregador' %}">
+    {% csrf_token %}
+
+    {% if erro %}
+      <p class="mensagem-erro" role="alert">{{ erro }}</p>
+    {% endif %}
+
+    <div class="logo-empresa">
+      <div class="avatar">{{ empresa.iniciais }}</div>
+      <p class="tipo-conta">{% trans "Conta de empregador" %}</p>
+    </div>
+
+    <div class="card">
+      <h2>{% trans "Dados da empresa" %}</h2>
+
+      <label for="nome">{% trans "Nome da empresa" %}</label>
+      <input
+        type="text"
+        id="nome"
+        name="nome"
+        maxlength="100"
+        value="{{ empresa.nome }}"
+        required
+      >
+
+      <label for="email">{% trans "E-mail de contato" %}</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        maxlength="150"
+        value="{{ empresa.email }}"
+        required
+      >
+      <p class="dica">{% trans "Esse é o e-mail usado para entrar no Connecto." %}</p>
+    </div>
+
+    <div class="card">
+      <h2>{% trans "Sobre a empresa" %}</h2>
+
+      <label for="descricao">{% trans "Descrição" %}</label>
+      <textarea
+        id="descricao"
+        name="descricao"
+        rows="5"
+        maxlength="1000"
+        placeholder="{% trans 'Conte o que a empresa faz e o que oferece para os estagiários.' %}"
+      >{{ empresa.descricao }}</textarea>
+      <p class="contador-texto"><span id="contador-descricao">{{ empresa.descricao|length }}</span>/1000</p>
+    </div>
+
+    <button type="submit" class="botao botao-salvar">
+      {% trans "Salvar alterações" %}
+    </button>
+
+    <a href="{% url 'perfil_empresa' %}" class="botao botao-cancelar">
+      {% trans "Cancelar" %}
+    </a>
+  </form>
+
+  <script>
+    // Atualiza o contador de caracteres da descrição enquanto a pessoa digita
+    const descricao = document.getElementById("descricao");
+    const contador = document.getElementById("contador-descricao");
+
+    descricao.addEventListener("input", function () {
+      contador.textContent = descricao.value.length;
+    });
+  </script>
+
+</body>
+</html>

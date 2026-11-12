@@ -15,7 +15,11 @@
 <body>
 
   <div class="topo">
-    <a href="{% url 'perfil' %}" class="voltar">‹</a>
+    {% if empresa %}
+      <a href="{% url 'perfil_empresa' %}" class="voltar">‹</a>
+    {% else %}
+      <a href="{% url 'perfil' %}" class="voltar">‹</a>
+    {% endif %}
     <h1>{% trans "Central de Ajuda" %}</h1>
     <span class="icone-ajuda">🎧</span>
   </div>
