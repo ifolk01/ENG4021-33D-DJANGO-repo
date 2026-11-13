@@ -76,11 +76,11 @@ function atualizarBotao() {
         Notification.permission === "granted"
     ) {
         botao.textContent =
-            "Ativar Web Push";
+            botao.dataset.labelWebpush || "Ativar Web Push";
     } else {
         botao.textContent =
-            "Ativar avisos no navegador";
-    }
+            botao.dataset.labelAtivar || "Ativar avisos no navegador";
+    }   
 }
 
 
@@ -201,14 +201,12 @@ document.addEventListener(
                         await window.ativarPush();
 
                     if (sucesso) {
-
                         console.log(
                             "[Connecto Push] Web Push ativado!"
                         );
 
                         botao.textContent =
-                            "Avisos ativados ✓";
-
+                            botao.dataset.labelAtivados || "Avisos ativados ✓";
                     } else {
 
                         console.error(

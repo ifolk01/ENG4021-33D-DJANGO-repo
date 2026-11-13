@@ -86,7 +86,7 @@
             value="{{ curso_item.id }}"
             {% if perfil_usuario.curso_id == curso_item.id %}selected{% endif %}
           >
-            {{ curso_item.nome }}
+            {% trans curso_item.nome %}
           </option>
         {% empty %}
           <option value="" disabled>
@@ -101,16 +101,16 @@
           {% trans "Selecione seu período" %}
         </option>
 
-        <option value="1" {% if perfil_usuario.periodo == 1 %}selected{% endif %}>1º</option>
-        <option value="2" {% if perfil_usuario.periodo == 2 %}selected{% endif %}>2º</option>
-        <option value="3" {% if perfil_usuario.periodo == 3 %}selected{% endif %}>3º</option>
-        <option value="4" {% if perfil_usuario.periodo == 4 %}selected{% endif %}>4º</option>
-        <option value="5" {% if perfil_usuario.periodo == 5 %}selected{% endif %}>5º</option>
-        <option value="6" {% if perfil_usuario.periodo == 6 %}selected{% endif %}>6º</option>
-        <option value="7" {% if perfil_usuario.periodo == 7 %}selected{% endif %}>7º</option>
-        <option value="8" {% if perfil_usuario.periodo == 8 %}selected{% endif %}>8º</option>
-        <option value="9" {% if perfil_usuario.periodo == 9 %}selected{% endif %}>9º</option>
-        <option value="10" {% if perfil_usuario.periodo == 10 %}selected{% endif %}>10º</option>
+        <option value="1" {% if perfil_usuario.periodo == 1 %}selected{% endif %}>{% trans "1º" %}</option>
+        <option value="2" {% if perfil_usuario.periodo == 2 %}selected{% endif %}>{% trans "2º" %}</option>
+        <option value="3" {% if perfil_usuario.periodo == 3 %}selected{% endif %}>{% trans "3º" %}</option>
+        <option value="4" {% if perfil_usuario.periodo == 4 %}selected{% endif %}>{% trans "4º" %}</option>
+        <option value="5" {% if perfil_usuario.periodo == 5 %}selected{% endif %}>{% trans "5º" %}</option>
+        <option value="6" {% if perfil_usuario.periodo == 6 %}selected{% endif %}>{% trans "6º" %}</option>
+        <option value="7" {% if perfil_usuario.periodo == 7 %}selected{% endif %}>{% trans "7º" %}</option>
+        <option value="8" {% if perfil_usuario.periodo == 8 %}selected{% endif %}>{% trans "8º" %}</option>
+        <option value="9" {% if perfil_usuario.periodo == 9 %}selected{% endif %}>{% trans "9º" %}</option>
+        <option value="10" {% if perfil_usuario.periodo == 10 %}selected{% endif %}>{% trans "10º" %}</option>
       </select>
 
       <label for="instituicao">{% trans "Instituição" %}</label>

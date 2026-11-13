@@ -70,7 +70,7 @@
 
       <h2>{{ nome }}</h2>
 
-      <p class="curso">{{ curso }}</p>
+      <p class="curso">{% trans curso %}</p>
 
       <a href="{% url 'editar_perfil' %}" class="botao botao-editar">
         {% trans "Editar perfil" %}
@@ -108,13 +108,13 @@
       <div class="linha">
         <span class="icone">🎓</span>
         <span>{% trans "Curso" %}</span>
-        <span class="valor">{{ curso }}</span>
+        <span class="valor">{% trans curso %}</span>
       </div>
 
       <div class="linha">
         <span class="icone">🏫</span>
         <span>{% trans "Instituição" %}</span>
-        <span class="valor">{{ instituicao }}</span>
+        <span class="valor">{% trans instituicao %}</span>
       </div>
 
     </div>
