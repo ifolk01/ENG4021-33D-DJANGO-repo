@@ -368,10 +368,12 @@ class Mensagem(models.Model):
         on_delete=models.CASCADE,
         related_name="mensagens",
     )
+    
     autor = models.CharField(max_length=20, choices=AUTORES)
     texto = models.TextField()
     criada_em = models.DateTimeField(auto_now_add=True)
-
+    #mudança aqui 
+    lida_pelo_candidato = models.BooleanField(default=False)
     class Meta:
         ordering = ["criada_em", "id"]
 
