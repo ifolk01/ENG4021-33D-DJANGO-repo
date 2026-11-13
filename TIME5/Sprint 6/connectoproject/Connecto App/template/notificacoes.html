@@ -25,9 +25,15 @@
 
     <p class="notif-intro">{% trans "Lembretes das vagas em que você se candidatou." %}</p>
 
-    <button type="button" id="btn-ativar-avisos" class="notif-enable" hidden>
-        {% trans "Ativar avisos no navegador" %}
-      </button>
+    <button
+      type="button"
+      id="btn-ativar-avisos"
+      class="notif-enable"
+      data-label-ativar="{% trans 'Ativar avisos no navegador' %}"
+      hidden
+    >
+      {% trans "Ativar avisos no navegador" %}
+    </button>
 
     <!-- Lista de notificações -->
     <section class="notif-list" aria-label="{% trans 'Lista de notificações' %}">

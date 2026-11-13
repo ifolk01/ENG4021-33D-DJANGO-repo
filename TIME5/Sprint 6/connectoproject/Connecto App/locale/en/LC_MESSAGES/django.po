@@ -1680,8 +1680,6 @@ msgid "Vagas"
 msgstr "Jobs"
 
 #: .\template\includes\bottom_nav.html:17
-#, fuzzy
-#| msgid "Minhas Vagas"
 msgid "Minhas"
 msgstr "My Jobs"
 
@@ -1779,10 +1777,6 @@ msgstr "Back to Home"
 #: .\template\notificacoes.html:25
 msgid "Lembretes das vagas em que você se candidatou."
 msgstr "Reminders for the jobs you applied to."
-
-#: .\template\notificacoes.html:28
-msgid "Ativar avisos no navegador"
-msgstr "Enable browser notifications"
 
 #: .\template\notificacoes.html:32
 msgid "Lista de notificações"
@@ -1883,24 +1877,213 @@ msgstr "About the company"
 msgid "Candidatar-se"
 msgstr "Apply"
 
-#~ msgid "Dados BI"
-#~ msgstr "Data & BI"
+msgid "Dados BI"
+msgstr "Data & BI"
 
-#~ msgid "Relações Internacionais"
-#~ msgstr "International Relations"
+msgid "Relações Internacionais"
+msgstr "International Relations"
 
-#~ msgid "Recursos Humanos"
-#~ msgstr "Human Resources"
+msgid "Recursos Humanos"
+msgstr "Human Resources"
 
-#~ msgid "Negócios"
-#~ msgstr "Business"
+msgid "Negócios"
+msgstr "Business"
 
-#~ msgid "Meio Ambiente"
-#~ msgstr "Environment"
+msgid "Meio Ambiente"
+msgstr "Environment"
 
-#~ msgid "Logística"
-#~ msgstr "Logistics"
+msgid "Logística"
+msgstr "Logistics"
 
-#~ msgid "Educação"
-#~ msgstr "Education"
+msgid "Educação"
+msgstr "Education"
 
+msgid "Aluno"
+msgstr "Student"
+
+msgid "Empregador"
+msgstr "Employer"
+
+msgid "Enviada"
+msgstr "Submitted"
+
+msgid "Em análise"
+msgstr "Under review"
+
+msgid "Entrevista"
+msgstr "Interview"
+
+msgid "Aprovada"
+msgstr "Approved"
+
+msgid "Recusada"
+msgstr "Rejected"
+
+msgid "Remoto"
+msgstr "Remote"
+
+msgid "Híbrido"
+msgstr "Hybrid"
+
+msgid "Presencial"
+msgstr "On-site"
+
+msgid "Voltar para mensagens"
+msgstr "Back to messages"
+
+msgid "Sobre o assistente"
+msgstr "About the assistant"
+
+msgid "Assistente da vaga"
+msgstr "Job assistant"
+
+msgid "Pergunte sobre esta oportunidade. As respostas usam somente as informações da descrição publicada da vaga."
+msgstr "Ask about this opportunity. Answers use only the information from the published job description."
+
+msgid "Pergunte sobre a vaga..."
+msgstr "Ask about the job..."
+
+msgid "Enviar mensagem"
+msgstr "Send message"
+
+msgid "Ativar avisos no navegador"
+msgstr "Enable browser notifications"
+
+msgid "Ativar Web Push"
+msgstr "Enable Web Push"
+
+msgid "Avisos ativados ✓"
+msgstr "Notifications enabled ✓"
+
+# Cursos
+msgid "Engenharia Química"
+msgstr "Chemical Engineering"
+
+msgid "Engenharia Mecânica"
+msgstr "Mechanical Engineering"
+
+msgid "Engenharia Elétrica"
+msgstr "Electrical Engineering"
+
+msgid "Engenharia de Computação"
+msgstr "Computer Engineering"
+
+msgid "Sistemas de Informação"
+msgstr "Information Systems"
+
+# Editar Perfil
+msgid "Selecione seu curso"
+msgstr "Select your degree program"
+
+msgid "Nenhum curso cadastrado"
+msgstr "No degree program registered"
+
+msgid "Selecione seu período"
+msgstr "Select your term"
+
+msgid "Ex.: PUC-Rio"
+msgstr "e.g., PUC-Rio"
+
+# Abrir Solicitação
+msgid "Voltar"
+msgstr "Back"
+
+msgid "Abrir Solicitação"
+msgstr "Open Request"
+
+msgid "Central de Ajuda Connecto"
+msgstr "Connecto Help Center"
+
+msgid "Como podemos ajudar?"
+msgstr "How can we help?"
+
+msgid "Preencha as informações abaixo para enviar sua dúvida ou relatar um problema."
+msgstr "Fill in the information below to send your question or report a problem."
+
+msgid "Assunto da solicitação"
+msgstr "Request subject"
+
+msgid "Ex: Problema ao acessar minha conta"
+msgstr "e.g., Issue accessing my account"
+
+msgid "Descreva seu problema"
+msgstr "Describe your issue"
+
+msgid "Conte o que aconteceu ou descreva sua dúvida..."
+msgstr "Tell us what happened or describe your question..."
+
+msgid "Máximo de 3.000 caracteres."
+msgstr "Maximum 3,000 characters."
+
+msgid "Enviar solicitação"
+msgstr "Send request"
+
+# Candidaturas Recebidas
+msgid "Candidaturas recebidas"
+msgstr "Received applications"
+
+msgid "Recebida em"
+msgstr "Received on"
+
+msgid "Mudar status"
+msgstr "Change status"
+
+msgid "Atualizar"
+msgstr "Update"
+
+msgid "Observação para o aluno (opcional)"
+msgstr "Note for the student (optional)"
+
+msgid "Observação para o aluno"
+msgstr "Note for the student"
+
+msgid "Nenhuma candidatura recebida ainda. Quando um aluno se candidatar a uma vaga da sua empresa, ela aparece aqui."
+msgstr "No applications received yet. When a student applies to one of your company's jobs, it will appear here."
+
+msgid "Voltar ao perfil"
+msgstr "Back to profile"
+
+# Perfil da Empresa
+msgid "Perfil da Empresa"
+msgstr "Company Profile"
+
+msgid "Perfil do empregador"
+msgstr "Employer profile"
+
+msgid "Vagas ativas"
+msgstr "Active jobs"
+
+msgid "Descrição"
+msgstr "Description"
+
+msgid "Nenhuma descrição cadastrada."
+msgstr "No description provided."
+
+# Editar Perfil Empregador
+msgid "Editar perfil da empresa"
+msgstr "Edit company profile"
+
+msgid "Conta de empregador"
+msgstr "Employer account"
+
+msgid "Dados da empresa"
+msgstr "Company information"
+
+msgid "Nome da empresa"
+msgstr "Company name"
+
+msgid "E-mail de contato"
+msgstr "Contact email"
+
+msgid "Esse é o e-mail usado para entrar no Connecto."
+msgstr "This is the email used to log in to Connecto."
+
+msgid "Conte o que a empresa faz e o que oferece para os estagiários."
+msgstr "Tell us what the company does and what it offers to interns."
+
+# Barra Inferior Empresa
+msgid "Ajustes"
+msgstr "Settings"
+
+msgid "Empresa"
+msgstr "Company"

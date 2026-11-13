@@ -39,10 +39,10 @@
 
               <div class="application-tags">
                 {% if vaga.modalidade %}
-                  <span class="application-tag application-tag--mode">{{ vaga.modalidade }}</span>
+                  <span class="application-tag application-tag--mode">{% trans vaga.modalidade %}</span>
                 {% endif %}
                 {% if vaga.area %}
-                  <span class="application-tag application-tag--area">{{ vaga.area }}</span>
+                  <span class="application-tag application-tag--area">{% trans vaga.area %}</span>
                 {% endif %}
               </div>
             </div>

@@ -39,7 +39,7 @@
               </div>
 
               <span class="application-status application-status--{{ candidatura.status }}">
-                {{ candidatura.get_status_display }}
+                {% trans candidatura.get_status_display %}
               </span>
             </div>
 
@@ -54,7 +54,7 @@
               <div class="form-status-linha">
                 <select id="status-{{ candidatura.id }}" name="status">
                   {% for valor, nome in status_opcoes %}
-                    <option value="{{ valor }}" {% if candidatura.status == valor %}selected{% endif %}>{{ nome }}</option>
+                    <option value="{{ valor }}" {% if candidatura.status == valor %}selected{% endif %}>{% trans nome %}</option>
                   {% endfor %}
                 </select>
 
