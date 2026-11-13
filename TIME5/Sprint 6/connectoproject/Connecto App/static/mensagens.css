@@ -925,3 +925,29 @@
     max-width: 76%;
   }
 }
+
+/* =========================================
+   LAYOUT RESPONSIVO — TABLET / DESKTOP
+   ========================================= */
+
+@media (min-width: 700px) {
+  .messages-shell {
+    width: min(100%, 900px);
+    padding: var(--connecto-space-xl) var(--connecto-desktop-gutter) var(--connecto-space-2xl);
+  }
+
+  .messages-search {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .messages-shell {
+    width: min(100%, 1100px);
+  }
+
+  .conversation-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--connecto-space-base);
+  }
+}

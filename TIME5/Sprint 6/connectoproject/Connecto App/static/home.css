@@ -659,3 +659,45 @@
       var(--connecto-page-gutter);
   }
 }
+
+/* =========================================
+   LAYOUT RESPONSIVO — TABLET / DESKTOP
+   ========================================= */
+
+@media (min-width: 700px) {
+  .home-shell {
+    padding: var(--connecto-space-xl) var(--connecto-desktop-gutter) var(--connecto-space-2xl);
+  }
+
+  .home-logo {
+    display: none;
+  }
+
+  .home-topbar {
+    min-height: 48px;
+    justify-content: flex-end;
+    padding-top: 0;
+  }
+
+  .home-search {
+    max-width: 760px;
+  }
+
+  .filters-scroll {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+}
+
+@media (min-width: 900px) {
+  .home-jobs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--connecto-space-base);
+  }
+}
+
+@media (min-width: 1280px) {
+  .home-jobs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

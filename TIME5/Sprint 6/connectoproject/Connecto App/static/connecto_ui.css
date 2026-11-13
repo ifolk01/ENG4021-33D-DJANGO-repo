@@ -565,3 +565,178 @@ a {
       rgba(38, 40, 47, .14);
   }
 }
+
+
+/* =========================================
+   RESPONSIVIDADE ESTRUTURAL
+   Mobile: bottom bar
+   Tablet: navigation rail
+   Desktop: sidebar completa
+   ========================================= */
+
+:root {
+  --connecto-rail-width: 84px;
+  --connecto-sidebar-width: 236px;
+  --connecto-side-nav-width: 0px;
+  --connecto-tablet-width: 900px;
+  --connecto-desktop-width: 1180px;
+  --connecto-desktop-gutter: clamp(24px, 3vw, 40px);
+}
+
+.nav-brand {
+  display: none;
+  color: var(--tema-ink, var(--connecto-navy));
+  text-decoration: none;
+}
+
+.nav-brand img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.nav-brand__name {
+  display: none;
+  font-size: var(--connecto-text-xl);
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.nav-label--full {
+  display: none;
+}
+
+.bottom-nav-empresa {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (min-width: 700px) {
+  :root {
+    --connecto-side-nav-width: var(--connecto-rail-width);
+  }
+
+  body.connecto-page {
+    padding-left: var(--connecto-rail-width);
+    padding-bottom: 0;
+  }
+
+  .app-shell,
+  .standard-shell {
+    width: min(100%, var(--connecto-tablet-width));
+    margin: 0 auto;
+  }
+
+  .bottom-nav,
+  .bottom-nav-empresa {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: none;
+    width: var(--connecto-rail-width);
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: var(--connecto-space-sm);
+    padding: var(--connecto-space-lg) var(--connecto-space-md);
+    border: 0;
+    border-right: 1px solid var(--tema-line, var(--connecto-line));
+    border-radius: 0;
+    background: rgba(255, 255, 255, .96);
+    box-shadow: 8px 0 28px rgba(38, 40, 47, .06);
+  }
+
+  .nav-brand {
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--connecto-space-md);
+  }
+
+  .nav-item {
+    width: 100%;
+    height: 58px;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 3px;
+    padding: var(--connecto-space-sm);
+    border-radius: var(--connecto-radius-md);
+  }
+
+  .nav-item:hover {
+    background: rgba(48, 53, 79, .055);
+  }
+
+  .nav-label,
+  .nav-label--short,
+  .nav-label--full {
+    display: none;
+  }
+
+  .nav-safe-bottom {
+    padding-bottom: var(--connecto-space-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --connecto-side-nav-width: var(--connecto-sidebar-width);
+  }
+
+  body.connecto-page {
+    padding-left: var(--connecto-sidebar-width);
+  }
+
+  .app-shell,
+  .standard-shell {
+    width: min(100%, var(--connecto-desktop-width));
+  }
+
+  .bottom-nav,
+  .bottom-nav-empresa {
+    width: var(--connecto-sidebar-width);
+    padding: var(--connecto-space-xl) var(--connecto-space-base);
+    gap: var(--connecto-space-xs);
+  }
+
+  .nav-brand {
+    justify-content: flex-start;
+    gap: var(--connecto-space-md);
+    padding: 0 var(--connecto-space-md);
+    margin-bottom: var(--connecto-space-xl);
+  }
+
+  .nav-brand__name {
+    display: inline;
+  }
+
+  .nav-item {
+    height: 52px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--connecto-space-md);
+    padding: 0 var(--connecto-space-base);
+    font-size: var(--connecto-text-md);
+  }
+
+  .nav-label {
+    display: inline;
+  }
+
+  .nav-label--short {
+    display: none;
+  }
+
+  .nav-label--full {
+    display: inline;
+  }
+
+  .nav-icon-wrap {
+    flex: 0 0 auto;
+  }
+}
+

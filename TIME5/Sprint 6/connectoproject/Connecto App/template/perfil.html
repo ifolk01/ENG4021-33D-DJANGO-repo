@@ -10,8 +10,8 @@
 
   <title>Connecto - {% trans "Perfil" %}</title>
 
-  <link rel="stylesheet" href="{% static 'perfil.css' %}">
   <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+  <link rel="stylesheet" href="{% static 'perfil.css' %}">
   <link rel="stylesheet" href="{% static 'botao_configuracoes.css' %}">
   <link rel="stylesheet" href="{% static 'modal_sair.css' %}">
 
@@ -52,6 +52,10 @@
         </div>
       {% endfor %}
     {% endif %}
+
+    <div class="profile-layout">
+
+      <section class="profile-overview">
 
     <div class="identificacao">
 
@@ -107,6 +111,10 @@
       </div>
 
     </div>
+
+      </section>
+
+      <section class="profile-details">
 
     <div class="dados">
 
@@ -185,6 +193,10 @@
     <button type="button" class="botao botao-excluir">
       {% trans "Excluir conta" %}
     </button>
+
+      </section>
+
+    </div>
 
   </main>
 

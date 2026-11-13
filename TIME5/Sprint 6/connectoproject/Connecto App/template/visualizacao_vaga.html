@@ -14,7 +14,7 @@
     {% include 'includes/tema_head.html' %}
 </head>
 
-<body>
+<body class="connecto-page job-detail-page">
 
 <div class="app-shell">
 
@@ -38,32 +38,18 @@
     <main class="vaga-page">
 
         <section class="vaga-card">
-
-            <!-- EMPRESA / ÍCONE -->
             <div class="vaga-company-row">
-
                 <div class="empresa-avatar">
                     {{ vaga.empresa.nome|slice:":2"|upper }}
                 </div>
 
                 <div class="vaga-heading">
-
-                    <h2>
-                        {{ vaga.titulo }}
-                    </h2>
-
-                    <p>
-                        {{ vaga.empresa.nome }}
-                    </p>
-
+                    <h2>{{ vaga.titulo }}</h2>
+                    <p>{{ vaga.empresa.nome }}</p>
                 </div>
-
             </div>
 
-
-            <!-- TAGS -->
             <div class="vaga-tags">
-
                 {% if vaga.cidade %}
                 <span class="vaga-tag location">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -75,6 +61,11 @@
                 {% endif %}
 
                 {% if vaga.modalidade %}
+                <span class="vaga-tag modalidade">{{ vaga.modalidade }}</span>
+                {% endif %}
+
+                {% if vaga.area %}
+                <span class="vaga-tag area">{{ vaga.area }}</span>
                 <span class="vaga-tag modalidade">
                     {% trans vaga.modalidade %}
                 </span>
@@ -85,113 +76,69 @@
                     {% trans vaga.area %}
                 </span>
                 {% endif %}
-
             </div>
+        </section>
 
+        <div class="vaga-main-column">
+            <section class="vaga-section">
+                <h3>{% trans "Sobre a vaga" %}</h3>
+                <p>{{ vaga.descricao }}</p>
+            </section>
 
-            {% if vaga.bolsa %}
-            <div class="vaga-info-row">
-                <span>{% trans "Bolsa" %}</span>
-                <strong>R$ {{ vaga.bolsa }}</strong>
-            </div>
+            {% if vaga.requisitos %}
+            <section class="vaga-section">
+                <h3>{% trans "Requisitos" %}</h3>
+                <p>{{ vaga.requisitos }}</p>
+            </section>
             {% endif %}
 
-
-            {% if vaga.local %}
-            <div class="vaga-info-row">
-                <span>{% trans "Local" %}</span>
-                <strong>{{ vaga.local }}</strong>
-            </div>
+            {% if vaga.empresa.descricao %}
+            <section class="vaga-section">
+                <h3>{% trans "Sobre a empresa" %}</h3>
+                <p>{{ vaga.empresa.descricao }}</p>
+            </section>
             {% endif %}
+        </div>
 
+        <aside class="vaga-side-column">
+            <section class="vaga-side-card">
+                {% if vaga.bolsa %}
+                <div class="vaga-info-row">
+                    <span>{% trans "Bolsa" %}</span>
+                    <strong>R$ {{ vaga.bolsa }}</strong>
+                </div>
+                {% endif %}
 
-            {% if vaga.prazo %}
-            <div class="vaga-info-row">
-                <span>{% trans "Prazo" %}</span>
-                <strong>{{ vaga.prazo|date:"d/m/Y" }}</strong>
-            </div>
-            {% endif %}
+                {% if vaga.local %}
+                <div class="vaga-info-row">
+                    <span>{% trans "Local" %}</span>
+                    <strong>{{ vaga.local }}</strong>
+                </div>
+                {% endif %}
 
-        </section>
+                {% if vaga.prazo %}
+                <div class="vaga-info-row">
+                    <span>{% trans "Prazo" %}</span>
+                    <strong>{{ vaga.prazo|date:"d/m/Y" }}</strong>
+                </div>
+                {% endif %}
+            </section>
 
-
-        <!-- DESCRIÇÃO -->
-        <section class="vaga-section">
-
-            <h3>{% trans "Sobre a vaga" %}</h3>
-
-            <p>
-                {{ vaga.descricao }}
-            </p>
-
-        </section>
-
-
-        <!-- REQUISITOS -->
-        {% if vaga.requisitos %}
-
-        <section class="vaga-section">
-
-            <h3>{% trans "Requisitos" %}</h3>
-
-            <p>
-                {{ vaga.requisitos }}
-            </p>
-
-        </section>
-
-        {% endif %}
-
-
-        <!-- EMPRESA -->
-        {% if vaga.empresa.descricao %}
-
-        <section class="vaga-section">
-
-            <h3>{% trans "Sobre a empresa" %}</h3>
-
-            <p>
-                {{ vaga.empresa.descricao }}
-            </p>
-
-        </section>
-
-        {% endif %}
-
-
-        <!-- CANDIDATAR -->
-        <section class="vaga-action">
-
-            {% if ja_candidatado %}
-        
-                <a
-                    href="{% url 'candidaturas' %}"
-                    class="candidatar-button candidatura-existente"
-                >
+            <section class="vaga-action">
+                {% if ja_candidatado %}
+                <a href="{% url 'candidaturas' %}" class="candidatar-button candidatura-existente">
                     {% trans "Ver minha candidatura" %}
                 </a>
-        
-            {% else %}
-        
-                <form
-                    method="post"
-                    action="{% url 'candidatar' vaga.id %}"
-                >
-        
+                {% else %}
+                <form method="post" action="{% url 'candidatar' vaga.id %}">
                     {% csrf_token %}
-        
-                    <button
-                        type="submit"
-                        class="candidatar-button"
-                    >
+                    <button type="submit" class="candidatar-button">
                         {% trans "Candidatar-se" %}
                     </button>
-        
                 </form>
-        
-            {% endif %}
-        
-        </section>
+                {% endif %}
+            </section>
+        </aside>
 
     </main>
 

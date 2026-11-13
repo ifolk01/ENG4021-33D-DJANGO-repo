@@ -640,3 +640,38 @@
       var(--connecto-space-2xl);
   }
 }
+
+/* =========================================
+   LAYOUT RESPONSIVO — TABLET / DESKTOP
+   ========================================= */
+
+.applications-header h1,
+.applications-header h2 {
+  margin: var(--connecto-space-sm) 0 var(--connecto-section-gap);
+  color: var(--tema-ink, var(--connecto-navy));
+  font-size: var(--connecto-text-page);
+  line-height: 1.05;
+  letter-spacing: -.03em;
+}
+
+@media (min-width: 700px) {
+  .applications-shell {
+    padding: var(--connecto-space-xl) var(--connecto-desktop-gutter) var(--connecto-space-2xl);
+  }
+
+  .applications-status-filters {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+}
+
+@media (min-width: 1024px) {
+  .applications-shell {
+    max-width: 1100px;
+  }
+
+  .applications-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--connecto-space-base);
+  }
+}
