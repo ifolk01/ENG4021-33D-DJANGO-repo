@@ -525,4 +525,5 @@ body:has(.login-container) .auth-footer {
   .login-container .auth-subtitle {
     margin-bottom: 26px;
   }
+  }
 }
