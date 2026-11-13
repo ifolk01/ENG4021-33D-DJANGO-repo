@@ -238,7 +238,7 @@ body:has(.login-container) .seletor-idioma {
 }
 
 .login-container .auth-subtitle {
-  color: #111111;
+  color: var(--tema-ink, #33364F);
   font-size: 18px;
   font-weight: 500;
   font-style: italic;
