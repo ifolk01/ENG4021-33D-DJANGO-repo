@@ -1,24 +1,133 @@
 :root {
+  /* =========================================
+     CONNECTO — CORES E BASE VISUAL
+     ========================================= */
+
   --connecto-bg: #f5f5ef;
   --connecto-surface: #ffffff;
+
   --connecto-navy: #30354f;
   --connecto-text: #262a3e;
   --connecto-muted: #73757d;
   --connecto-line: #e8e7df;
+
   --connecto-cyan: #1596b7;
   --connecto-cyan-soft: #e4f4f8;
+
   --connecto-green: #3fa36b;
   --connecto-green-soft: #e7f3eb;
+
   --connecto-red: #d76264;
   --connecto-red-soft: #f9e8e7;
+
   --connecto-amber: #d89a28;
   --connecto-amber-soft: #fbf1de;
+
   --connecto-nav-active: #e6e7e8;
-  --connecto-shadow: 0 8px 22px rgba(37, 40, 51, .08);
+
+  --connecto-shadow:
+    0 8px 22px rgba(37, 40, 51, .08);
+
+
+  /* =========================================
+     LAYOUT GLOBAL
+     ========================================= */
+
   --connecto-nav-height: 72px;
   --connecto-nav-gap: 10px;
+
+  /* O Connecto continua mobile-first.
+     Em desktop o conteúdo fica centralizado. */
   --connecto-mobile-width: 460px;
+
+
+  /* =========================================
+     TIPOGRAFIA RESPONSIVA
+
+     Mobile = limite mínimo.
+     Tablet/Desktop = cresce suavemente.
+     Nunca ultrapassa o limite máximo.
+     ========================================= */
+
+  --connecto-text-xs: 11px;
+
+  --connecto-text-sm:
+    clamp(11px, 1vw, 12px);
+
+  --connecto-text-meta:
+    clamp(12px, 1.1vw, 13px);
+
+  --connecto-text-md:
+    clamp(13px, 1.2vw, 14px);
+
+  --connecto-text-base:
+    clamp(14px, 1.3vw, 15px);
+
+  --connecto-text-lg:
+    clamp(15px, 1.4vw, 16px);
+
+  --connecto-text-xl:
+    clamp(17px, 1.6vw, 18px);
+
+  --connecto-text-2xl:
+    clamp(19px, 2vw, 22px);
+
+  --connecto-text-3xl:
+    clamp(22px, 2.6vw, 26px);
+
+  --connecto-text-page:
+    clamp(28px, 4vw, 36px);
+
+
+  /* =========================================
+     ALTURA DE LINHA
+     ========================================= */
+
+  --connecto-line-tight: 1.15;
+  --connecto-line-title: 1.2;
+  --connecto-line-body: 1.45;
+
+
+  /* =========================================
+     ESPAÇAMENTO RESPONSIVO
+     ========================================= */
+
+  --connecto-space-xs: 4px;
+  --connecto-space-sm: 8px;
+  --connecto-space-md: 12px;
+  --connecto-space-base: 16px;
+  --connecto-space-lg: 20px;
+  --connecto-space-xl: 24px;
+  --connecto-space-2xl: 32px;
+
+  --connecto-page-gutter:
+    clamp(12px, 3vw, 24px);
+
+  --connecto-section-gap:
+    clamp(16px, 3vw, 28px);
+
+  --connecto-card-gap:
+    clamp(10px, 2vw, 16px);
+
+  --connecto-card-padding:
+    clamp(14px, 2.5vw, 22px);
+
+
+  /* =========================================
+     RAIOS
+     ========================================= */
+
+  --connecto-radius-sm: 12px;
+  --connecto-radius-md: 16px;
+  --connecto-radius-lg: 18px;
+  --connecto-radius-xl: 24px;
+  --connecto-radius-pill: 999px;
 }
+
+
+/* =========================================
+   RESET / BASE
+   ========================================= */
 
 * {
   box-sizing: border-box;
@@ -32,17 +141,44 @@ html {
 body.connecto-page {
   min-height: 100dvh;
   margin: 0;
+
   overflow-x: hidden;
+
   background: var(--connecto-bg);
-  color: var(--tema-ink, var(--connecto-navy));
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  color:
+    var(
+      --tema-ink,
+      var(--connecto-navy)
+    );
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size: var(--connecto-text-base);
+  line-height: var(--connecto-line-body);
+
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  padding-bottom: calc(var(--connecto-nav-height) + 28px + env(safe-area-inset-bottom));
+
+  padding-bottom:
+    calc(
+      var(--connecto-nav-height)
+      + 28px
+      + env(safe-area-inset-bottom)
+    );
 }
 
 button,
 input,
+textarea,
+select,
 a {
   font: inherit;
 }
@@ -52,57 +188,141 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+
+/* =========================================
+   SHELLS
+   ========================================= */
+
 .app-shell,
 .standard-shell {
-  width: min(100%, var(--connecto-mobile-width));
+  width:
+    min(
+      100%,
+      var(--connecto-mobile-width)
+    );
+
   margin: 0 auto;
 }
+
+
+/* =========================================
+   BOTTOM NAV
+   ========================================= */
 
 .bottom-nav {
   position: fixed;
   z-index: 1000;
+
   left: 50%;
-  bottom: max(var(--connecto-nav-gap), env(safe-area-inset-bottom));
+
+  bottom:
+    max(
+      var(--connecto-nav-gap),
+      env(safe-area-inset-bottom)
+    );
+
   transform: translateX(-50%);
-  width: min(calc(100% - 22px), 420px);
+
+  width:
+    min(
+      calc(100% - 22px),
+      420px
+    );
+
   height: var(--connecto-nav-height);
+
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(
+      5,
+      minmax(0, 1fr)
+    );
+
   align-items: stretch;
+
   gap: 2px;
+
   padding: 6px;
-  border: 1px solid rgba(255, 255, 255, .96);
-  border-radius: 36px;
-  background: rgba(255, 255, 255, .94);
-  box-shadow: 0 10px 28px rgba(38, 40, 47, .12);
-  backdrop-filter: blur(20px) saturate(1.1);
-  -webkit-backdrop-filter: blur(20px) saturate(1.1);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, .96);
+
+  border-radius:
+    var(--connecto-radius-pill);
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .94
+    );
+
+  box-shadow:
+    0 10px 28px
+    rgba(38, 40, 47, .12);
+
+  backdrop-filter:
+    blur(20px)
+    saturate(1.1);
+
+  -webkit-backdrop-filter:
+    blur(20px)
+    saturate(1.1);
 }
 
 .nav-item {
   min-width: 0;
   height: 100%;
+
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
+
   gap: 3px;
-  padding: 5px 2px 4px;
-  border-radius: 28px;
+
+  padding:
+    5px
+    2px
+    4px;
+
+  border-radius:
+    var(--connecto-radius-xl);
+
   color: #151515;
+
   text-decoration: none;
-  font-size: 11.5px;
+
+  font-size:
+    var(--connecto-text-sm);
+
   font-weight: 650;
   line-height: 1;
+
   white-space: nowrap;
-  transition: background-color .18s ease, color .18s ease, transform .16s ease;
+
+  transition:
+    background-color .18s ease,
+    color .18s ease,
+    transform .16s ease;
 }
 
 .nav-item svg {
   width: 25px;
   height: 25px;
+
   flex: none;
 }
+
+
+/* =========================================
+   ÍCONE + BADGE DE MENSAGENS
+   ========================================= */
 
 .nav-icon-wrap {
   position: relative;
@@ -132,17 +352,22 @@ a {
   align-items: center;
   justify-content: center;
 
-  padding: 0 5px;
+  padding:
+    0
+    5px;
 
-  border: 2px solid
+  border:
+    2px solid
     rgba(255, 255, 255, .96);
 
-  border-radius: 999px;
+  border-radius:
+    var(--connecto-radius-pill);
 
-  background: var(
-    --connecto-red,
-    #d76264
-  );
+  background:
+    var(
+      --connecto-red,
+      #d76264
+    );
 
   color: #ffffff;
 
@@ -161,53 +386,131 @@ a {
   display: none;
 }
 
+
+/* =========================================
+   ESTADO ATIVO DA NAVEGAÇÃO
+   ========================================= */
+
 .nav-item.active {
-  color: var(--tema-ink, var(--connecto-navy));
-  background: var(--connecto-nav-active);
+  color:
+    var(
+      --tema-ink,
+      var(--connecto-navy)
+    );
+
+  background:
+    var(--connecto-nav-active);
 }
 
 .nav-item:active {
   transform: scale(.95);
 }
 
+
+/* =========================================
+   LINKS PRIMÁRIOS
+   ========================================= */
+
 .primary-link {
-  display: inline-flex;
   min-height: 44px;
+
+  display: inline-flex;
+
   align-items: center;
   justify-content: center;
-  padding: 0 18px;
-  border-radius: 24px;
-  background: var(--connecto-navy);
-  color: #fff;
+
+  padding:
+    0
+    var(--connecto-space-xl);
+
+  border-radius:
+    var(--connecto-radius-pill);
+
+  background:
+    var(--connecto-navy);
+
+  color: #ffffff;
+
   text-decoration: none;
+
+  font-size:
+    var(--connecto-text-md);
+
   font-weight: 750;
+
+  line-height:
+    var(--connecto-line-tight);
 }
 
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
 .connecto-empty-state {
-  padding: 58px 18px 30px;
+  padding:
+    58px
+    var(--connecto-page-gutter)
+    30px;
+
   text-align: center;
 }
 
 .connecto-empty-state__texto {
   max-width: 330px;
-  margin: 0 auto 18px;
-  color: var(--connecto-muted);
-  line-height: 1.45;
+
+  margin:
+    0 auto
+    var(--connecto-space-xl);
+
+  color:
+    var(--connecto-muted);
+
+  font-size:
+    var(--connecto-text-base);
+
+  line-height:
+    var(--connecto-line-body);
 }
 
-/* Espaço extra para conteúdos roláveis não ficarem escondidos pela barra fixa. */
+
+/* =========================================
+   ESPAÇO SEGURO PARA BOTTOM NAV
+   ========================================= */
+
 .nav-safe-bottom {
-  padding-bottom: calc(var(--connecto-nav-height) + 34px + env(safe-area-inset-bottom));
+  padding-bottom:
+    calc(
+      var(--connecto-nav-height)
+      + 34px
+      + env(safe-area-inset-bottom)
+    );
 }
+
+
+/* =========================================
+   MOBILE PEQUENO
+   ========================================= */
 
 @media (max-width: 360px) {
+
   :root {
     --connecto-nav-height: 68px;
+
+    --connecto-page-gutter: 12px;
+    --connecto-card-padding: 14px;
   }
 
   .bottom-nav {
-    width: calc(100% - 14px);
-    bottom: max(6px, env(safe-area-inset-bottom));
+    width:
+      calc(100% - 14px);
+
+    bottom:
+      max(
+        6px,
+        env(safe-area-inset-bottom)
+      );
+
     padding: 5px;
   }
 
@@ -215,14 +518,50 @@ a {
     font-size: 10px;
   }
 
-  .nav-item svg {
+  .nav-item svg,
+  .nav-icon-wrap svg {
     width: 23px;
     height: 23px;
   }
+
+  .nav-icon-wrap {
+    width: 25px;
+    height: 25px;
+  }
 }
 
+
+/* =========================================
+   TABLET / DESKTOP
+   ========================================= */
+
 @media (min-width: 700px) {
+
+  :root {
+    --connecto-nav-gap: 16px;
+  }
+
   .bottom-nav {
     bottom: 16px;
+  }
+}
+
+
+/* =========================================
+   DESKTOP MAIOR
+   ========================================= */
+
+@media (min-width: 1024px) {
+
+  /*
+    Mantemos o Connecto com identidade mobile-first.
+    Os textos e espaços já atingem os valores máximos
+    definidos nos clamp(), evitando exagero em telas grandes.
+  */
+
+  .bottom-nav {
+    box-shadow:
+      0 12px 32px
+      rgba(38, 40, 47, .14);
   }
 }

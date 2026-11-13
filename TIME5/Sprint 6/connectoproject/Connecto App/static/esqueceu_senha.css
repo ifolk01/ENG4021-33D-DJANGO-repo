@@ -1,15 +1,65 @@
+/* =========================================
+   RECUPERAÇÃO DE SENHA — RESPONSIVO
+   Herda a base de login.css
+   ========================================= */
+
 .recuperacao-title {
-  color: var(--connecto-primary-dark);
-  font-size: 24px;
-  font-weight: 500;
-  text-align: center;
   margin: 0;
+
+  color:
+    var(--connecto-primary-dark, var(--connecto-navy, #33364F));
+
+  font-size:
+    var(--connecto-text-3xl, clamp(22px, 2.6vw, 26px));
+
+  font-weight: 600;
+
+  line-height:
+    var(--connecto-line-title, 1.2);
+
+  text-align: center;
 }
 
 .recuperacao-description {
-  color: var(--connecto-text-soft);
-  font-size: 15px;
-  line-height: 1.5;
+  margin:
+    0
+    0
+    var(--connecto-space-sm, 8px);
+
+  color:
+    var(--connecto-text-soft, var(--connecto-muted, #6B6F80));
+
+  font-size:
+    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+
+  line-height:
+    var(--connecto-line-body, 1.45);
+
   text-align: center;
-  margin: 0 0 8px 0;
+}
+
+
+/* =========================================
+   MOBILE PEQUENO
+   ========================================= */
+
+@media (max-width: 360px) {
+  .recuperacao-title {
+    font-size:
+      var(--connecto-text-2xl, clamp(19px, 2vw, 22px));
+  }
+}
+
+
+/* =========================================
+   TABLET / DESKTOP
+   ========================================= */
+
+@media (min-width: 700px) {
+  .recuperacao-description {
+    max-width: 380px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

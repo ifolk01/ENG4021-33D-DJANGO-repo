@@ -1,75 +1,195 @@
-/* Tela de candidaturas recebidas pelo empregador */
+/* =========================================
+   CANDIDATURAS RECEBIDAS — EMPREGADOR
+   ========================================= */
+
 .empresa-subtitulo {
-  margin: -14px 0 18px;
-  color: var(--tema-muted, #6B6F80);
-  font-size: 14px;
+  margin:
+    calc(var(--connecto-space-md) * -1)
+    0
+    var(--connecto-section-gap);
+
+  color:
+    var(
+      --tema-muted,
+      #6B6F80
+    );
+
+  font-size:
+    var(--connecto-text-md);
+
+  line-height:
+    var(--connecto-line-body);
 }
 
+
+/* =========================================
+   AVISOS
+   ========================================= */
+
 .aviso-empresa {
-  margin-bottom: 14px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background-color: var(--tema-cyan-soft, #DDEEF4);
+  margin-bottom:
+    var(--connecto-space-md);
+
+  padding:
+    var(--connecto-space-md)
+    var(--connecto-space-base);
+
+  border-radius:
+    var(--connecto-radius-sm);
+
+  background-color:
+    var(
+      --tema-cyan-soft,
+      #DDEEF4
+    );
+
   color: #116A85;
-  font-size: 14px;
+
+  font-size:
+    var(--connecto-text-md);
+
+  line-height:
+    var(--connecto-line-body);
 }
 
 .aviso-empresa.error {
-  background-color: var(--tema-red-soft, #F9E8E7);
+  background-color:
+    var(
+      --tema-red-soft,
+      #F9E8E7
+    );
+
   color: #C85A5A;
 }
+
+
+/* =========================================
+   LISTA DE CANDIDATURAS
+   ========================================= */
 
 .lista-recebidas {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+
+  gap:
+    var(--connecto-card-gap);
 }
 
-/* Card de cada candidatura */
+
+/* =========================================
+   CARD
+   ========================================= */
+
 .card-recebida {
-  padding: 16px;
-  border: 1px solid var(--tema-line, #E4E4DD);
-  border-radius: 18px;
-  background-color: var(--tema-surface, #FFFFFF);
+  padding:
+    var(--connecto-card-padding);
+
+  border:
+    1px solid
+    var(
+      --tema-line,
+      #E4E4DD
+    );
+
+  border-radius:
+    var(--connecto-radius-lg);
+
+  background-color:
+    var(
+      --tema-surface,
+      #FFFFFF
+    );
 }
 
 .card-recebida-topo {
   display: flex;
   align-items: center;
-  gap: 12px;
+
+  gap:
+    var(--connecto-space-md);
 }
+
+
+/* =========================================
+   CANDIDATO
+   ========================================= */
 
 .candidato-avatar {
   flex-shrink: 0;
+
   width: 46px;
   height: 46px;
-  border-radius: 50%;
-  background-color: var(--tema-surface-2, #E6E6F2);
+
+  display: grid;
+  place-items: center;
+
+  border-radius:
+    var(--connecto-radius-pill);
+
+  background-color:
+    var(
+      --tema-surface-2,
+      #E6E6F2
+    );
+
   color: #464B71;
+
+  font-size:
+    var(--connecto-text-lg);
+
   font-weight: 600;
-  line-height: 46px;
+
+  line-height: 1;
+
   text-align: center;
 }
 
 html[data-theme="dark"] .candidato-avatar {
-  color: var(--tema-ink, #E8E9F0);
+  color:
+    var(
+      --tema-ink,
+      #E8E9F0
+    );
 }
 
 .candidato-info {
   flex: 1;
+
   min-width: 0;
 }
 
 .candidato-info h3 {
   margin: 0;
-  font-size: 16px;
+
+  font-size:
+    var(--connecto-text-lg);
+
+  font-weight: 750;
+
+  line-height:
+    var(--connecto-line-title);
+
   overflow-wrap: anywhere;
 }
 
 .candidato-info p {
-  margin: 2px 0 0;
-  color: var(--tema-muted, #6B6F80);
-  font-size: 14px;
+  margin:
+    2px
+    0
+    0;
+
+  color:
+    var(
+      --tema-muted,
+      #6B6F80
+    );
+
+  font-size:
+    var(--connecto-text-md);
+
+  line-height:
+    var(--connecto-line-body);
+
   overflow-wrap: anywhere;
 }
 
@@ -78,64 +198,210 @@ html[data-theme="dark"] .candidato-avatar {
 }
 
 .candidatura-data {
-  margin: 10px 0 0;
-  color: var(--tema-muted, #6B6F80);
-  font-size: 13px;
+  margin:
+    var(--connecto-space-sm)
+    0
+    0;
+
+  color:
+    var(
+      --tema-muted,
+      #6B6F80
+    );
+
+  font-size:
+    var(--connecto-text-meta);
+
+  line-height:
+    var(--connecto-line-title);
 }
 
-/* Formulário para mudar o status */
+
+/* =========================================
+   FORMULÁRIO DE STATUS
+   ========================================= */
+
 .form-status {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--tema-line, #E4E4DD);
+  margin-top:
+    var(--connecto-space-md);
+
+  padding-top:
+    var(--connecto-space-md);
+
+  border-top:
+    1px solid
+    var(
+      --tema-line,
+      #E4E4DD
+    );
 }
 
 .form-status label {
   display: block;
+
   margin-bottom: 6px;
-  color: var(--tema-muted, #6B6F80);
-  font-size: 13px;
+
+  color:
+    var(
+      --tema-muted,
+      #6B6F80
+    );
+
+  font-size:
+    var(--connecto-text-meta);
+
+  line-height:
+    var(--connecto-line-title);
 }
 
 .form-status-linha {
   display: flex;
-  gap: 8px;
+
+  gap:
+    var(--connecto-space-sm);
 }
 
 .form-status select,
 .form-status input {
   width: 100%;
+
   min-width: 0;
-  padding: 10px 12px;
-  border: 1px solid var(--tema-line, #E4E4DD);
-  border-radius: 10px;
-  background-color: var(--tema-surface-2, #FAFAF7);
-  color: var(--tema-ink, #33364F);
-  font-size: 14px;
+
+  padding:
+    10px
+    var(--connecto-space-md);
+
+  border:
+    1px solid
+    var(
+      --tema-line,
+      #E4E4DD
+    );
+
+  border-radius:
+    var(--connecto-radius-sm);
+
+  background-color:
+    var(
+      --tema-surface-2,
+      #FAFAF7
+    );
+
+  color:
+    var(
+      --tema-ink,
+      #33364F
+    );
+
+  font-size:
+    var(--connecto-text-md);
+
+  line-height:
+    var(--connecto-line-body);
+
   font-family: inherit;
 }
 
 .form-status input {
-  margin-top: 8px;
+  margin-top:
+    var(--connecto-space-sm);
 }
 
 .form-status select:focus,
 .form-status input:focus {
   outline: none;
-  border-color: #116A85;
+
+  border-color:
+    var(
+      --connecto-cyan,
+      #116A85
+    );
 }
+
+
+/* =========================================
+   BOTÃO
+   ========================================= */
 
 .botao-atualizar {
   flex-shrink: 0;
-  padding: 10px 16px;
+
+  min-height: 42px;
+
+  padding:
+    10px
+    var(--connecto-space-base);
+
   border: none;
-  border-radius: 10px;
-  background-color: #116A85;
+
+  border-radius:
+    var(--connecto-radius-sm);
+
+  background-color:
+    #116A85;
+
   color: #FFFFFF;
-  font-weight: 600;
+
+  font-size:
+    var(--connecto-text-md);
+
+  font-weight: 700;
+
+  line-height:
+    var(--connecto-line-tight);
+
   cursor: pointer;
 }
 
 .botao-atualizar:hover {
-  background-color: #0D5469;
+  background-color:
+    #0D5469;
+}
+
+
+/* =========================================
+   MOBILE PEQUENO
+   ========================================= */
+
+@media (max-width: 360px) {
+
+  .card-recebida {
+    padding:
+      var(--connecto-space-md);
+  }
+
+  .card-recebida-topo {
+    gap:
+      var(--connecto-space-sm);
+  }
+
+  .candidato-avatar {
+    width: 42px;
+    height: 42px;
+  }
+
+  .form-status-linha {
+    flex-direction: column;
+  }
+
+  .botao-atualizar {
+    width: 100%;
+  }
+}
+
+
+/* =========================================
+   TABLET / DESKTOP
+   ========================================= */
+
+@media (min-width: 700px) {
+
+  .card-recebida {
+    padding:
+      var(--connecto-card-padding);
+  }
+
+  .form-status-linha {
+    align-items: center;
+  }
 }

@@ -1,152 +1,306 @@
 :root {
-  --connecto-primary-dark: #33364F;
+  /* Compatibilidade da tela de autenticação com o Design System global */
+  --connecto-primary-dark:
+    var(--connecto-navy, #33364F);
+
   --connecto-secondary: #2a6d8c;
-  --connecto-bg: #F2F2ED;
-  --connecto-surface: #FFFFFF;
-  --connecto-border: #DCDCD3;
-  --connecto-text: #33364F;
-  --connecto-text-soft: #6B6F80;
+
+  --connecto-bg:
+    var(--tema-bg, #F2F2ED);
+
+  --connecto-surface:
+    var(--tema-surface, #FFFFFF);
+
+  --connecto-border:
+    var(--tema-line, #DCDCD3);
+
+  --connecto-text:
+    var(--tema-ink, #33364F);
+
+  --connecto-text-soft:
+    var(--tema-muted, #6B6F80);
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--connecto-bg);
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding: 24px;
+* {
   box-sizing: border-box;
 }
 
-.login-container {
-  flex: 1;
+body {
+  min-height: 100dvh;
+
+  margin: 0;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 400px;
-  margin: 0 auto;
+
+  padding:
+    max(var(--connecto-space-xl, 24px), env(safe-area-inset-top))
+    var(--connecto-page-gutter, clamp(16px, 4vw, 32px))
+    max(var(--connecto-space-xl, 24px), env(safe-area-inset-bottom));
+
+  background-color:
+    var(--connecto-bg);
+
+  color:
+    var(--connecto-text);
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+
+  line-height:
+    var(--connecto-line-body, 1.45);
+}
+
+
+/* =========================================
+   LOGIN
+   ========================================= */
+
+.login-container {
   width: 100%;
+  max-width: 400px;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto;
 }
 
 .auth-logo-box {
-  width: 80px;
-  height: 80px;
-  background-color: var(--connecto-surface);
-  border-radius: 20px;
+  width: clamp(72px, 16vw, 84px);
+  height: clamp(72px, 16vw, 84px);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+  margin-bottom:
+    var(--connecto-space-base, 16px);
+
+  border-radius:
+    var(--connecto-radius-xl, 24px);
+
+  background-color:
+    var(--connecto-surface);
+
+  box-shadow:
+    0 4px 12px
+    rgba(0, 0, 0, .05);
 }
 
 .auth-logo-box img {
-  width: 50px;
+  width: clamp(46px, 10vw, 54px);
+
   object-fit: contain;
 }
 
 .auth-subtitle {
-  color: var(--connecto-text-soft);
-  font-size: 15px;
-  margin-bottom: 40px;
+  margin:
+    0
+    0
+    clamp(28px, 6vw, 40px);
+
+  color:
+    var(--connecto-text-soft);
+
+  font-size:
+    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+
+  line-height:
+    var(--connecto-line-body, 1.45);
+
   text-align: center;
 }
 
-
 .auth-form {
   width: 100%;
+
   display: flex;
   flex-direction: column;
-  gap: 16px;
+
+  gap:
+    var(--connecto-space-base, 16px);
 }
 
 .auth-input {
   width: 100%;
-  padding: 16px;
-  border-radius: 12px;
-  border: 1px solid var(--connecto-border);
-  background-color: var(--connecto-surface);
-  font-size: 16px;
-  color: var(--connecto-text);
-  box-sizing: border-box;
+  min-height: 50px;
+
+  padding:
+    var(--connecto-space-md, 12px)
+    var(--connecto-space-base, 16px);
+
+  border:
+    1px solid
+    var(--connecto-border);
+
+  border-radius:
+    var(--connecto-radius-sm, 12px);
+
   outline: none;
+
+  background-color:
+    var(--connecto-surface);
+
+  color:
+    var(--connecto-text);
+
+  font-size:
+    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
+
+  line-height:
+    var(--connecto-line-body, 1.45);
 }
 
 .auth-input::placeholder {
-  color: #999;
+  color: #999999;
 }
 
 .auth-input:focus {
-  border-color: var(--connecto-primary-dark);
+  border-color:
+    var(--connecto-primary-dark);
 }
 
 .auth-forgot {
+  margin:
+    calc(var(--connecto-space-sm, 8px) * -1)
+    0
+    var(--connecto-space-base, 16px);
+
   text-align: right;
-  margin-top: -8px;
-  margin-bottom: 16px;
 }
 
 .auth-forgot a {
-  color: var(--connecto-secondary);
+  color:
+    var(--connecto-secondary);
+
+  font-size:
+    var(--connecto-text-md, clamp(13px, 1.2vw, 14px));
+
   text-decoration: none;
-  font-size: 14px;
 }
 
 .auth-button {
   width: 100%;
-  padding: 16px;
-  border-radius: 12px;
-  background-color: var(--connecto-primary-dark);
-  color: var(--connecto-surface);
+  min-height: 50px;
+
+  margin-bottom:
+    clamp(28px, 6vw, 40px);
+
+  padding:
+    var(--connecto-space-md, 12px)
+    var(--connecto-space-base, 16px);
+
   border: none;
-  font-size: 16px;
-  font-weight: 500;
+
+  border-radius:
+    var(--connecto-radius-sm, 12px);
+
+  background-color:
+    var(--connecto-primary-dark);
+
+  color:
+    var(--connecto-surface);
+
+  font-size:
+    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
+
+  font-weight: 650;
+
+  line-height:
+    var(--connecto-line-tight, 1.15);
+
   cursor: pointer;
-  margin-bottom: 40px;
 }
 
 .auth-footer {
   margin-top: auto;
+
+  padding-bottom:
+    var(--connecto-space-xl, 24px);
+
+  color:
+    var(--connecto-text-soft);
+
+  font-size:
+    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+
+  line-height:
+    var(--connecto-line-body, 1.45);
+
   text-align: center;
-  padding-bottom: 24px;
-  color: var(--connecto-text-soft);
-  font-size: 15px;
 }
 
 .auth-footer a {
-  color: var(--connecto-text);
+  color:
+    var(--connecto-text);
+
+  font-weight: 650;
+
   text-decoration: none;
-  font-weight: 500;
 }
 
+
+/* =========================================
+   CADASTRO
+   ========================================= */
+
 .cadastro-container {
-  max-width: 400px;
-  margin: 0 auto;
   width: 100%;
+  max-width: 400px;
+
+  margin: 0 auto;
 }
 
 .cadastro-topbar {
+  position: relative;
+
   display: flex;
   align-items: center;
-  margin-bottom: 32px;
-  position: relative;
+
+  margin-bottom:
+    var(--connecto-space-2xl, 32px);
 }
 
 .back-button {
+  position: absolute;
+  left: 0;
+
   width: 40px;
   height: 40px;
-  background-color: var(--connecto-surface);
-  border-radius: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border-radius:
+    var(--connecto-radius-pill, 999px);
+
+  background-color:
+    var(--connecto-surface);
+
+  color:
+    var(--connecto-text);
+
   text-decoration: none;
-  color: var(--connecto-text);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  position: absolute;
-  left: 0;
+
+  box-shadow:
+    0 2px 8px
+    rgba(0, 0, 0, .05);
 }
 
 .back-button svg {
@@ -156,60 +310,139 @@ body {
 
 .cadastro-topbar h2 {
   flex: 1;
-  text-align: center;
+
   margin: 0;
-  font-size: 16px;
-  color: var(--connecto-text);
+
+  color:
+    var(--connecto-text);
+
+  font-size:
+    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
+
+  line-height:
+    var(--connecto-line-title, 1.2);
+
+  text-align: center;
 }
 
 .cadastro-header h1 {
-  font-size: 28px;
-  color: var(--connecto-primary-dark);
-  margin: 0 0 8px 0;
-  font-weight: 500;
+  margin:
+    0
+    0
+    var(--connecto-space-sm, 8px);
+
+  color:
+    var(--connecto-primary-dark);
+
+  font-size:
+    var(--connecto-text-page, clamp(28px, 4vw, 36px));
+
+  font-weight: 600;
+
+  line-height:
+    var(--connecto-line-title, 1.2);
 }
 
 .cadastro-header p {
-  color: var(--connecto-text-soft);
-  font-size: 15px;
-  margin: 0 0 32px 0;
+  margin:
+    0
+    0
+    var(--connecto-space-2xl, 32px);
+
+  color:
+    var(--connecto-text-soft);
+
+  font-size:
+    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+
+  line-height:
+    var(--connecto-line-body, 1.45);
 }
 
-/* CONTAINER DE SENHA */
+
+/* =========================================
+   SENHA
+   ========================================= */
+
 .password-wrapper {
   position: relative;
+
   width: 100%;
 }
 
 .password-wrapper .auth-input {
-  padding-right: 48px; /* Dá espaço para o ícone do olho não sobrepor o texto */
+  padding-right: 48px;
 }
 
 .toggle-password {
   position: absolute;
+
   top: 50%;
   right: 14px;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: #999;
+
+  transform:
+    translateY(-50%);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  padding: 0;
+
+  border: none;
+
+  background: none;
+
+  color: #999999;
+
+  cursor: pointer;
 }
 
 .toggle-password:hover {
-  color: var(--connecto-primary-dark);
+  color:
+    var(--connecto-primary-dark);
 }
 
 .toggle-password svg {
   width: 22px;
   height: 22px;
-  transition: color 0.2s ease;
+
+  transition:
+    color .2s ease;
 }
 
 .toggle-password:focus {
   outline: none;
+}
+
+
+/* =========================================
+   MOBILE PEQUENO
+   ========================================= */
+
+@media (max-width: 360px) {
+  body {
+    padding-inline:
+      var(--connecto-space-md, 12px);
+  }
+
+  .auth-input,
+  .auth-button {
+    min-height: 48px;
+  }
+}
+
+
+/* =========================================
+   TABLET / DESKTOP
+   ========================================= */
+
+@media (min-width: 700px) {
+  body {
+    padding-top:
+      var(--connecto-space-2xl, 32px);
+
+    padding-bottom:
+      var(--connecto-space-2xl, 32px);
+  }
 }

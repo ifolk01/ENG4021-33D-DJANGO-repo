@@ -1,64 +1,133 @@
 body.match-page {
   height: 100dvh;
+
   overflow: hidden;
+
   padding-bottom: 0;
 }
 
 .match-shell {
-  width: min(100%, var(--connecto-mobile-width));
+  width:
+    min(
+      100%,
+      var(--connecto-mobile-width)
+    );
+
   height: 100dvh;
+
   margin: 0 auto;
+
   display: flex;
   flex-direction: column;
-  padding: max(14px, env(safe-area-inset-top)) 14px calc(var(--connecto-nav-height) + 28px + env(safe-area-inset-bottom));
+
+  padding:
+    max(var(--connecto-space-md), env(safe-area-inset-top))
+    var(--connecto-page-gutter)
+    calc(
+      var(--connecto-nav-height)
+      + 28px
+      + env(safe-area-inset-bottom)
+    );
+
   overflow: hidden;
 }
 
+
+/* =========================================
+   TOPO
+   ========================================= */
+
 .match-topbar {
   flex: 0 0 auto;
+
   min-height: 64px;
+
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 14px;
-  padding: 4px 8px 13px;
+
+  gap: var(--connecto-space-md);
+
+  padding:
+    var(--connecto-space-xs)
+    var(--connecto-space-sm)
+    13px;
 }
 
 .match-topbar strong {
-  color: var(--tema-ink, var(--connecto-navy));
-  font-size: clamp(18px, 4.8vw, 22px);
-  line-height: 1.1;
+  color:
+    var(
+      --tema-ink,
+      var(--connecto-navy)
+    );
+
+  font-size:
+    var(--connecto-text-2xl);
+
+  font-weight: 780;
+
+  line-height:
+    var(--connecto-line-tight);
+
   letter-spacing: -.02em;
+
   white-space: nowrap;
 }
 
 .match-topbar span {
   max-width: 52%;
+
   color: #76777d;
-  font-size: clamp(13px, 3.7vw, 16px);
-  line-height: 1.2;
+
+  font-size:
+    var(--connecto-text-lg);
+
+  line-height:
+    var(--connecto-line-title);
+
   text-align: right;
 }
 
+
+/* =========================================
+   PILHA DE CARDS
+   ========================================= */
+
 .match-stack {
   position: relative;
+
   flex: 1 1 auto;
+
   min-height: 0;
   max-height: 760px;
+
   isolation: isolate;
 }
 
 .match-card-back {
   position: absolute;
+
   left: 4px;
   right: 4px;
   bottom: -12px;
-  height: calc(100% - 18px);
+
+  height:
+    calc(100% - 18px);
+
   border-radius: 31px;
+
   background: #cecec9;
-  box-shadow: 0 16px 32px rgba(25, 27, 35, .12);
-  transform: scale(.985);
-  transform-origin: center bottom;
+
+  box-shadow:
+    0 16px 32px
+    rgba(25, 27, 35, .12);
+
+  transform:
+    scale(.985);
+
+  transform-origin:
+    center bottom;
+
   z-index: 0;
 }
 
@@ -66,41 +135,85 @@ body.match-page {
   left: -2px;
   right: -2px;
   bottom: -20px;
+
   background: #ddddda;
-  transform: scale(.97);
+
+  transform:
+    scale(.97);
+
   z-index: -1;
 }
 
 .match-card {
   position: relative;
+
   z-index: 2;
+
   height: 100%;
   min-height: 0;
+
   display: flex;
   flex-direction: column;
-  padding: clamp(22px, 5vw, 29px) clamp(20px, 5.8vw, 28px) 21px;
+
+  padding:
+    clamp(20px, 4vw, 28px)
+    clamp(18px, 4.5vw, 26px)
+    var(--connecto-space-lg);
+
   border-radius: 31px;
-  background: var(--tema-surface, #fff);
-  box-shadow: 0 22px 34px rgba(20, 22, 29, .25);
+
+  background:
+    var(
+      --tema-surface,
+      #ffffff
+    );
+
+  box-shadow:
+    0 22px 34px
+    rgba(20, 22, 29, .25);
+
   cursor: grab;
+
   user-select: none;
   -webkit-user-select: none;
+
   touch-action: pan-y;
-  will-change: transform, opacity;
+
+  will-change:
+    transform,
+    opacity;
 }
 
 .match-card:active {
   cursor: grabbing;
 }
 
+
+/* =========================================
+   EMPRESA
+   ========================================= */
+
 .match-company-icon {
   flex: 0 0 auto;
-  width: clamp(62px, 17vw, 72px);
-  height: clamp(62px, 17vw, 72px);
+
+  width:
+    clamp(58px, 15vw, 72px);
+
+  height:
+    clamp(58px, 15vw, 72px);
+
   display: grid;
   place-items: center;
-  border-radius: 16px;
-  background: var(--tema-surface-2, #e9eaf0);
+
+  border-radius:
+    var(--connecto-radius-md);
+
+  background:
+    var(
+      --tema-surface-2,
+      #e9eaf0
+    );
+
   color: #555b7c;
 }
 
@@ -111,81 +224,162 @@ body.match-page {
 
 .match-card__content {
   min-height: 0;
-  padding-top: clamp(20px, 5vh, 31px);
+
+  padding-top:
+    clamp(18px, 4vh, 28px);
 }
 
 .match-card h1 {
   display: -webkit-box;
+
   overflow: hidden;
+
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  margin: 0 0 7px;
-  color: var(--tema-ink, var(--connecto-navy));
-  font-size: clamp(29px, 7.4vw, 39px);
+
+  margin:
+    0
+    0
+    var(--connecto-space-sm);
+
+  color:
+    var(
+      --tema-ink,
+      var(--connecto-navy)
+    );
+
+  font-size:
+    var(--connecto-text-page);
+
   font-weight: 780;
-  line-height: 1.08;
+
+  line-height:
+    1.08;
+
   letter-spacing: -.035em;
 }
 
 .match-company {
   margin: 0;
+
   color: #707178;
-  font-size: clamp(18px, 4.8vw, 23px);
-  line-height: 1.25;
+
+  font-size:
+    var(--connecto-text-2xl);
+
+  line-height:
+    var(--connecto-line-title);
 }
+
+
+/* =========================================
+   TAGS
+   ========================================= */
 
 .match-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: clamp(18px, 4.5vh, 25px) 0 clamp(21px, 5vh, 30px);
+
+  gap: var(--connecto-space-sm);
+
+  margin:
+    clamp(16px, 4vh, 24px)
+    0
+    clamp(18px, 4.5vh, 28px);
 }
 
 .match-tags .tag {
-  display: inline-flex;
   min-height: 30px;
+
+  display: inline-flex;
   align-items: center;
-  padding: 0 12px;
-  border-radius: 12px;
-  font-size: clamp(13px, 3.5vw, 15px);
+
+  padding:
+    0
+    var(--connecto-space-md);
+
+  border-radius:
+    var(--connecto-radius-sm);
+
+  font-size:
+    var(--connecto-text-md);
+
   font-weight: 700;
+
   line-height: 1;
 }
 
 .tag--work {
-  color: var(--connecto-amber);
-  background: var(--connecto-amber-soft);
+  color:
+    var(--connecto-amber);
+
+  background:
+    var(--connecto-amber-soft);
 }
 
 .tag--area {
-  color: var(--connecto-cyan);
-  background: var(--connecto-cyan-soft);
+  color:
+    var(--connecto-cyan);
+
+  background:
+    var(--connecto-cyan-soft);
 }
 
 .tag--money {
-  color: var(--connecto-green);
-  background: var(--connecto-green-soft);
+  color:
+    var(--connecto-green);
+
+  background:
+    var(--connecto-green-soft);
 }
+
+
+/* =========================================
+   DESCRIÇÃO
+   ========================================= */
 
 .match-description {
   display: -webkit-box;
+
   overflow: hidden;
+
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 6;
+
   margin: 0;
+
   color: #74798d;
-  font-size: clamp(18px, 5vw, 23px);
-  line-height: 1.42;
+
+  font-size:
+    var(--connecto-text-xl);
+
+  line-height:
+    var(--connecto-line-body);
 }
+
+
+/* =========================================
+   AÇÕES
+   ========================================= */
 
 .match-actions {
   flex: 0 0 auto;
+
   margin-top: auto;
+
   display: grid;
-  grid-template-columns: 76px 1fr 76px;
+
+  grid-template-columns:
+    76px
+    1fr
+    76px;
+
   align-items: center;
-  gap: 10px;
-  padding-top: clamp(18px, 5vh, 30px);
+
+  gap: var(--connecto-space-sm);
+
+  padding-top:
+    clamp(18px, 4vh, 28px);
 }
 
 .match-actions form {
@@ -195,13 +389,29 @@ body.match-page {
 .match-action {
   width: 70px;
   height: 70px;
+
   display: grid;
   place-items: center;
+
   padding: 0;
-  border: 1px solid #deddd6;
-  border-radius: 50%;
-  background: var(--tema-surface, #fff);
-  box-shadow: 0 8px 21px rgba(31, 34, 48, .12);
+
+  border:
+    1px solid
+    #deddd6;
+
+  border-radius:
+    var(--connecto-radius-pill);
+
+  background:
+    var(
+      --tema-surface,
+      #ffffff
+    );
+
+  box-shadow:
+    0 8px 21px
+    rgba(31, 34, 48, .12);
+
   cursor: pointer;
 }
 
@@ -211,60 +421,131 @@ body.match-page {
 }
 
 .match-action--skip {
-  color: var(--connecto-cyan);
+  color:
+    var(--connecto-cyan);
 }
 
 .match-action--like {
-  border-color: var(--connecto-navy);
-  background: var(--connecto-navy);
-  color: var(--connecto-red);
+  border-color:
+    var(--connecto-navy);
+
+  background:
+    var(--connecto-navy);
+
+  color:
+    var(--connecto-red);
 }
 
 .match-progress {
   color: #73747a;
+
   text-align: center;
-  font-size: clamp(16px, 4.5vw, 19px);
+
+  font-size:
+    var(--connecto-text-xl);
+
+  line-height:
+    var(--connecto-line-title);
+
   white-space: nowrap;
 }
 
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
 .match-empty {
-  margin: auto 4px;
-  padding: 42px 24px;
-  border-radius: 28px;
-  background: var(--tema-surface, #fff);
-  box-shadow: var(--connecto-shadow);
+  margin:
+    auto
+    var(--connecto-space-xs);
+
+  padding:
+    var(--connecto-space-2xl)
+    var(--connecto-space-xl);
+
+  border-radius:
+    var(--connecto-radius-xl);
+
+  background:
+    var(
+      --tema-surface,
+      #ffffff
+    );
+
+  box-shadow:
+    var(--connecto-shadow);
+
   text-align: center;
 }
 
 .match-empty__icon {
   width: 68px;
   height: 68px;
+
   display: grid;
   place-items: center;
-  margin: 0 auto 17px;
-  border-radius: 50%;
-  background: var(--connecto-green-soft);
-  color: var(--connecto-green);
+
+  margin:
+    0
+    auto
+    var(--connecto-space-base);
+
+  border-radius:
+    var(--connecto-radius-pill);
+
+  background:
+    var(--connecto-green-soft);
+
+  color:
+    var(--connecto-green);
+
   font-size: 33px;
   font-weight: 800;
 }
 
 .match-empty h1 {
-  margin: 0 0 9px;
-  font-size: 24px;
+  margin:
+    0
+    0
+    var(--connecto-space-sm);
+
+  font-size:
+    var(--connecto-text-3xl);
+
+  line-height:
+    var(--connecto-line-title);
 }
 
 .match-empty p {
   max-width: 330px;
-  margin: 0 auto 20px;
-  color: var(--connecto-muted);
-  line-height: 1.45;
+
+  margin:
+    0
+    auto
+    var(--connecto-space-lg);
+
+  color:
+    var(--connecto-muted);
+
+  font-size:
+    var(--connecto-text-base);
+
+  line-height:
+    var(--connecto-line-body);
 }
+
+
+/* =========================================
+   TELAS BAIXAS
+   ========================================= */
 
 @media (max-height: 720px) {
   .match-topbar {
     min-height: 55px;
-    padding-bottom: 9px;
+
+    padding-bottom:
+      var(--connecto-space-sm);
   }
 
   .match-company-icon {
@@ -273,11 +554,15 @@ body.match-page {
   }
 
   .match-card__content {
-    padding-top: 16px;
+    padding-top:
+      var(--connecto-space-base);
   }
 
   .match-tags {
-    margin: 14px 0 16px;
+    margin:
+      var(--connecto-space-md)
+      0
+      var(--connecto-space-base);
   }
 
   .match-description {
@@ -290,25 +575,57 @@ body.match-page {
   }
 
   .match-actions {
-    grid-template-columns: 64px 1fr 64px;
-    padding-top: 14px;
+    grid-template-columns:
+      64px
+      1fr
+      64px;
+
+    padding-top:
+      var(--connecto-space-md);
   }
 }
 
+
+/* =========================================
+   MOBILE PEQUENO
+   ========================================= */
+
 @media (max-width: 360px) {
   .match-shell {
-    padding-left: 9px;
-    padding-right: 9px;
+    padding-left:
+      var(--connecto-page-gutter);
+
+    padding-right:
+      var(--connecto-page-gutter);
   }
 
   .match-card {
     border-radius: 27px;
-    padding-left: 18px;
-    padding-right: 18px;
+
+    padding-left:
+      var(--connecto-space-xl);
+
+    padding-right:
+      var(--connecto-space-xl);
   }
 
   .match-topbar {
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left:
+      var(--connecto-space-xs);
+
+    padding-right:
+      var(--connecto-space-xs);
+  }
+}
+
+
+/* =========================================
+   TABLET / DESKTOP
+   ========================================= */
+
+@media (min-width: 700px) {
+  .match-card {
+    padding-top:
+      var(--connecto-space-xl);
   }
 }
