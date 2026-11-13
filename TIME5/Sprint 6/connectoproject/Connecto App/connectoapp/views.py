@@ -719,29 +719,66 @@ MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO = (
 @login_required
 def mensagens(request):
     conversas = (
-        Conversa.objects.filter(usuario=request.user)
+        Conversa.objects
+        .filter(usuario=request.user)
         .select_related("oportunidade__empresa")
         .prefetch_related("mensagens")
     )
 
     itens = []
+
     for conversa_item in conversas:
+
+        # Usa as mensagens já carregadas pelo prefetch.
+        # A mensagem automática antiga continua escondida.
+        mensagens_visiveis = [
+            mensagem
+            for mensagem in conversa_item.mensagens.all()
+            if not mensagem.texto.startswith(
+                MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO
+            )
+        ]
+
+        ultima_mensagem = (
+            mensagens_visiveis[-1]
+            if mensagens_visiveis
+            else None
+        )
+
+        # Só mensagens da empresa/assistente podem ser
+        # consideradas não lidas pelo candidato.
+        nao_lidas = sum(
+            1
+            for mensagem in mensagens_visiveis
+            if (
+                mensagem.autor == "empresa"
+                and not mensagem.lida_pelo_candidato
+            )
+        )
+
         itens.append(
             {
                 "conversa": conversa_item,
-                "ultima_mensagem": conversa_item.mensagens.exclude(
-                    texto__startswith=MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO
-                ).last(),
+                "ultima_mensagem": ultima_mensagem,
+                "nao_lidas": nao_lidas,
             }
         )
 
-    return render(request, "mensagens.html", {"itens": itens})
+    return render(
+        request,
+        "mensagens.html",
+        {
+            "itens": itens,
+        },
+    )
 
 
 @login_required
 def conversa(request, conversa_id):
     conversa_atual = get_object_or_404(
-        Conversa.objects.select_related("oportunidade__empresa"),
+        Conversa.objects.select_related(
+            "oportunidade__empresa"
+        ),
         pk=conversa_id,
         usuario=request.user,
     )
@@ -750,11 +787,32 @@ def conversa(request, conversa_id):
         usuario=request.user,
         oportunidade=conversa_atual.oportunidade,
     ).first()
+    #mudança aqui 
+    # Ao abrir a conversa, todas as mensagens recebidas 
+    # da empresa são consideradas lidas pelo candidato.
+    (
+        conversa_atual.mensagens
+        .filter(
+            autor="empresa",
+            lida_pelo_candidato=False,
+        )
+        .exclude(
+            texto__startswith=
+                MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO
+        )
+        .update(
+            lida_pelo_candidato=True
+        )
+    )
 
-    # Conversas antigas podem conter a resposta fixa criada pela versão
-    # anterior do app. Ela fica escondida para não parecer uma resposta da IA.
-    mensagens_visiveis = conversa_atual.mensagens.exclude(
-        texto__startswith=MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO
+    # Conversas antigas podem conter a resposta fixa criada
+    # pela versão anterior do app. Ela continua escondida.
+    mensagens_visiveis = (
+        conversa_atual.mensagens
+        .exclude(
+            texto__startswith=
+                MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO
+        )
     )
 
     return render(
@@ -763,7 +821,10 @@ def conversa(request, conversa_id):
         {
             "conversa": conversa_atual,
             "mensagens_conversa": mensagens_visiveis,
-            "foi_match": bool(candidatura and candidatura.origem == "match"),
+            "foi_match": bool(
+                candidatura
+                and candidatura.origem == "match"
+            ),
         },
     )
 
@@ -890,19 +951,22 @@ def assistente_vaga(request, conversa_id):
                 "degradada": True,
             }
         )
-
+    #mudança aqui 
     with transaction.atomic():
         Mensagem.objects.create(
             conversa=conversa,
             autor="candidato",
             texto=pergunta,
-        )
+            #aqui
+            lida_pelo_candidato=True,
+    )
 
         mensagem_assistente = Mensagem.objects.create(
             conversa=conversa,
             autor="empresa",
             texto=resposta,
-        )
+            lida_pelo_candidato=True,
+    )
 
         conversa.save(update_fields=["atualizada_em"])
 
@@ -1391,19 +1455,40 @@ def push_subscribe(request):
         "ok": True
     })
 
-
+#mexi aqui
 @require_POST
 @login_required
 def verificar_notificacoes(request):
-    nao_lidas = Notificacao.objects.filter(
-        usuario=request.user,
-        lida=False,
-    ).count()
+    notificacoes_nao_lidas = (
+        Notificacao.objects
+        .filter(
+            usuario=request.user,
+            lida=False,
+        )
+        .count()
+    )
 
-    return JsonResponse({
-        "novas": [],
-        "nao_lidas": nao_lidas,
-    })
+    mensagens_nao_lidas = (
+        Mensagem.objects
+        .filter(
+            conversa__usuario=request.user,
+            autor="empresa",
+            lida_pelo_candidato=False,
+        )
+        .exclude(
+            texto__startswith=
+                MENSAGEM_AUTOMATICA_ANTIGA_PREFIXO
+        )
+        .count()
+    )
+
+    return JsonResponse(
+        {
+            "novas": [],
+            "nao_lidas": notificacoes_nao_lidas,
+            "mensagens_nao_lidas": mensagens_nao_lidas,
+        }
+    )
 
 
 

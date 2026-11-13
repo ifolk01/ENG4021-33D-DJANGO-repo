@@ -26,7 +26,7 @@
       {% for item in itens %}
         <a
           href="{% url 'conversa' item.conversa.id %}"
-          class="conversation-card"
+          class="conversation-card{% if item.nao_lidas %} conversation-card--unread{% endif %}"
           data-search="{{ item.conversa.oportunidade.empresa.nome|lower }} {{ item.conversa.oportunidade.titulo|lower }}"
         >
           <div class="conversation-avatar">
@@ -47,6 +47,15 @@
             {% if item.ultima_mensagem %}
               <time datetime="{{ item.ultima_mensagem.criada_em|date:'c' }}">{{ item.ultima_mensagem.criada_em|date:"d/m, H:i" }}</time>
             {% endif %}
+            {% if item.nao_lidas %}
+              <span class="conversation-unread-badge" aria-label="{{ item.nao_lidas }} mensagens não lidas">
+                {% if item.nao_lidas > 99 %}  
+                  99+
+                {% else %}
+                  {{ item.nao_lidas }}
+                {% endif %}
+            </span>
+          {% endif %}
             <span class="chevron">›</span>
           </div>
         </a>

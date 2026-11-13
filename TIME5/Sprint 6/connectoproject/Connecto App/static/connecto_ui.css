@@ -104,6 +104,63 @@ a {
   flex: none;
 }
 
+.nav-icon-wrap {
+  position: relative;
+
+  width: 27px;
+  height: 27px;
+
+  display: grid;
+  place-items: center;
+}
+
+.nav-icon-wrap svg {
+  width: 25px;
+  height: 25px;
+}
+
+.nav-message-badge {
+  position: absolute;
+
+  top: -7px;
+  right: -10px;
+
+  min-width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 5px;
+
+  border: 2px solid
+    rgba(255, 255, 255, .96);
+
+  border-radius: 999px;
+
+  background: var(
+    --connecto-red,
+    #d76264
+  );
+
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+
+  box-shadow:
+    0 3px 8px
+    rgba(215, 98, 100, .28);
+
+  pointer-events: none;
+}
+
+.nav-message-badge[hidden] {
+  display: none;
+}
+
 .nav-item.active {
   color: var(--tema-ink, var(--connecto-navy));
   background: var(--connecto-nav-active);

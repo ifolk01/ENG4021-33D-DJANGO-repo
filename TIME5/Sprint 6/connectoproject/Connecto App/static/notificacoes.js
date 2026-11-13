@@ -1,5 +1,5 @@
 const INTERVALO_MS =
-    10 * 60 * 1000;
+    30 * 1000;
 
 
 function csrf() {
@@ -153,6 +153,15 @@ async function verificar() {
             badge.hidden =
                 dados.nao_lidas === 0;
         }
+        const mensagensBadge = document.getElementById("mensagens-badge");
+/*mudança aqui */
+        if (mensagensBadge) {
+            const totalMensagens = Number(dados.mensagens_nao_lidas || 0); mensagensBadge.hidden = totalMensagens === 0;
+        if (totalMensagens > 99) {
+            mensagensBadge.textContent = "99+";
+        } else {
+            mensagensBadge.textContent =String(totalMensagens);}
+}
 
     } catch (error) {
 
