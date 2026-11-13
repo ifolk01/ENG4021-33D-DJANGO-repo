@@ -17,7 +17,10 @@
 
   <div class="login-container">
     <div class="auth-logo-box">
-      <img src="{% static 'logo_icon.jpg' %}" alt="{% trans 'Logo Connecto' %}">
+      <img
+        src="{% static 'logo_icon.jpg' %}"
+        alt="{% trans 'Logo Connecto' %}"
+      >
     </div>
 
     <div class="auth-subtitle">
@@ -31,21 +34,27 @@
         {% trans "Esqueceu sua senha?" %}
       </h1>
 
-      <p class="recuperacao-description">
-        {% trans "Informe seu e-mail cadastrado para receber instruções de recuperação de senha." %}
-      </p>
+      {% if sucesso %}
+        <p class="recuperacao-description" role="status">
+          {% trans "Se o e-mail informado estiver cadastrado, você receberá um link para redefinir sua senha." %}
+        </p>
+      {% else %}
+        <p class="recuperacao-description">
+          {% trans "Informe seu e-mail cadastrado para receber instruções de recuperação de senha." %}
+        </p>
 
-      <input
-        type="email"
-        name="email"
-        class="auth-input"
-        placeholder="{% trans 'E-mail cadastrado' %}"
-        required
-      >
+        <input
+          type="email"
+          name="email"
+          class="auth-input"
+          placeholder="{% trans 'E-mail cadastrado' %}"
+          required
+        >
 
-      <button type="submit" class="auth-button">
-        {% trans "Enviar instruções" %}
-      </button>
+        <button type="submit" class="auth-button">
+          {% trans "Enviar instruções" %}
+        </button>
+      {% endif %}
     </form>
   </div>
 

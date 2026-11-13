@@ -46,6 +46,11 @@ urlpatterns = [
     path("configuracoes/", views.configuracoes, name="configuracoes"),
     
     path("esqueceu-senha/", views.esqueceu_senha, name="esqueceu_senha"),
+    path(
+    "redefinir-senha/<uidb64>/<token>/",
+    views.redefinir_senha,
+    name="redefinir_senha",
+),
 
     path("duvidas-frequentes/",views.duvidas_frequentes,name="duvidas_frequentes"),
     path("notificacoes/push/subscribe/",views.push_subscribe,name="push_subscribe"),

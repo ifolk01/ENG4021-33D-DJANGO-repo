@@ -1,6 +1,12 @@
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.urls import reverse
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
 from django.db import transaction
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -1097,12 +1103,97 @@ def perfil(request):
     )
 
 def esqueceu_senha(request):
-    return render(
-        request,
-        "Login.html",
-        {"erro": "Recuperação de senha ainda não disponível."}
+    if request.method == "POST":
+        email = request.POST.get("email", "").strip().lower()
+
+        empresa = Empresa.objects.filter(
+            email__iexact=email,
+            usuario__isnull=False,
+            usuario__is_active=True,
+        ).select_related("usuario").first()
+
+        if empresa:
+            usuario = empresa.usuario
+
+            uid = urlsafe_base64_encode(force_bytes(usuario.pk))
+            token = default_token_generator.make_token(usuario)
+
+            link = request.build_absolute_uri(
+                reverse(
+                    "redefinir_senha",
+                    kwargs={"uidb64": uid, "token": token},
+                )
+            )
+
+            send_mail(
+                subject="Connecto - Recuperação de senha",
+                message=(
+                    "Olá!\n\n"
+                    "Recebemos uma solicitação para redefinir sua senha "
+                    "no Connecto.\n\n"
+                    f"Acesse o link abaixo para criar uma nova senha:\n{link}\n\n"
+                    "Se você não solicitou a recuperação, ignore este e-mail."
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[empresa.email],
+                fail_silently=False,
+            )
+
+        return render(
+            request,
+            "esqueceu_senha.html",
+            {"sucesso": True},
+        )
+
+    return render(request, "esqueceu_senha.html")
+
+def redefinir_senha(request, uidb64, token):
+    usuario = None
+
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        usuario = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        pass
+
+    empresa_valida = (
+        usuario is not None
+        and usuario.is_active
+        and Empresa.objects.filter(usuario=usuario).exists()
     )
 
+    token_valido = (
+        empresa_valida
+        and default_token_generator.check_token(usuario, token)
+    )
+
+    if not token_valido:
+        return render(
+            request,
+            "redefinir_senha.html",
+            {"link_invalido": True},
+        )
+
+    if request.method == "POST":
+        senha = request.POST.get("password", "")
+        confirmar_senha = request.POST.get("confirmar_senha", "")
+
+        if len(senha) < 6:
+            erro = "A senha deve ter no mínimo 6 caracteres."
+        elif senha != confirmar_senha:
+            erro = "As senhas não coincidem."
+        else:
+            usuario.set_password(senha)
+            usuario.save()
+            return redirect("login")
+
+        return render(
+            request,
+            "redefinir_senha.html",
+            {"erro": erro},
+        )
+
+    return render(request, "redefinir_senha.html")
 
 @login_required
 def duvidas_frequentes(request):
