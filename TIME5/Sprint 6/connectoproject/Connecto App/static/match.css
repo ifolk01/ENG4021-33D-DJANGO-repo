@@ -629,3 +629,37 @@ body.match-page {
       var(--connecto-space-xl);
   }
 }
+
+/* =========================================
+   LAYOUT RESPONSIVO — TABLET / DESKTOP
+   ========================================= */
+
+@media (min-width: 700px) {
+  .match-shell {
+    width: min(100%, 720px);
+    padding-left: var(--connecto-space-xl);
+    padding-right: var(--connecto-space-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .match-shell {
+    width: min(100%, 760px);
+  }
+
+  .match-stack {
+    max-height: 780px;
+  }
+
+  .match-card {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .match-card-back,
+  .match-card-back--far {
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

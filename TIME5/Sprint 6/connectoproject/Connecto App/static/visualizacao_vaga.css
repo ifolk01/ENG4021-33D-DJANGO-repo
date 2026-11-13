@@ -495,3 +495,99 @@ body {
       var(--connecto-space-xl, 24px);
   }
 }
+
+/* =========================================
+   LAYOUT RESPONSIVO — DETALHE DE VAGA
+   ========================================= */
+
+.vaga-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.vaga-card {
+  order: 1;
+}
+
+.vaga-side-column {
+  display: contents;
+}
+
+.vaga-side-card {
+  order: 2;
+  margin-bottom: var(--connecto-card-gap, 14px);
+  padding: var(--connecto-card-padding, 20px);
+  border: 1px solid var(--tema-line, var(--connecto-line, #edf0f3));
+  border-radius: var(--connecto-radius-lg, 18px);
+  background: var(--tema-surface, #ffffff);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, .04);
+}
+
+.vaga-main-column {
+  order: 3;
+  min-width: 0;
+}
+
+.vaga-action {
+  order: 4;
+}
+
+.vaga-side-card .vaga-info-row:first-child {
+  border-top: 0;
+}
+
+.candidatar-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+@media (min-width: 700px) {
+  .app-shell {
+    max-width: var(--connecto-tablet-width, 900px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-shell {
+    max-width: var(--connecto-desktop-width, 1180px);
+  }
+
+  .vaga-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    grid-template-rows: auto auto;
+    align-items: start;
+    gap: var(--connecto-space-xl);
+    padding: var(--connecto-space-xl) var(--connecto-desktop-gutter) var(--connecto-space-2xl);
+  }
+
+  .vaga-card {
+    grid-column: 1;
+    grid-row: 1;
+    margin-bottom: 0;
+  }
+
+  .vaga-main-column {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .vaga-side-column {
+    display: block;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    position: sticky;
+    top: 92px;
+  }
+
+  .vaga-side-card {
+    margin-bottom: var(--connecto-space-base);
+  }
+
+  .vaga-side-column .vaga-action {
+    margin: 0;
+  }
+}
+
