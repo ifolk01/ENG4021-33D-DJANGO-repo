@@ -23,6 +23,16 @@
 
         <h1>{% trans "Minha candidatura" %}</h1>
 
+    <header class="application-detail-header">
+      <a
+        href="{% url 'candidaturas' %}"
+        class="application-detail-back"
+        aria-label="{% trans 'Voltar para candidaturas' %}"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m15 18-6-6 6-6"></path>
+            </svg>
+      </a>
         <span class="application-detail-header-space"></span>
       </header>
 
