@@ -2094,3 +2094,63 @@ msgstr "Ajustes"
 
 msgid "Empresa"
 msgstr "Empresa"
+
+# Criar Conta Empresa
+msgid "Cadastro do empregador"
+msgstr "Registro de empleador"
+
+msgid "Exibir senha"
+msgstr "Mostrar contraseña"
+
+msgid "Ocultar senha"
+msgstr "Ocultar contraseña"
+
+# Detalhe da Candidatura
+msgid "Detalhe da candidatura"
+msgstr "Detalle de la postulación"
+
+msgid "Voltar para candidaturas"
+msgstr "Volver a postulaciones"
+
+msgid "Minha candidatura"
+msgstr "Mi postulación"
+
+msgid "Status atual"
+msgstr "Estado actual"
+
+msgid "Sua candidatura foi enviada com sucesso."
+msgstr "Tu postulación fue enviada con éxito."
+
+msgid "Candidatura enviada"
+msgstr "Postulación enviada"
+
+msgid "Última atualização"
+msgstr "Última actualización"
+
+msgid "Processo seletivo"
+msgstr "Proceso de selección"
+
+msgid "Andamento da candidatura"
+msgstr "Progreso de la postulación"
+
+msgid "Sua candidatura foi registrada com sucesso no Connecto."
+msgstr "Tu postulación fue registrada con éxito en Connecto."
+
+msgid "O status da sua candidatura foi atualizado."
+msgstr "El estado de tu postulación ha sido actualizado."
+
+msgid "Ainda não houve novas atualizações nesta candidatura."
+msgstr "Aún no ha habido nuevas actualizaciones en esta postulación."
+
+msgid "Ações"
+msgstr "Acciones"
+
+msgid "Conversar sobre esta vaga"
+msgstr "Chatear sobre esta vacante"
+
+msgid "Ver detalhes da vaga"
+msgstr "Ver detalles de la vacante"
+
+# Visualização da Vaga
+msgid "Ver minha candidatura"
+msgstr "Ver mi postulación"

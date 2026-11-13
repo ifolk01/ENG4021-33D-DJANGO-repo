@@ -2087,3 +2087,63 @@ msgstr "Settings"
 
 msgid "Empresa"
 msgstr "Company"
+
+# Criar Conta Empresa
+msgid "Cadastro do empregador"
+msgstr "Employer registration"
+
+msgid "Exibir senha"
+msgstr "Show password"
+
+msgid "Ocultar senha"
+msgstr "Hide password"
+
+# Detalhe da Candidatura
+msgid "Detalhe da candidatura"
+msgstr "Application details"
+
+msgid "Voltar para candidaturas"
+msgstr "Back to applications"
+
+msgid "Minha candidatura"
+msgstr "My application"
+
+msgid "Status atual"
+msgstr "Current status"
+
+msgid "Sua candidatura foi enviada com sucesso."
+msgstr "Your application was successfully submitted."
+
+msgid "Candidatura enviada"
+msgstr "Application submitted"
+
+msgid "Última atualização"
+msgstr "Last updated"
+
+msgid "Processo seletivo"
+msgstr "Selection process"
+
+msgid "Andamento da candidatura"
+msgstr "Application progress"
+
+msgid "Sua candidatura foi registrada com sucesso no Connecto."
+msgstr "Your application was successfully registered on Connecto."
+
+msgid "O status da sua candidatura foi atualizado."
+msgstr "Your application status has been updated."
+
+msgid "Ainda não houve novas atualizações nesta candidatura."
+msgstr "There are no new updates on this application yet."
+
+msgid "Ações"
+msgstr "Actions"
+
+msgid "Conversar sobre esta vaga"
+msgstr "Chat about this job"
+
+msgid "Ver detalhes da vaga"
+msgstr "View job details"
+
+# Visualização da Vaga
+msgid "Ver minha candidatura"
+msgstr "View my application"
