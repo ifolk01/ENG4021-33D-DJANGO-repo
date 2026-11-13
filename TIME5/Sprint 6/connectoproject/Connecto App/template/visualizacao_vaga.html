@@ -66,6 +66,15 @@
 
                 {% if vaga.area %}
                 <span class="vaga-tag area">{{ vaga.area }}</span>
+                <span class="vaga-tag modalidade">
+                    {% trans vaga.modalidade %}
+                </span>
+                {% endif %}
+
+                {% if vaga.area %}
+                <span class="vaga-tag area">
+                    {% trans vaga.area %}
+                </span>
                 {% endif %}
             </div>
         </section>
