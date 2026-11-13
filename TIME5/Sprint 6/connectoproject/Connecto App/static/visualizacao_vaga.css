@@ -1,207 +1,497 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    background: var(--tema-bg, #f7f8fa);
-    color: var(--tema-ink, #17324d);
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+  margin: 0;
+
+  background:
+    var(
+      --tema-bg,
+      var(--connecto-bg, #f7f8fa)
+    );
+
+  color:
+    var(
+      --tema-ink,
+      var(--connecto-navy, #17324d)
+    );
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+
+  line-height:
+    var(--connecto-line-body, 1.45);
 }
 
 .app-shell {
-    width: 100%;
-    min-height: 100dvh;
-    max-width: 560px;
-    margin: 0 auto;
-    background: var(--tema-bg, #f7f8fa);
-    padding-bottom: calc(90px + env(safe-area-inset-bottom));
+  width: 100%;
+  max-width: 560px;
+
+  min-height: 100dvh;
+
+  margin: 0 auto;
+
+  padding-bottom:
+    calc(
+      var(--connecto-nav-height, 72px)
+      + 18px
+      + env(safe-area-inset-bottom)
+    );
+
+  background:
+    var(
+      --tema-bg,
+      var(--connecto-bg, #f7f8fa)
+    );
 }
 
-/* HEADER */
+
+/* =========================================
+   HEADER
+   ========================================= */
+
 .vaga-header {
-    height: 68px;
-    display: grid;
-    grid-template-columns: 48px 1fr 48px;
-    align-items: center;
-    padding: 0 16px;
-    background: var(--tema-bg, #ffffff);
-    border-bottom: 1px solid var(--tema-line, #edf0f3);
-    position: sticky;
-    top: 0;
-    z-index: 20;
+  position: sticky;
+  z-index: 20;
+
+  top: 0;
+
+  height: 68px;
+
+  display: grid;
+
+  grid-template-columns:
+    48px
+    1fr
+    48px;
+
+  align-items: center;
+
+  padding:
+    0
+    var(--connecto-page-gutter, clamp(12px, 3vw, 24px));
+
+  border-bottom:
+    1px solid
+    var(--tema-line, var(--connecto-line, #edf0f3));
+
+  background:
+    var(
+      --tema-bg,
+      #ffffff
+    );
 }
 
 .vaga-header h1 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 700;
-    text-align: center;
-    color: var(--tema-ink, #183b56);
+  margin: 0;
+
+  color:
+    var(
+      --tema-ink,
+      var(--connecto-navy, #183b56)
+    );
+
+  font-size:
+    var(--connecto-text-xl, clamp(17px, 1.6vw, 18px));
+
+  font-weight: 700;
+
+  line-height:
+    var(--connecto-line-title, 1.2);
+
+  text-align: center;
 }
 
 .back-button {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 25px;
-    color: var(--tema-ink, #183b56);
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color:
+    var(
+      --tema-ink,
+      var(--connecto-navy, #183b56)
+    );
+
+  font-size: 25px;
+  line-height: 1;
+
+  text-decoration: none;
 }
 
-/* CONTEÚDO */
+
+/* =========================================
+   CONTEÚDO
+   ========================================= */
+
 .vaga-page {
-    padding: 18px 16px 30px;
+  padding:
+    var(--connecto-space-lg, 20px)
+    var(--connecto-page-gutter, clamp(12px, 3vw, 24px))
+    var(--connecto-space-2xl, 32px);
 }
 
-/* CARD PRINCIPAL */
+
+/* =========================================
+   CARDS
+   ========================================= */
+
 .vaga-card,
 .vaga-section {
-    background: var(--tema-surface, #ffffff);
-    border: 1px solid var(--tema-line, #edf0f3);
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 14px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  margin-bottom:
+    var(--connecto-card-gap, clamp(10px, 2vw, 16px));
+
+  padding:
+    var(--connecto-card-padding, clamp(14px, 2.5vw, 22px));
+
+  border:
+    1px solid
+    var(--tema-line, var(--connecto-line, #edf0f3));
+
+  border-radius:
+    var(--connecto-radius-lg, 18px);
+
+  background:
+    var(
+      --tema-surface,
+      #ffffff
+    );
+
+  box-shadow:
+    0 4px 15px
+    rgba(0, 0, 0, .04);
 }
 
-/* EMPRESA */
+
+/* =========================================
+   EMPRESA
+   ========================================= */
+
 .vaga-company-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    margin-bottom: 18px;
+  display: flex;
+  align-items: flex-start;
+
+  gap:
+    var(--connecto-space-md, 12px);
+
+  margin-bottom:
+    var(--connecto-section-gap, clamp(16px, 3vw, 28px));
 }
 
 .empresa-avatar {
-    width: 52px;
-    min-width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--tema-cyan-soft, #e4f3f8);
-    color: var(--tema-ink, #34738c);
-    font-weight: 800;
-    font-size: 16px;
+  width: 52px;
+  min-width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius:
+    var(--connecto-radius-md, 16px);
+
+  background:
+    var(
+      --tema-cyan-soft,
+      #e4f3f8
+    );
+
+  color:
+    var(
+      --tema-ink,
+      #34738c
+    );
+
+  font-size:
+    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
+
+  font-weight: 800;
 }
 
 .vaga-heading {
-    flex: 1;
+  flex: 1;
+
+  min-width: 0;
 }
 
 .vaga-heading h2 {
-    margin: 1px 0 5px;
-    font-size: 20px;
-    line-height: 1.25;
-    color: var(--tema-ink, #183b56);
+  margin:
+    1px
+    0
+    var(--connecto-space-xs, 4px);
+
+  color:
+    var(
+      --tema-ink,
+      var(--connecto-navy, #183b56)
+    );
+
+  font-size:
+    var(--connecto-text-2xl, clamp(19px, 2vw, 22px));
+
+  line-height:
+    var(--connecto-line-title, 1.2);
 }
 
 .vaga-heading p {
-    margin: 0;
-    font-size: 14px;
-    color: var(--tema-muted, #6e7f8d);
+  margin: 0;
+
+  color:
+    var(
+      --tema-muted,
+      var(--connecto-muted, #6e7f8d)
+    );
+
+  font-size:
+    var(--connecto-text-md, clamp(13px, 1.2vw, 14px));
+
+  line-height:
+    var(--connecto-line-body, 1.45);
 }
 
-/* TAGS */
+
+/* =========================================
+   TAGS
+   ========================================= */
+
 .vaga-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-bottom:
+    var(--connecto-space-lg, 20px);
 }
 
 .vaga-tag {
-    padding: 7px 11px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
+  padding:
+    7px
+    11px;
+
+  border-radius:
+    var(--connecto-radius-pill, 999px);
+
+  font-size:
+    var(--connecto-text-sm, clamp(11px, 1vw, 12px));
+
+  font-weight: 600;
+
+  line-height: 1;
 }
 
 .vaga-tag.location {
-    background: var(--tema-red-soft, #fde8ec);
-    color: var(--tema-ink, #a34f61);
+  background:
+    var(--tema-red-soft, #fde8ec);
+
+  color:
+    var(--tema-ink, #a34f61);
 }
 
 .vaga-tag.modalidade {
-    background: var(--tema-amber-soft, #fff1c7);
-    color: var(--tema-ink, #88702a);
+  background:
+    var(--tema-amber-soft, #fff1c7);
+
+  color:
+    var(--tema-ink, #88702a);
 }
 
 .vaga-tag.area {
-    background: var(--tema-cyan-soft, #dfeefa);
-    color: var(--tema-ink, #386b8c);
+  background:
+    var(--tema-cyan-soft, #dfeefa);
+
+  color:
+    var(--tema-ink, #386b8c);
 }
 
-/* INFO */
+
+/* =========================================
+   INFO
+   ========================================= */
+
 .vaga-info-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 14px 0;
-    border-top: 1px solid var(--tema-line, #eef1f3);
-    font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap:
+    var(--connecto-space-base, 16px);
+
+  padding:
+    var(--connecto-space-md, 12px)
+    0;
+
+  border-top:
+    1px solid
+    var(--tema-line, var(--connecto-line, #eef1f3));
+
+  font-size:
+    var(--connecto-text-md, clamp(13px, 1.2vw, 14px));
+
+  line-height:
+    var(--connecto-line-body, 1.45);
 }
 
 .vaga-info-row span {
-    color: var(--tema-muted, #798895);
+  color:
+    var(
+      --tema-muted,
+      var(--connecto-muted, #798895)
+    );
 }
 
 .vaga-info-row strong {
-    color: var(--tema-ink, #183b56);
-    text-align: right;
+  color:
+    var(
+      --tema-ink,
+      var(--connecto-navy, #183b56)
+    );
+
+  text-align: right;
 }
 
-/* SEÇÕES */
+
+/* =========================================
+   SEÇÕES
+   ========================================= */
+
 .vaga-section h3 {
-    margin: 0 0 12px;
-    font-size: 17px;
-    color: var(--tema-ink, #183b56);
+  margin:
+    0
+    0
+    var(--connecto-space-md, 12px);
+
+  color:
+    var(
+      --tema-ink,
+      var(--connecto-navy, #183b56)
+    );
+
+  font-size:
+    var(--connecto-text-xl, clamp(17px, 1.6vw, 18px));
+
+  line-height:
+    var(--connecto-line-title, 1.2);
 }
 
 .vaga-section p {
-    margin: 0;
-    color: var(--tema-muted, #586b79);
-    font-size: 14px;
-    line-height: 1.65;
-    white-space: pre-line;
+  margin: 0;
+
+  color:
+    var(
+      --tema-muted,
+      var(--connecto-muted, #586b79)
+    );
+
+  font-size:
+    var(--connecto-text-md, clamp(13px, 1.2vw, 14px));
+
+  line-height: 1.6;
+
+  white-space: pre-line;
 }
 
-/* CANDIDATURA */
+
+/* =========================================
+   CANDIDATURA
+   ========================================= */
+
 .vaga-action {
-    margin-top: 22px;
-    margin-bottom: 12px;
+  margin:
+    var(--connecto-space-xl, 24px)
+    0
+    var(--connecto-space-md, 12px);
 }
 
 .candidatar-button {
-    width: 100%;
-    height: 54px;
-    border: 0;
-    border-radius: 14px;
-    background: #32758e;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.15s ease, opacity 0.15s ease;
+  width: 100%;
+  min-height: 52px;
+
+  border: 0;
+
+  border-radius:
+    var(--connecto-radius-md, 16px);
+
+  background: #32758e;
+
+  color: #ffffff;
+
+  font-size:
+    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
+
+  font-weight: 700;
+
+  line-height:
+    var(--connecto-line-tight, 1.15);
+
+  cursor: pointer;
+
+  transition:
+    transform .15s ease,
+    opacity .15s ease;
 }
 
 .candidatar-button:active {
-    transform: scale(0.98);
+  transform:
+    scale(.98);
 }
 
-/* RESPONSIVO */
-@media (min-width: 600px) {
-    .app-shell {
-        border-left: 1px solid var(--tema-line, #eceff1);
-        border-right: 1px solid var(--tema-line, #eceff1);
-    }
+
+/* =========================================
+   MOBILE PEQUENO
+   ========================================= */
+
+@media (max-width: 360px) {
+  .vaga-header {
+    grid-template-columns:
+      42px
+      1fr
+      42px;
+  }
+
+  .empresa-avatar {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+  }
+
+  .vaga-info-row {
+    gap:
+      var(--connecto-space-sm, 8px);
+  }
+}
+
+
+/* =========================================
+   TABLET / DESKTOP
+   ========================================= */
+
+@media (min-width: 700px) {
+  .app-shell {
+    border-left:
+      1px solid
+      var(--tema-line, #eceff1);
+
+    border-right:
+      1px solid
+      var(--tema-line, #eceff1);
+  }
+
+  .vaga-page {
+    padding-top:
+      var(--connecto-space-xl, 24px);
+  }
 }

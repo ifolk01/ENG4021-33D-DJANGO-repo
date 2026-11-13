@@ -1,76 +1,189 @@
+/* =========================================
+   EDITAR PERFIL — RESPONSIVO
+   ========================================= */
+
 body {
-  background-color: var(--tema-bg, #F2F2ED);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: var(--tema-ink, #33364F);
   margin: 0;
-  padding: 16px;
+
+  padding:
+    max(var(--connecto-space-base, 16px), env(safe-area-inset-top))
+    var(--connecto-page-gutter, clamp(12px, 3vw, 24px))
+    var(--connecto-space-xl, 24px);
+
+  background-color:
+    var(--tema-bg, var(--connecto-bg, #F2F2ED));
+
+  color:
+    var(--tema-ink, var(--connecto-navy, #33364F));
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+
+  line-height:
+    var(--connecto-line-body, 1.45);
+
+  box-sizing: border-box;
 }
 
-/* Cabeçalho */
+* {
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   CABEÇALHO
+   ========================================= */
+
 .topo {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+
+  gap:
+    var(--connecto-space-md, 12px);
+
+  margin-bottom:
+    var(--connecto-space-sm, 8px);
 }
 
 .topo h1 {
   margin: 0;
-  font-size: 18px;
+
+  color:
+    var(--tema-ink, var(--connecto-navy, #33364F));
+
+  font-size:
+    var(--connecto-text-2xl, clamp(19px, 2vw, 22px));
+
+  line-height:
+    var(--connecto-line-title, 1.2);
 }
 
 .voltar {
+  color:
+    var(--tema-ink, var(--connecto-navy, #33364F));
+
   font-size: 30px;
-  color: var(--tema-ink, #33364F);
+  line-height: 1;
+
   text-decoration: none;
 }
 
 .espaco {
-  width: 16px;
+  width: 30px;
 }
 
-/* Foto / avatar */
+
+/* =========================================
+   FOTO / AVATAR
+   ========================================= */
+
 .foto {
+  margin:
+    0
+    0
+    var(--connecto-space-md, 12px);
+
   text-align: center;
-  margin: 0 0 12px 0;
 }
 
 .avatar {
   width: 64px;
   height: 64px;
-  line-height: 64px;
-  margin: 0 auto 8px auto;
-  border-radius: 50%;
-  background-color: var(--tema-surface-2, #E6E6F2);
+
+  display: grid;
+  place-items: center;
+
+  margin:
+    0
+    auto
+    var(--connecto-space-sm, 8px);
+
+  border-radius:
+    var(--connecto-radius-pill, 999px);
+
+  background-color:
+    var(--tema-surface-2, #E6E6F2);
+
   color: #464B71;
-  font-size: 24px;
+
+  font-size:
+    var(--connecto-text-3xl, clamp(22px, 2.6vw, 26px));
+
+  line-height: 1;
 }
 
 .alterar-foto {
   color: #116A85;
-  font-size: 15px;
+
+  font-size:
+    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+
   text-decoration: none;
 }
 
-/* Cards */
+
+/* =========================================
+   CARDS
+   ========================================= */
+
 .card {
-  background-color: var(--tema-surface, #FFFFFF);
-  border-radius: 14px;
-  padding: 14px 16px;
-  margin-bottom: 12px;
+  margin-bottom:
+    var(--connecto-card-gap, clamp(10px, 2vw, 16px));
+
+  padding:
+    var(--connecto-card-padding, clamp(14px, 2.5vw, 22px));
+
+  border-radius:
+    var(--connecto-radius-md, 16px);
+
+  background-color:
+    var(--tema-surface, #FFFFFF);
 }
 
 .card h2 {
-  margin: 0 0 4px 0;
-  font-size: 16px;
+  margin:
+    0
+    0
+    var(--connecto-space-xs, 4px);
+
+  font-size:
+    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
+
+  line-height:
+    var(--connecto-line-title, 1.2);
 }
 
-/* Campos do formulário */
+
+/* =========================================
+   FORMULÁRIO
+   ========================================= */
+
 label {
   display: block;
-  margin: 8px 0 4px 0;
-  font-size: 13px;
-  color: var(--tema-muted, #6B6F80);
+
+  margin:
+    var(--connecto-space-sm, 8px)
+    0
+    var(--connecto-space-xs, 4px);
+
+  color:
+    var(--tema-muted, var(--connecto-muted, #6B6F80));
+
+  font-size:
+    var(--connecto-text-meta, clamp(12px, 1.1vw, 13px));
+
+  line-height:
+    var(--connecto-line-title, 1.2);
 }
 
 input[type="text"],
@@ -78,31 +191,56 @@ input[type="email"],
 input[type="tel"],
 select {
   width: 100%;
-  box-sizing: border-box;
-  padding: 10px 12px;
-  border: 1px solid var(--tema-line, #E4E4DD);
-  border-radius: 10px;
-  background-color: var(--tema-surface-2, #FAFAF7);
-  color: var(--tema-ink, #33364F);
-  font-size: 15px;
+
+  padding:
+    10px
+    var(--connecto-space-md, 12px);
+
+  border:
+    1px solid
+    var(--tema-line, var(--connecto-line, #E4E4DD));
+
+  border-radius:
+    var(--connecto-radius-sm, 12px);
+
+  background-color:
+    var(--tema-surface-2, #FAFAF7);
+
+  color:
+    var(--tema-ink, var(--connecto-navy, #33364F));
+
   font-family: inherit;
+
+  font-size:
+    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+
+  line-height:
+    var(--connecto-line-body, 1.45);
 }
 
 input:focus,
 select:focus {
   outline: none;
-  border-color: #116A85;
+
+  border-color:
+    var(--connecto-cyan, #116A85);
 }
 
 input:disabled {
-  color: var(--tema-muted, #6B6F80);
-  background-color: var(--tema-surface-2, #EFEFEA);
+  color:
+    var(--tema-muted, var(--connecto-muted, #6B6F80));
+
+  background-color:
+    var(--tema-surface-2, #EFEFEA);
 }
+
 
 /* Curso e período na mesma linha */
 .lado-a-lado {
   display: flex;
-  gap: 10px;
+
+  gap:
+    var(--connecto-space-sm, 8px);
 }
 
 .campo-curso {
@@ -113,42 +251,96 @@ input:disabled {
   flex: 1;
 }
 
-/* Áreas de interesse (checkbox em formato de pílula) */
+
+/* =========================================
+   ÁREAS DE INTERESSE
+   ========================================= */
+
 .areas input {
   display: none;
 }
 
 .areas label {
-  display: inline-block;
-  margin: 8px 6px 0 0;
-  padding: 7px 12px;
-  border: 1px solid var(--tema-line, #E4E4DD);
-  border-radius: 999px;
-  background-color: var(--tema-surface, #FFFFFF);
-  color: var(--tema-ink, #33364F);
-  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+
+  margin:
+    var(--connecto-space-sm, 8px)
+    6px
+    0
+    0;
+
+  padding:
+    7px
+    var(--connecto-space-md, 12px);
+
+  border:
+    1px solid
+    var(--tema-line, var(--connecto-line, #E4E4DD));
+
+  border-radius:
+    var(--connecto-radius-pill, 999px);
+
+  background-color:
+    var(--tema-surface, #FFFFFF);
+
+  color:
+    var(--tema-ink, var(--connecto-navy, #33364F));
+
+  font-size:
+    var(--connecto-text-md, clamp(13px, 1.2vw, 14px));
+
+  line-height: 1;
+
   cursor: pointer;
 }
 
 .areas input:checked + label {
-  background-color: var(--tema-cyan-soft, #DDEEF4);
-  border-color: #DDEEF4;
+  border-color:
+    var(--tema-cyan-soft, #DDEEF4);
+
+  background-color:
+    var(--tema-cyan-soft, #DDEEF4);
+
   color: #118AB2;
 }
 
-/* Botões */
+
+/* =========================================
+   BOTÕES
+   ========================================= */
+
 .botao {
-  display: block;
   width: 100%;
-  box-sizing: border-box;
-  padding: 14px;
-  margin-bottom: 10px;
+  min-height: 48px;
+
+  display: block;
+
+  margin-bottom:
+    var(--connecto-space-sm, 8px);
+
+  padding:
+    var(--connecto-space-md, 12px)
+    var(--connecto-space-base, 16px);
+
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+
+  border-radius:
+    var(--connecto-radius-sm, 12px);
+
   font-family: inherit;
+
+  font-size:
+    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
+
+  font-weight: 700;
+
+  line-height:
+    var(--connecto-line-tight, 1.15);
+
   text-align: center;
   text-decoration: none;
+
   cursor: pointer;
 }
 
@@ -158,6 +350,46 @@ input:disabled {
 }
 
 .botao-cancelar {
-  background-color: var(--tema-surface, #FFFFFF);
+  background-color:
+    var(--tema-surface, #FFFFFF);
+
   color: #116A85;
+}
+
+
+/* =========================================
+   MOBILE PEQUENO
+   ========================================= */
+
+@media (max-width: 360px) {
+  .lado-a-lado {
+    flex-direction: column;
+  }
+
+  .campo-curso,
+  .campo-periodo {
+    flex: 1 1 auto;
+  }
+
+  .avatar {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+
+/* =========================================
+   TABLET / DESKTOP
+   ========================================= */
+
+@media (min-width: 700px) {
+  body {
+    padding-top:
+      var(--connecto-space-xl, 24px);
+  }
+
+  .card {
+    padding:
+      var(--connecto-card-padding, clamp(14px, 2.5vw, 22px));
+  }
 }
