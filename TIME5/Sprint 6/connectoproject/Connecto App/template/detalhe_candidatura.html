@@ -1,144 +1,55 @@
-{% load static %}
-{% load i18n %}
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Connecto — {% trans "Detalhe da candidatura" %}</title>
-  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
-  <link rel="stylesheet" href="{% static 'detalhe_candidatura.css' %}">
-  {% include 'includes/tema_head.html' %}
-</head>
+  {% load static %}
+  {% load i18n %}
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Connecto — {% trans "Detalhe da candidatura" %}</title>
+    <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+    <link rel="stylesheet" href="{% static 'detalhe_candidatura.css' %}">
+    {% include 'includes/tema_head.html' %}
+  </head>
 
-<body class="connecto-page application-detail-page">
-  <main class="standard-shell application-detail-shell">
+  <body class="connecto-page application-detail-page">
+    <main class="standard-shell application-detail-shell">
 
-    <header class="application-detail-header">
-      <a
-        href="{% url 'candidaturas' %}"
-        class="application-detail-back"
-        aria-label="{% trans 'Voltar para candidaturas' %}"
-      >‹</a>
+      <header class="application-detail-header">
+        <a
+          href="{% url 'candidaturas' %}"
+          class="application-detail-back"
+          aria-label="{% trans 'Voltar para candidaturas' %}"
+        >‹</a>
 
-      <h1>{% trans "Minha candidatura" %}</h1>
+        <h1>{% trans "Minha candidatura" %}</h1>
 
-      <span class="application-detail-header-space"></span>
-    </header>
-
-
-    <section class="application-summary-card">
-
-      <div class="application-summary-top">
-
-        <div class="application-company-icon" aria-hidden="true">
-          {{ candidatura.oportunidade.empresa.iniciais }}
-        </div>
-
-        <div class="application-summary-heading">
-
-          <span
-            class="application-detail-status application-detail-status--{{ candidatura.status }}"
-          >
-            {{ candidatura.get_status_display }}
-          </span>
-
-          <h2>{{ candidatura.oportunidade.titulo }}</h2>
-
-          <p>
-            {{ candidatura.oportunidade.empresa.nome }}
-            {% if candidatura.oportunidade.cidade %}
-              · {{ candidatura.oportunidade.cidade }}
-            {% endif %}
-          </p>
-
-        </div>
-
-      </div>
+        <span class="application-detail-header-space"></span>
+      </header>
 
 
-      <div class="application-summary-tags">
+      <section class="application-summary-card">
 
-        {% if candidatura.oportunidade.modalidade %}
-          <span class="application-summary-tag application-summary-tag--mode">
-            {{ candidatura.oportunidade.modalidade }}
-          </span>
-        {% endif %}
+        <div class="application-summary-top">
 
-        {% if candidatura.oportunidade.area %}
-          <span class="application-summary-tag application-summary-tag--area">
-            {{ candidatura.oportunidade.area }}
-          </span>
-        {% endif %}
-
-      </div>
-
-
-      <div class="application-current-status">
-
-        <div class="application-current-status__label">
-          {% trans "Status atual" %}
-        </div>
-
-        <strong>{{ candidatura.get_status_display }}</strong>
-
-        {% if candidatura.status_descricao %}
-          <p>{{ candidatura.status_descricao }}</p>
-        {% endif %}
-
-      </div>
-
-
-      <div class="application-summary-meta">
-
-        <div>
-          <span>{% trans "Candidatura enviada" %}</span>
-          <strong>{{ candidatura.data_candidatura|date:"d/m/Y H:i" }}</strong>
-        </div>
-
-        {% if candidatura.status_atualizado_em %}
-          <div>
-            <span>{% trans "Última atualização" %}</span>
-            <strong>{{ candidatura.status_atualizado_em|date:"d/m/Y H:i" }}</strong>
-          </div>
-        {% endif %}
-
-      </div>
-
-    </section>
-
-
-    <section class="application-timeline-card">
-
-      <div class="application-section-heading">
-        <div>
-          <span class="application-section-eyebrow">
-            {% trans "Processo seletivo" %}
-          </span>
-          <h2>{% trans "Andamento da candidatura" %}</h2>
-        </div>
-      </div>
-
-
-      <div class="application-timeline">
-
-        <div class="timeline-item timeline-item--completed">
-
-          <div class="timeline-marker">
-            <span></span>
+          <div class="application-company-icon" aria-hidden="true">
+            {{ candidatura.oportunidade.empresa.iniciais }}
           </div>
 
-          <div class="timeline-content">
+          <div class="application-summary-heading">
 
-            <div class="timeline-content__top">
-              <strong>{% trans "Candidatura enviada" %}</strong>
-              <time datetime="{{ candidatura.data_candidatura|date:'c' }}">
-                {{ candidatura.data_candidatura|date:"d/m/Y H:i" }}
-              </time>
-            </div>
+            <span
+              class="application-detail-status application-detail-status--{{ candidatura.status }}"
+            >
+              {% trans candidatura.get_status_display %}
+            </span>
+
+            <h2>{{ candidatura.oportunidade.titulo }}</h2>
 
             <p>
-              {% trans "Sua candidatura foi registrada com sucesso no Connecto." %}
+              {{ candidatura.oportunidade.empresa.nome }}
+              {% if candidatura.oportunidade.cidade %}
+                · {{ candidatura.oportunidade.cidade }}
+              {% endif %}
             </p>
 
           </div>
@@ -146,7 +57,70 @@
         </div>
 
 
-        {% for historico in candidatura.historico_status.all %}
+        <div class="application-summary-tags">
+
+        {% if candidatura.oportunidade.modalidade %}
+          <span class="application-summary-tag application-summary-tag--mode">
+            {% trans candidatura.oportunidade.modalidade %}
+          </span>
+        {% endif %}
+
+        {% if candidatura.oportunidade.area %}
+          <span class="application-summary-tag application-summary-tag--area">
+            {% trans candidatura.oportunidade.area %}
+          </span>
+        {% endif %}
+
+        </div>
+
+
+        <div class="application-current-status">
+
+          <div class="application-current-status__label">
+            {% trans "Status atual" %}
+          </div>
+
+          <strong>{% trans candidatura.get_status_display %}</strong>
+
+          {% if candidatura.status_descricao %}
+            <p>{% trans candidatura.status_descricao %}</p>
+          {% endif %}
+
+        </div>
+
+
+        <div class="application-summary-meta">
+
+          <div>
+            <span>{% trans "Candidatura enviada" %}</span>
+            <strong>{{ candidatura.data_candidatura|date:"d/m/Y H:i" }}</strong>
+          </div>
+
+          {% if candidatura.status_atualizado_em %}
+            <div>
+              <span>{% trans "Última atualização" %}</span>
+              <strong>{{ candidatura.status_atualizado_em|date:"d/m/Y H:i" }}</strong>
+            </div>
+          {% endif %}
+
+        </div>
+
+      </section>
+
+
+      <section class="application-timeline-card">
+
+        <div class="application-section-heading">
+          <div>
+            <span class="application-section-eyebrow">
+              {% trans "Processo seletivo" %}
+            </span>
+            <h2>{% trans "Andamento da candidatura" %}</h2>
+          </div>
+        </div>
+
+
+        <div class="application-timeline">
 
           <div class="timeline-item timeline-item--completed">
 
@@ -157,61 +131,87 @@
             <div class="timeline-content">
 
               <div class="timeline-content__top">
-                <strong>{{ historico.get_status_novo_display }}</strong>
-                <time datetime="{{ historico.criado_em|date:'c' }}">
-                  {{ historico.criado_em|date:"d/m/Y H:i" }}
+                <strong>{% trans "Candidatura enviada" %}</strong>
+                <time datetime="{{ candidatura.data_candidatura|date:'c' }}">
+                  {{ candidatura.data_candidatura|date:"d/m/Y H:i" }}
                 </time>
               </div>
 
-              {% if historico.observacao %}
-                <p>{{ historico.observacao }}</p>
-              {% else %}
-                <p>{% trans "O status da sua candidatura foi atualizado." %}</p>
-              {% endif %}
+              <p>
+                {% trans "Sua candidatura foi registrada com sucesso no Connecto." %}
+              </p>
 
             </div>
 
           </div>
 
-        {% empty %}
 
-          <div class="timeline-empty">
-            <p>
-              {% trans "Ainda não houve novas atualizações nesta candidatura." %}
-            </p>
-          </div>
+          {% for historico in candidatura.historico_status.all %}
 
-        {% endfor %}
+            <div class="timeline-item timeline-item--completed">
 
-      </div>
+              <div class="timeline-marker">
+                <span></span>
+              </div>
 
-    </section>
+              <div class="timeline-content">
+
+                <div class="timeline-content__top">
+                  <strong>{% trans historico.get_status_novo_display %}</strong>
+                  <time datetime="{{ historico.criado_em|date:'c' }}">
+                    {{ historico.criado_em|date:"d/m/Y H:i" }}
+                  </time>
+                </div>
+
+                {% if historico.observacao %}
+                  <p>{{ historico.observacao }}</p>
+                {% else %}
+                  <p>{% trans "O status da sua candidatura foi atualizado." %}</p>
+                {% endif %}
+
+              </div>
+
+            </div>
+
+          {% empty %}
+
+            <div class="timeline-empty">
+              <p>
+                {% trans "Ainda não houve novas atualizações nesta candidatura." %}
+              </p>
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+      </section>
 
 
-    <section class="application-actions-card">
+      <section class="application-actions-card">
 
-      <h2>{% trans "Ações" %}</h2>
+        <h2>{% trans "Ações" %}</h2>
 
-      {% if conversa %}
+        {% if conversa %}
+          <a
+            href="{% url 'conversa' conversa.id %}"
+            class="application-action application-action--primary"
+          >
+            {% trans "Conversar sobre esta vaga" %}
+          </a>
+        {% endif %}
+
         <a
-          href="{% url 'conversa' conversa.id %}"
-          class="application-action application-action--primary"
+          href="{% url 'detalhe_vaga' candidatura.oportunidade.id %}"
+          class="application-action application-action--secondary"
         >
-          {% trans "Conversar sobre esta vaga" %}
+          {% trans "Ver detalhes da vaga" %}
         </a>
-      {% endif %}
 
-      <a
-        href="{% url 'detalhe_vaga' candidatura.oportunidade.id %}"
-        class="application-action application-action--secondary"
-      >
-        {% trans "Ver detalhes da vaga" %}
-      </a>
+      </section>
 
-    </section>
+    </main>
 
-  </main>
-
-  {% include 'includes/bottom_nav.html' with pagina_ativa='candidaturas' %}
-</body>
-</html>
+    {% include 'includes/bottom_nav.html' with pagina_ativa='candidaturas' %}
+  </body>
+  </html>
