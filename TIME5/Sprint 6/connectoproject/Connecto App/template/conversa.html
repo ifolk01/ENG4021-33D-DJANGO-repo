@@ -14,7 +14,11 @@
 <body class="connecto-page chat-page">
 <div class="app-shell conversa-shell">
     <header class="chat-header">
-        <a href="{% url 'mensagens' %}" class="chat-back" aria-label="{% trans 'Voltar para mensagens' %}">←</a>
+        <a href="{% url 'mensagens' %}" class="chat-back" aria-label="{% trans 'Voltar para mensagens' %}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m15 18-6-6 6-6"></path>
+            </svg>
+        </a>
 
         <div class="chat-header-info">
             <strong>{{ conversa.oportunidade.empresa.nome }}</strong>
@@ -27,13 +31,23 @@
 
     <main class="chat-content" id="chat-content">
         <section class="match-notice">
-            <span class="match-notice-icon" aria-hidden="true">📋</span>
+            <span class="match-notice-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="5" y="4" width="14" height="17" rx="2"></rect>
+                <path d="M9 4.5V3h6v1.5M8 9h8M8 13h5"></path>
+            </svg>
+            </span>
             <strong>{% trans "Você se candidatou a esta vaga" %}</strong>
             <span>{{ conversa.oportunidade.titulo }}</span>
         </section>
 
         <section class="assistant-context" aria-label="{% trans 'Sobre o assistente' %}">
-            <div class="assistant-context-icon" aria-hidden="true">✦</div>
+            <div class="assistant-context-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2L12 3Z"></path>
+                <path d="m18 14 .8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8L18 14Z"></path>
+            </svg>
+            </div>
             <div>
                 <strong>{% trans "Assistente da vaga" %}</strong>
                 <p>{% trans "Pergunte sobre esta oportunidade. As respostas usam somente as informações da descrição publicada da vaga." %}</p>
@@ -77,7 +91,12 @@
             autocomplete="off"
             required
         >
-        <button id="chat-submit" type="submit" aria-label="{% trans 'Enviar mensagem' %}">➤</button>
+        <button id="chat-submit" type="submit" aria-label="{% trans 'Enviar mensagem' %}">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m22 2-7 20-4-9-9-4 20-7Z"></path>
+            <path d="M22 2 11 13"></path>
+        </svg>
+        </button>
     </form>
 
     {% include 'includes/bottom_nav.html' with pagina_ativa='mensagens' %}

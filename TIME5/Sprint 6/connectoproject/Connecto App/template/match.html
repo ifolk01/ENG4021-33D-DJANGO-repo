@@ -14,7 +14,18 @@
   <main class="match-shell">
     <header class="match-topbar">
       <strong>{% blocktrans count counter=restantes %}Para você • {{ counter }} vaga{% plural %}Para você • {{ counter }} vagas{% endblocktrans %}</strong>
-      <span>{% trans "Toque ❤️ curtir · ✕ pular" %}</span>
+      <span class="match-hint">
+        {% trans "Toque" %}
+        <svg class="match-hint-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8Z"></path>
+        </svg>
+        {% trans "curtir" %}
+        ·
+        <svg class="match-hint-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18"></path>
+        </svg>
+        {% trans "pular" %}
+      </span>
     </header>
 
     {% if vaga %}
@@ -71,7 +82,12 @@
       </section>
     {% else %}
       <section class="match-empty">
-        <div class="match-empty__icon">✓</div>
+        <div class="match-empty__icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="m8 12 2.6 2.6L16.5 9"></path>
+          </svg>
+        </div>
         <h1>{% trans "Você viu todas as vagas por enquanto" %}</h1>
         <p>{% trans "Quando novas oportunidades forem cadastradas, elas aparecerão aqui." %}</p>
         <a href="{% url 'home' %}" class="primary-link">{% trans "Voltar para Vagas" %}</a>

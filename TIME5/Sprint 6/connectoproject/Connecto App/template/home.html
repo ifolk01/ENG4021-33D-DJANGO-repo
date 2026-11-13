@@ -103,7 +103,10 @@
             </div>
 
             <div class="job-card__tags">
-              {% if vaga.cidade %}<span class="job-chip job-chip--location">⌖&nbsp; {{ vaga.cidade }}</span>{% endif %}
+              {% if vaga.cidade %}<span class="job-chip job-chip--location"><svg class="job-chip__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path>
+                  <circle cx="12" cy="10" r="2.5"></circle>
+                </svg> <span>{{ vaga.cidade }}</span></span>{% endif %}
               {% if vaga.modalidade %}<span class="job-chip job-chip--work">{{ vaga.modalidade }}</span>{% endif %}
               {% if vaga.area %}<span class="job-chip job-chip--area">{% trans vaga.area %}</span>{% endif %}
             </div>
