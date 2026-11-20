@@ -13,7 +13,7 @@
 <body class="connecto-page applications-page">
   <main class="standard-shell applications-shell">
     <header class="applications-header">
-      <h2>{% trans "Minhas Vagas" %}</h2>
+      <h1>{% trans "Minhas Vagas" %}</h1>
     </header>
 
     <nav class="applications-tabs" aria-label="{% trans 'Minhas vagas' %}">
@@ -98,7 +98,11 @@
               </div>
             </div>
 
-            <span class="application-chevron" aria-hidden="true">›</span>
+            <span class="application-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </span>
           </a>
         {% endfor %}
       </section>
