@@ -43,6 +43,7 @@ from .gemini_service import (
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth import logout as auth_logout
+from django.utils.translation import gettext_lazy as _
 logger = logging.getLogger(__name__)
 
 def login(request):
@@ -344,6 +345,159 @@ def candidaturas_empresa(request):
             "empresa": empresa,
             "candidaturas": candidaturas_recebidas,
             "status_opcoes": Candidatura.STATUS_CHOICES,
+        },
+    )
+
+
+@login_required
+def empresa_vagas(request):
+    empresa = Empresa.objects.filter(usuario=request.user).first()
+    if not empresa:
+        messages.error(request, _("Acesso restrito para contas de empresa."))
+        return redirect("home")
+
+    vagas = (
+        Oportunidade.objects
+        .filter(empresa=empresa)
+        .order_by("-publicada_em", "-id")
+    )
+
+    return render(
+        request,
+        "empresa_vagas.html",
+        {
+            "empresa": empresa,
+            "vagas": vagas,
+            "pagina_ativa": "vagas",
+        },
+    )
+
+
+@login_required
+def empresa_criar_vaga(request):
+    empresa = Empresa.objects.filter(usuario=request.user).first()
+    if not empresa:
+        messages.error(request, _("Acesso restrito para contas de empresa."))
+        return redirect("home")
+
+    modalidades = [m[0] for m in Oportunidade.MODALIDADES]
+
+    if request.method == "POST":
+        titulo = request.POST.get("titulo", "").strip()
+        modalidade = request.POST.get("modalidade", "Presencial").strip()
+        area = request.POST.get("area", "").strip()
+        cidade = request.POST.get("cidade", "").strip()
+        local = request.POST.get("local", "").strip() or cidade
+        bolsa_raw = request.POST.get("bolsa", "").strip().replace(",", ".")
+        prazo_raw = request.POST.get("prazo", "").strip()
+        descricao = request.POST.get("descricao", "").strip()
+        requisitos = request.POST.get("requisitos", "").strip()
+
+        erros = []
+        if not titulo:
+            erros.append(_("O título da vaga é obrigatório."))
+        if not descricao:
+            erros.append(_("A descrição da vaga é obrigatória."))
+
+        bolsa = None
+        if bolsa_raw:
+            try:
+                bolsa = float(bolsa_raw)
+            except ValueError:
+                erros.append(_("Valor da bolsa inválido."))
+
+        prazo = None
+        if prazo_raw:
+            try:
+                from datetime import datetime
+                prazo = datetime.strptime(prazo_raw, "%Y-%m-%d").date()
+            except ValueError:
+                erros.append(_("Data de prazo inválida."))
+
+        if not erros:
+            vaga = Oportunidade.objects.create(
+                empresa=empresa,
+                titulo=titulo,
+                descricao=descricao,
+                modalidade=modalidade,
+                area=area,
+                cidade=cidade,
+                local=local,
+                bolsa=bolsa,
+                prazo=prazo,
+                requisitos=requisitos,
+                ativa=True,
+            )
+            messages.success(request, _("Vaga criada com sucesso!"))
+            return redirect("empresa_detalhe_vaga", vaga_id=vaga.id)
+
+        return render(
+            request,
+            "empresa_criar_vaga.html",
+            {
+                "empresa": empresa,
+                "modalidades": modalidades,
+                "erros": erros,
+                "valores": request.POST,
+                "pagina_ativa": "vagas",
+            },
+        )
+
+    return render(
+        request,
+        "empresa_criar_vaga.html",
+        {
+            "empresa": empresa,
+            "modalidades": modalidades,
+            "pagina_ativa": "vagas",
+        },
+    )
+
+
+@login_required
+def empresa_detalhe_vaga(request, vaga_id):
+    empresa = Empresa.objects.filter(usuario=request.user).first()
+    if not empresa:
+        messages.error(request, _("Acesso restrito para contas de empresa."))
+        return redirect("home")
+
+    vaga = get_object_or_404(Oportunidade, id=vaga_id, empresa=empresa)
+    total_candidaturas = vaga.candidaturas.count()
+
+    return render(
+        request,
+        "empresa_detalhe_vaga.html",
+        {
+            "empresa": empresa,
+            "vaga": vaga,
+            "total_candidaturas": total_candidaturas,
+            "pagina_ativa": "vagas",
+        },
+    )
+
+
+@login_required
+def empresa_vaga_candidaturas(request, vaga_id):
+    empresa = Empresa.objects.filter(usuario=request.user).first()
+    if not empresa:
+        messages.error(request, _("Acesso restrito para contas de empresa."))
+        return redirect("home")
+
+    vaga = get_object_or_404(Oportunidade, id=vaga_id, empresa=empresa)
+    candidaturas = (
+        vaga.candidaturas
+        .select_related("usuario", "usuario__perfil", "usuario__perfil__curso")
+        .order_by("-data_candidatura")
+    )
+
+    return render(
+        request,
+        "empresa_vaga_candidaturas.html",
+        {
+            "empresa": empresa,
+            "vaga": vaga,
+            "candidaturas": candidaturas,
+            "pagina_ativa": "vagas",
         },
     )
 

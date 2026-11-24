@@ -50,12 +50,12 @@
         </div>
 
         <div class="contadores">
-            <div class="contador">
+            <a href="{% url 'empresa_vagas' %}" class="contador contador-link">
                 <h3>{{ total_vagas }}</h3>
                 <p>{% trans "Vagas ativas" %}</p>
-            </div>
+            </a>
 
-            <a href="{% url 'candidaturas_empresa' %}" class="contador contador-link">
+            <a href="{% url 'empresa_vagas' %}" class="contador contador-link">
                 <h3>{{ total_candidaturas }}</h3>
                 <p>{% trans "Candidaturas" %}</p>
             </a>
