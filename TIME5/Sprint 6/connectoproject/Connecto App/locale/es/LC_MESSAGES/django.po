@@ -2154,3 +2154,155 @@ msgstr "Ver detalles de la vacante"
 # Visualização da Vaga
 msgid "Ver minha candidatura"
 msgstr "Ver mi postulación"
+
+
+# Novas strings da Área da Empresa (Sprint 6 - Vagas e Candidaturas)
+msgid "Acesso restrito para contas de empresa."
+msgstr "Acceso restringido para cuentas de empresa."
+
+msgid "O título da vaga é obrigatório."
+msgstr "El título de la vacante es obligatorio."
+
+msgid "A descrição da vaga é obrigatória."
+msgstr "La descripción de la vacante es obligatoria."
+
+msgid "Valor da bolsa inválido."
+msgstr "Valor de beca no válido."
+
+msgid "Data de prazo inválida."
+msgstr "Fecha límite no válida."
+
+msgid "Vaga criada com sucesso!"
+msgstr "¡Vacante creada con éxito!"
+
+msgid "Vagas da Empresa"
+msgstr "Vacantes de la Empresa"
+
+msgid "Criar nova vaga"
+msgstr "Crear nueva vacante"
+
+msgid "Criar vaga"
+msgstr "Crear vacante"
+
+msgid "Lista de vagas publicadas"
+msgstr "Lista de vacantes publicadas"
+
+msgid "Ativa"
+msgstr "Activa"
+
+msgid "Inativa"
+msgstr "Inactiva"
+
+msgid "candidatura(s)"
+msgstr "postulación(es)"
+
+msgid "Nenhuma vaga publicada ainda"
+msgstr "Aún no hay vacantes publicadas"
+
+msgid "Crie uma vaga para começar a receber candidaturas de estudantes qualificados."
+msgstr "Crea una vacante para comenzar a recibir postulaciones de estudiantes calificados."
+
+msgid "Criar primeira vaga"
+msgstr "Crear primera vacante"
+
+msgid "Criar Vaga"
+msgstr "Crear Vacante"
+
+msgid "Voltar para vagas"
+msgstr "Volver a vacantes"
+
+msgid "Título da vaga"
+msgstr "Título de la vacante"
+
+msgid "Ex: Estagiário de Desenvolvimento de Software"
+msgstr "Ej.: Pasante de Desarrollo de Software"
+
+msgid "Modalidade"
+msgstr "Modalidad"
+
+msgid "Área"
+msgstr "Área"
+
+msgid "Ex: Tecnologia, Design, Finanças"
+msgstr "Ej.: Tecnología, Diseño, Finanzas"
+
+msgid "Cidade / Estado"
+msgstr "Ciudad / Estado"
+
+msgid "Ex: Rio de Janeiro, RJ"
+msgstr "Ej.: Río de Janeiro, RJ"
+
+msgid "Valor da Bolsa (R$)"
+msgstr "Monto de la beca (R$)"
+
+msgid "Ex: 1800.00"
+msgstr "Ej.: 1800.00"
+
+msgid "Prazo de candidatura"
+msgstr "Fecha límite de postulación"
+
+msgid "Endereço / Local"
+msgstr "Dirección / Ubicación"
+
+msgid "Ex: Av. Paulista, 1000 ou Bairro"
+msgstr "Ej.: Av. Paulista, 1000 o Barrio"
+
+msgid "Descrição da vaga"
+msgstr "Descripción de la vacante"
+
+msgid "Descreva as responsabilidades, atividades e oportunidades da vaga..."
+msgstr "Describe las responsabilidades, actividades y oportunidades de la vacante..."
+
+msgid "Digite um requisito por linha..."
+msgstr "Ingrese un requisito por línea..."
+
+msgid "Dica: escreva um requisito por linha para melhor organização."
+msgstr "Consejo: escribe un requisito por línea para una mejor organización."
+
+msgid "Publicar vaga"
+msgstr "Publicar vacante"
+
+msgid "Detalhes da Vaga"
+msgstr "Detalles de la Vacante"
+
+msgid "Prazo:"
+msgstr "Plazo:"
+
+msgid "Ver candidaturas"
+msgstr "Ver postulaciones"
+
+msgid "Candidaturas da Vaga"
+msgstr "Postulaciones de la Vacante"
+
+msgid "Voltar para detalhes da vaga"
+msgstr "Volver a detalles de la vacante"
+
+msgid "Candidaturas Recebidas"
+msgstr "Postulaciones Recibidas"
+
+msgid "candidato(s) inscrito(s)"
+msgstr "candidato(s) inscrito(s)"
+
+msgid "Lista de candidatos inscritos"
+msgstr "Lista de candidatos inscritos"
+
+msgid "Curso:"
+msgstr "Carrera:"
+
+msgid "Instituição:"
+msgstr "Institución:"
+
+msgid "Não informada"
+msgstr "No informada"
+
+msgid "E-mail:"
+msgstr "Correo:"
+
+msgid "Candidatura enviada em"
+msgstr "Postulación enviada el"
+
+msgid "Nenhuma candidatura recebida ainda"
+msgstr "Aún no se han recibido postulaciones"
+
+msgid "Assim que estudantes se candidatarem a esta vaga, eles aparecerão listados aqui."
+msgstr "Tan pronto como los estudiantes se postulen a esta vacante, aparecerán listados aquí."

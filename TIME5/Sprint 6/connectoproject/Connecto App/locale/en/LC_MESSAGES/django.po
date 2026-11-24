@@ -2147,3 +2147,155 @@ msgstr "View job details"
 # Visualização da Vaga
 msgid "Ver minha candidatura"
 msgstr "View my application"
+
+
+# Novas strings da Área da Empresa (Sprint 6 - Vagas e Candidaturas)
+msgid "Acesso restrito para contas de empresa."
+msgstr "Restricted access for company accounts."
+
+msgid "O título da vaga é obrigatório."
+msgstr "Job title is required."
+
+msgid "A descrição da vaga é obrigatória."
+msgstr "Job description is required."
+
+msgid "Valor da bolsa inválido."
+msgstr "Invalid stipend amount."
+
+msgid "Data de prazo inválida."
+msgstr "Invalid deadline date."
+
+msgid "Vaga criada com sucesso!"
+msgstr "Job created successfully!"
+
+msgid "Vagas da Empresa"
+msgstr "Company Jobs"
+
+msgid "Criar nova vaga"
+msgstr "Create new job"
+
+msgid "Criar vaga"
+msgstr "Create job"
+
+msgid "Lista de vagas publicadas"
+msgstr "List of published jobs"
+
+msgid "Ativa"
+msgstr "Active"
+
+msgid "Inativa"
+msgstr "Inactive"
+
+msgid "candidatura(s)"
+msgstr "application(s)"
+
+msgid "Nenhuma vaga publicada ainda"
+msgstr "No jobs published yet"
+
+msgid "Crie uma vaga para começar a receber candidaturas de estudantes qualificados."
+msgstr "Create a job opening to start receiving applications from qualified students."
+
+msgid "Criar primeira vaga"
+msgstr "Create first job"
+
+msgid "Criar Vaga"
+msgstr "Create Job"
+
+msgid "Voltar para vagas"
+msgstr "Back to jobs"
+
+msgid "Título da vaga"
+msgstr "Job title"
+
+msgid "Ex: Estagiário de Desenvolvimento de Software"
+msgstr "E.g.: Software Development Intern"
+
+msgid "Modalidade"
+msgstr "Modality"
+
+msgid "Área"
+msgstr "Field"
+
+msgid "Ex: Tecnologia, Design, Finanças"
+msgstr "E.g.: Technology, Design, Finance"
+
+msgid "Cidade / Estado"
+msgstr "City / State"
+
+msgid "Ex: Rio de Janeiro, RJ"
+msgstr "E.g.: Rio de Janeiro, RJ"
+
+msgid "Valor da Bolsa (R$)"
+msgstr "Stipend (R$)"
+
+msgid "Ex: 1800.00"
+msgstr "E.g.: 1800.00"
+
+msgid "Prazo de candidatura"
+msgstr "Application deadline"
+
+msgid "Endereço / Local"
+msgstr "Address / Location"
+
+msgid "Ex: Av. Paulista, 1000 ou Bairro"
+msgstr "E.g.: Paulista Ave, 1000 or Neighborhood"
+
+msgid "Descrição da vaga"
+msgstr "Job description"
+
+msgid "Descreva as responsabilidades, atividades e oportunidades da vaga..."
+msgstr "Describe responsibilities, tasks, and opportunities of the job..."
+
+msgid "Digite um requisito por linha..."
+msgstr "Enter one requirement per line..."
+
+msgid "Dica: escreva um requisito por linha para melhor organização."
+msgstr "Tip: write one requirement per line for better organization."
+
+msgid "Publicar vaga"
+msgstr "Publish job"
+
+msgid "Detalhes da Vaga"
+msgstr "Job Details"
+
+msgid "Prazo:"
+msgstr "Deadline:"
+
+msgid "Ver candidaturas"
+msgstr "View applications"
+
+msgid "Candidaturas da Vaga"
+msgstr "Job Applications"
+
+msgid "Voltar para detalhes da vaga"
+msgstr "Back to job details"
+
+msgid "Candidaturas Recebidas"
+msgstr "Received Applications"
+
+msgid "candidato(s) inscrito(s)"
+msgstr "candidate(s) registered"
+
+msgid "Lista de candidatos inscritos"
+msgstr "List of registered candidates"
+
+msgid "Curso:"
+msgstr "Course:"
+
+msgid "Instituição:"
+msgstr "Institution:"
+
+msgid "Não informada"
+msgstr "Not provided"
+
+msgid "E-mail:"
+msgstr "Email:"
+
+msgid "Candidatura enviada em"
+msgstr "Applied on"
+
+msgid "Nenhuma candidatura recebida ainda"
+msgstr "No applications received yet"
+
+msgid "Assim que estudantes se candidatarem a esta vaga, eles aparecerão listados aqui."
+msgstr "As soon as students apply to this job, they will be listed here."

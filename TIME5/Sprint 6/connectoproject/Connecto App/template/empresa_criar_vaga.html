@@ -1,0 +1,164 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Connecto — {% trans "Criar Vaga" %}</title>
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+  <link rel="stylesheet" href="{% static 'empresa_vagas.css' %}">
+  {% include 'includes/tema_head.html' %}
+</head>
+<body class="connecto-page">
+  <main class="empresa-shell">
+    <header class="empresa-topbar empresa-topbar--has-back">
+      <a href="{% url 'empresa_vagas' %}" class="empresa-voltar-btn" aria-label="{% trans 'Voltar para vagas' %}">‹</a>
+      <div class="empresa-topbar-texto" style="margin-left: 8px;">
+        <h1 class="empresa-titulo-pagina">{% trans "Criar Vaga" %}</h1>
+        <p class="empresa-subtitulo-pagina">{{ empresa.nome }}</p>
+      </div>
+    </header>
+
+    {% if erros %}
+      <div class="aviso-sistema error" style="margin-bottom: 16px; padding: 12px 16px; border-radius: 12px; background: var(--connecto-red-soft, #f9e8e7); border: 1px solid var(--connecto-red, #d76264); color: var(--connecto-red, #d76264);">
+        <ul style="margin: 0; padding-left: 20px;">
+          {% for erro in erros %}
+            <li>{{ erro }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <div class="empresa-form-card">
+      <form method="POST" action="{% url 'empresa_criar_vaga' %}">
+        {% csrf_token %}
+
+        <div class="empresa-form-grupo">
+          <label for="titulo" class="empresa-form-label">{% trans "Título da vaga" %} *</label>
+          <input
+            type="text"
+            id="titulo"
+            name="titulo"
+            class="empresa-form-input"
+            placeholder="{% trans 'Ex: Estagiário de Desenvolvimento de Software' %}"
+            value="{{ valores.titulo|default:'' }}"
+            required
+            maxlength="120"
+          >
+        </div>
+
+        <div class="empresa-form-grid-2col">
+          <div class="empresa-form-grupo">
+            <label for="modalidade" class="empresa-form-label">{% trans "Modalidade" %}</label>
+            <select id="modalidade" name="modalidade" class="empresa-form-select">
+              {% for mod in modalidades %}
+                <option value="{{ mod }}" {% if valores.modalidade == mod %}selected{% endif %}>
+                  {% trans mod %}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="empresa-form-grupo">
+            <label for="area" class="empresa-form-label">{% trans "Área" %}</label>
+            <input
+              type="text"
+              id="area"
+              name="area"
+              class="empresa-form-input"
+              placeholder="{% trans 'Ex: Tecnologia, Design, Finanças' %}"
+              value="{{ valores.area|default:'' }}"
+              maxlength="100"
+            >
+          </div>
+        </div>
+
+        <div class="empresa-form-grid-2col">
+          <div class="empresa-form-grupo">
+            <label for="cidade" class="empresa-form-label">{% trans "Cidade / Estado" %}</label>
+            <input
+              type="text"
+              id="cidade"
+              name="cidade"
+              class="empresa-form-input"
+              placeholder="{% trans 'Ex: Rio de Janeiro, RJ' %}"
+              value="{{ valores.cidade|default:'' }}"
+              maxlength="100"
+            >
+          </div>
+
+          <div class="empresa-form-grupo">
+            <label for="bolsa" class="empresa-form-label">{% trans "Valor da Bolsa (R$)" %}</label>
+            <input
+              type="text"
+              id="bolsa"
+              name="bolsa"
+              class="empresa-form-input"
+              placeholder="{% trans 'Ex: 1800.00' %}"
+              value="{{ valores.bolsa|default:'' }}"
+            >
+          </div>
+        </div>
+
+        <div class="empresa-form-grid-2col">
+          <div class="empresa-form-grupo">
+            <label for="prazo" class="empresa-form-label">{% trans "Prazo de candidatura" %}</label>
+            <input
+              type="date"
+              id="prazo"
+              name="prazo"
+              class="empresa-form-input"
+              value="{{ valores.prazo|default:'' }}"
+            >
+          </div>
+
+          <div class="empresa-form-grupo">
+            <label for="local" class="empresa-form-label">{% trans "Endereço / Local" %}</label>
+            <input
+              type="text"
+              id="local"
+              name="local"
+              class="empresa-form-input"
+              placeholder="{% trans 'Ex: Av. Paulista, 1000 ou Bairro' %}"
+              value="{{ valores.local|default:'' }}"
+              maxlength="150"
+            >
+          </div>
+        </div>
+
+        <div class="empresa-form-grupo">
+          <label for="descricao" class="empresa-form-label">{% trans "Descrição da vaga" %} *</label>
+          <textarea
+            id="descricao"
+            name="descricao"
+            class="empresa-form-textarea"
+            rows="5"
+            placeholder="{% trans 'Descreva as responsabilidades, atividades e oportunidades da vaga...' %}"
+            required
+          >{{ valores.descricao|default:'' }}</textarea>
+        </div>
+
+        <div class="empresa-form-grupo">
+          <label for="requisitos" class="empresa-form-label">{% trans "Requisitos" %}</label>
+          <textarea
+            id="requisitos"
+            name="requisitos"
+            class="empresa-form-textarea"
+            rows="4"
+            placeholder="{% trans 'Digite um requisito por linha...' %}"
+          >{{ valores.requisitos|default:'' }}</textarea>
+          <p class="empresa-form-ajuda">{% trans "Dica: escreva um requisito por linha para melhor organização." %}</p>
+        </div>
+
+        <div class="empresa-form-acoes">
+          <a href="{% url 'empresa_vagas' %}" class="btn-cancelar">{% trans "Cancelar" %}</a>
+          <button type="submit" class="btn-salvar">{% trans "Publicar vaga" %}</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  {% include 'includes/bottom_nav_empresa.html' with pagina_ativa='vagas' %}
+</body>
+</html>

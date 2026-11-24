@@ -7,11 +7,11 @@
     <span class="nav-brand__name">Connecto</span>
   </a>
 
-  <a href="{% url 'candidaturas_empresa' %}" class="nav-item {% if pagina_ativa == 'candidaturas' %}active{% endif %}">
+  <a href="{% url 'empresa_vagas' %}" class="nav-item {% if pagina_ativa == 'vagas' %}active{% endif %}">
     <span class="nav-icon-wrap" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-4.2A3 3 0 0 0 12 1a3 3 0 0 0-2.8 2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
     </span>
-    <span class="nav-label">{% trans "Candidaturas" %}</span>
+    <span class="nav-label">{% trans "Vagas" %}</span>
   </a>
 
   <a href="{% url 'configuracoes' %}" class="nav-item {% if pagina_ativa == 'configuracoes' %}active{% endif %}">

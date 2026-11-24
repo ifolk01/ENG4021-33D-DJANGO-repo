@@ -1,0 +1,88 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Connecto — {% trans "Candidaturas da Vaga" %}</title>
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
+  <link rel="stylesheet" href="{% static 'empresa_vagas.css' %}">
+  {% include 'includes/tema_head.html' %}
+</head>
+<body class="connecto-page">
+  <main class="empresa-shell">
+    <header class="empresa-topbar empresa-topbar--has-back">
+      <a href="{% url 'empresa_detalhe_vaga' vaga.id %}" class="empresa-voltar-btn" aria-label="{% trans 'Voltar para detalhes da vaga' %}">‹</a>
+      <div class="empresa-topbar-texto" style="margin-left: 8px;">
+        <h1 class="empresa-titulo-pagina">{% trans "Candidaturas Recebidas" %}</h1>
+        <p class="empresa-subtitulo-pagina">{{ vaga.titulo }}</p>
+      </div>
+    </header>
+
+    {% if candidaturas %}
+      <div style="margin-bottom: 14px; color: var(--tema-muted, #73757d); font-size: 13px; font-weight: 600;">
+        {{ candidaturas|length }} {% trans "candidato(s) inscrito(s)" %}
+      </div>
+
+      <section class="candidatos-grid" aria-label="{% trans 'Lista de candidatos inscritos' %}">
+        {% for candidatura in candidaturas %}
+          <article class="candidato-card">
+            <div class="candidato-avatar-wrap">
+              {% if candidatura.usuario.perfil.foto %}
+                <img src="{{ candidatura.usuario.perfil.foto.url }}" alt="{{ candidatura.usuario.get_full_name|default:candidatura.usuario.username }}" class="candidato-foto">
+              {% else %}
+                <div class="candidato-iniciais" aria-hidden="true">
+                  {% if candidatura.usuario.first_name %}
+                    {{ candidatura.usuario.first_name|slice:":1"|upper }}{{ candidatura.usuario.last_name|slice:":1"|upper }}
+                  {% else %}
+                    {{ candidatura.usuario.username|slice:":2"|upper }}
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="candidato-conteudo">
+              <h2 class="candidato-nome">{{ candidatura.usuario.get_full_name|default:candidatura.usuario.username }}</h2>
+
+              <p class="candidato-linha">
+                <span class="candidato-rotulo">{% trans "Curso:" %}</span>
+                <span>{{ candidatura.usuario.perfil.curso.nome|default:_("Não informado") }}</span>
+              </p>
+
+              <p class="candidato-linha">
+                <span class="candidato-rotulo">{% trans "Instituição:" %}</span>
+                <span>{{ candidatura.usuario.perfil.instituicao|default:_("Não informada") }}</span>
+              </p>
+
+              <p class="candidato-linha">
+                <span class="candidato-rotulo">{% trans "E-mail:" %}</span>
+                <span class="candidato-email-valor">{{ candidatura.usuario.email|default:_("Não informado") }}</span>
+              </p>
+
+              <span class="candidato-data-envio">
+                {% trans "Candidatura enviada em" %} {{ candidatura.data_candidatura|date:"d/m/Y" }}
+              </span>
+            </div>
+          </article>
+        {% endfor %}
+      </section>
+    {% else %}
+      <section class="empresa-empty-card">
+        <div class="empresa-empty-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+          </svg>
+        </div>
+        <h2 class="empresa-empty-titulo">{% trans "Nenhuma candidatura recebida ainda" %}</h2>
+        <p class="empresa-empty-texto">{% trans "Assim que estudantes se candidatarem a esta vaga, eles aparecerão listados aqui." %}</p>
+        <a href="{% url 'empresa_detalhe_vaga' vaga.id %}" class="btn-cancelar" style="display: inline-flex;">
+          {% trans "Voltar para detalhes da vaga" %}
+        </a>
+      </section>
+    {% endif %}
+  </main>
+
+  {% include 'includes/bottom_nav_empresa.html' with pagina_ativa='vagas' %}
+</body>
+</html>

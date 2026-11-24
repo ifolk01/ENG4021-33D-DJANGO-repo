@@ -26,6 +26,10 @@ urlpatterns = [
     path("match/<int:vaga_id>/acao/", views.match_acao, name="match_acao"),
 
     path("candidaturas/", views.candidaturas, name="candidaturas"),
+    path("empresa/vagas/", views.empresa_vagas, name="empresa_vagas"),
+    path("empresa/vagas/criar/", views.empresa_criar_vaga, name="empresa_criar_vaga"),
+    path("empresa/vagas/<int:vaga_id>/", views.empresa_detalhe_vaga, name="empresa_detalhe_vaga"),
+    path("empresa/vagas/<int:vaga_id>/candidaturas/", views.empresa_vaga_candidaturas, name="empresa_vaga_candidaturas"),
     path("empresa/candidaturas/",views.candidaturas_empresa,name="candidaturas_empresa",),
     path("empresa/candidaturas/<int:candidatura_id>/status/",views.atualizar_status_candidatura, name="atualizar_status_candidatura",),
     
