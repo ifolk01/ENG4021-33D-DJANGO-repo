@@ -2,95 +2,134 @@
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Connecto - {% trans "Configurações" %}</title>
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
   <link rel="stylesheet" href="{% static 'configuracoes.css' %}">
   {% include 'includes/tema_head.html' %}
 </head>
+<body class="connecto-page settings-page">
+  <main class="standard-shell settings-shell">
+    <header class="settings-header topo">
+      {% if empresa %}
+        <a href="{% url 'perfil_empresa' %}" class="voltar" aria-label="{% trans 'Voltar ao perfil da empresa' %}">
+      {% else %}
+        <a href="{% url 'perfil' %}" class="voltar" aria-label="{% trans 'Voltar ao perfil' %}">
+      {% endif %}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m15 18-6-6 6-6"></path>
+          </svg>
+        </a>
+      <h1>{% trans "Configurações" %}</h1>
+      <span class="espaco" aria-hidden="true"></span>
+    </header>
 
-<body>
+    <section class="settings-section">
+      <h2 class="titulo-secao">{% trans "Conta" %}</h2>
+      <div class="card">
+        <a href="{% if empresa %}{% url 'editar_perfil_empregador' %}{% else %}{% url 'editar_perfil' %}{% endif %}" class="linha">
+          <span class="icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>
+          </span>
+          <span>{% trans "Editar perfil" %}</span>
+          <span class="seta" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span>
+        </a>
 
-  <div class="topo">
-    {% if empresa %}
-      <a href="{% url 'perfil_empresa' %}" class="voltar">‹</a>
-    {% else %}
-      <a href="{% url 'perfil' %}" class="voltar">‹</a>
-    {% endif %}
-    <h1>{% trans "Configurações" %}</h1>
-    <span class="espaco"></span>
-  </div>
+        <a href="{% url 'alterar_senha' %}" class="linha" aria-label="{% trans 'Alterar senha' %}">
+          <span class="icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+          </span>
+          <span>{% trans "Alterar senha" %}</span>
+          <span class="seta" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span>
+        </a>
+      </div>
+    </section>
 
-  <h2 class="titulo-secao">{% trans "Conta" %}</h2>
-  <div class="card">
-    <a href="{% if empresa %}{% url 'editar_perfil_empregador' %}{% else %}{% url 'editar_perfil' %}{% endif %}" class="linha">
-      <span class="icone">👤</span>
-      <span>{% trans "Editar perfil" %}</span>
-      <span class="seta">›</span>
-    </a>
-    <a href="{% url 'alterar_senha' %}" class="linha">
-      <span class="icone">🔒</span>
-      <span>{% trans "Alterar senha" %}</span>
-      <span class="seta">›</span>
-    </a>
-  </div>
+    <section class="settings-section">
+      <h2 class="titulo-secao">{% trans "Preferências" %}</h2>
+      <div class="card card-preferencias">
+        <div class="linha linha-idioma">
+          <span class="icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"></path></svg>
+          </span>
+          <span>{% trans "Idioma" %}</span>
+          {% include 'includes/seletor_idioma.html' %}
+        </div>
+        {% include 'includes/alternar_tema.html' %}
+      </div>
+    </section>
 
-  <h2 class="titulo-secao">{% trans "Preferências" %}</h2>
-  <div class="card card-preferencias">
-    <div class="linha linha-idioma">
-      <span class="icone">🌐</span>
-      <span>{% trans "Idioma" %}</span>
-      {% include 'includes/seletor_idioma.html' %}
-    </div>
-    {% include 'includes/alternar_tema.html' %}
-  </div>
+    <section class="settings-section">
+      <h2 class="titulo-secao">{% trans "Notificações" %}</h2>
+      <div class="card">
+        {% if not empresa %}
+        <label class="linha">
+          <span class="icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"></path></svg>
+          </span>
+          <span>{% trans "Novas vagas" %}</span>
+          <input type="checkbox" class="chave" checked>
+        </label>
+        {% endif %}
+        <label class="linha">
+          <span class="icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"></path></svg>
+          </span>
+          <span>{% trans "Mensagens" %}</span>
+          <input type="checkbox" class="chave" checked>
+        </label>
+        <label class="linha">
+          <span class="icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
+          </span>
+          <span>{% trans "Avisos por e-mail" %}</span>
+          <input type="checkbox" class="chave">
+        </label>
+      </div>
+    </section>
 
-  <h2 class="titulo-secao">{% trans "Notificações" %}</h2>
-  <div class="card">
     {% if not empresa %}
-    <label class="linha">
-      <span class="icone">💼</span>
-      <span>{% trans "Novas vagas" %}</span>
-      <input type="checkbox" class="chave" checked>
-    </label>
+    <section class="settings-section">
+      <h2 class="titulo-secao">{% trans "Privacidade" %}</h2>
+      <div class="card">
+        <label class="linha">
+          <span class="icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>
+          </span>
+          <span>{% trans "Perfil visível para empresas" %}</span>
+          <input type="checkbox" class="chave" checked>
+        </label>
+      </div>
+    </section>
     {% endif %}
-    <label class="linha">
-      <span class="icone">💬</span>
-      <span>{% trans "Mensagens" %}</span>
-      <input type="checkbox" class="chave" checked>
-    </label>
-    <label class="linha">
-      <span class="icone">✉️</span>
-      <span>{% trans "Avisos por e-mail" %}</span>
-      <input type="checkbox" class="chave">
-    </label>
-  </div>
 
-  {% if not empresa %}
-  <h2 class="titulo-secao">{% trans "Privacidade" %}</h2>
-  <div class="card">
-    <label class="linha">
-      <span class="icone">👁️</span>
-      <span>{% trans "Perfil visível para empresas" %}</span>
-      <input type="checkbox" class="chave" checked>
-    </label>
-  </div>
+    <section class="settings-section">
+      <h2 class="titulo-secao">{% trans "Sobre" %}</h2>
+      <div class="card">
+        <div class="linha linha--disabled" aria-disabled="true">
+          <span class="icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l3 3v17H6z"></path><path d="M14 2v5h5M9 12h6M9 16h6"></path></svg>
+          </span>
+          <span>{% trans "Termos de uso" %}</span>
+          <span class="linha-status">{% trans "Em breve" %}</span>
+        </div>
+      </div>
+    </section>
+
+    <form method="post" action="{% url 'sair_da_conta' %}" class="settings-logout-form">
+      {% csrf_token %}
+      <button type="submit" class="botao botao-sair">{% trans "Sair da conta" %}</button>
+    </form>
+
+    <p class="versao">Connecto · {% trans "versão" %} 1.0</p>
+  </main>
+
+  {% if empresa %}
+    {% include 'includes/bottom_nav_empresa.html' with pagina_ativa='configuracoes' %}
+  {% else %}
+    {% include 'includes/bottom_nav.html' with pagina_ativa='perfil' %}
   {% endif %}
-
-  <h2 class="titulo-secao">{% trans "Sobre" %}</h2>
-  <div class="card">
-    <a href="#" class="linha">
-      <span class="icone">📄</span>
-      <span>{% trans "Termos de uso" %}</span>
-      <span class="seta">›</span>
-    </a>
-  </div>
-
-  <a href="{% url 'login' %}" class="botao botao-sair">{% trans "Sair da conta" %}</a>
-  <p class="versao">Connecto · {% trans "versão" %} 1.0</p>
-
 </body>
-
 </html>
