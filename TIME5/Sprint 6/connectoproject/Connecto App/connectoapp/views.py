@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
@@ -1566,6 +1567,52 @@ def editar_perfil_empregador(request):
             "empresa": empresa,
             "erro": erro,
         },
+    )
+
+
+@login_required
+def alterar_senha(request):
+    usuario = request.user
+    eh_empresa = Empresa.objects.filter(usuario=usuario).exists()
+    erro = None
+
+    if request.method == "POST":
+        senha_atual = request.POST.get("senha_atual", "")
+        nova_senha = request.POST.get("nova_senha", "")
+        confirmar_senha = request.POST.get("confirmar_senha", "")
+
+        if not senha_atual or not nova_senha or not confirmar_senha:
+            erro = "Preencha todos os campos."
+
+        elif not usuario.check_password(senha_atual):
+            erro = "A senha atual está incorreta."
+
+        elif len(nova_senha) < 6:
+            erro = "A nova senha deve ter no mínimo 6 caracteres."
+
+        elif nova_senha == senha_atual:
+            erro = "A nova senha precisa ser diferente da atual."
+
+        elif nova_senha != confirmar_senha:
+            erro = "As senhas não coincidem."
+
+        else:
+            usuario.set_password(nova_senha)
+            usuario.save()
+
+            # Sem isso o Django desloga a pessoa depois de trocar a senha
+            update_session_auth_hash(request, usuario)
+
+            messages.success(request, "Senha alterada com sucesso!")
+
+            if eh_empresa:
+                return redirect("perfil_empresa")
+            return redirect("perfil")
+
+    return render(
+        request,
+        "alterar_senha.html",
+        {"erro": erro},
     )
 
 
