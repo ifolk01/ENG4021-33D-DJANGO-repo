@@ -675,3 +675,111 @@
     gap: var(--connecto-space-base);
   }
 }
+
+
+/* =========================================
+   UI/UX FIX — CANDIDATURAS
+   ========================================= */
+
+.applications-shell {
+  width: min(100%, 1100px);
+}
+
+.applications-header h1,
+.applications-header h2 {
+  margin: var(--connecto-space-sm) 0 var(--connecto-section-gap);
+  color: var(--tema-ink, var(--connecto-navy));
+  font-size: var(--connecto-text-page);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -.03em;
+}
+
+.applications-tabs {
+  border: 1px solid var(--tema-line, var(--connecto-line));
+  background: var(--tema-surface-2, #e8e8e4);
+}
+
+.applications-tab:focus-visible,
+.status-filter:focus-visible,
+.application-card:focus-visible,
+.applications-primary:focus-visible {
+  outline: 3px solid var(--connecto-cyan);
+  outline-offset: 3px;
+}
+
+.status-filter {
+  border-color: var(--tema-line, var(--connecto-line));
+  background: var(--tema-surface, var(--connecto-surface));
+  color: var(--tema-muted, var(--connecto-muted));
+}
+
+.status-filter.active {
+  background: var(--tema-ink, var(--connecto-navy));
+  border-color: var(--tema-ink, var(--connecto-navy));
+  color: var(--tema-surface, #fff);
+}
+
+.application-card {
+  border-color: var(--tema-line, var(--connecto-line));
+  background: var(--tema-surface, var(--connecto-surface));
+  transition: transform .16s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.application-card:hover {
+  border-color: color-mix(in srgb, var(--connecto-cyan) 45%, var(--tema-line, var(--connecto-line)));
+  transform: translateY(-1px);
+}
+
+.application-company-icon {
+  background-color: var(--tema-cyan-soft, var(--connecto-cyan-soft)) !important;
+  color: var(--connecto-status-info-fg) !important;
+}
+
+.application-status--enviada { color: var(--connecto-status-info-fg); }
+.application-status--em_analise { color: var(--connecto-status-warning-fg); }
+.application-status--entrevista { background: var(--connecto-status-purple-bg); color: var(--connecto-status-purple-fg); }
+.application-status--aprovada { background: var(--connecto-status-success-bg); color: var(--connecto-status-success-fg); }
+.application-status--nao_selecionada { color: var(--connecto-status-danger-fg); }
+.application-status--retirada { background: var(--connecto-status-neutral-bg); color: var(--connecto-status-neutral-fg); }
+
+.application-status-row time,
+.application-company {
+  color: var(--tema-muted, var(--connecto-muted));
+}
+
+.application-chevron {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  color: var(--tema-muted, var(--connecto-muted));
+  font-size: 0;
+}
+
+.application-chevron svg {
+  width: 18px;
+  height: 18px;
+}
+
+.applications-empty__icon {
+  background: var(--tema-surface-2, #e8e9f0);
+  color: var(--tema-ink, var(--connecto-navy));
+}
+
+@media (max-width: 520px) {
+  .application-card {
+    min-height: 118px;
+    grid-template-columns: 50px minmax(0, 1fr) 20px;
+    padding: var(--connecto-space-md);
+  }
+
+  .application-company-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .application-status-row {
+    align-items: flex-start;
+  }
+}
