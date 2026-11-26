@@ -1,93 +1,161 @@
+
 {% load static %}
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connecto - {% trans "Editar perfil da empresa" %}</title>
-  <link rel="stylesheet" href="{% static 'editar_perfil_empregador.css' %}">
-  {% include 'includes/tema_head.html' %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>Connecto - {% trans "Editar perfil da empresa" %}</title>
+
+    <link rel="stylesheet" href="{% static 'editar_perfil_empregador.css' %}">
+
+    {% include 'includes/tema_head.html' %}
 </head>
 
 <body>
 
-  <div class="topo">
-    <a href="{% url 'perfil_empresa' %}" class="voltar" aria-label="{% trans 'Voltar' %}">‹</a>
-    <h1>{% trans "Editar perfil" %}</h1>
-    <span class="espaco"></span>
-  </div>
+    <!-- CABEÇALHO -->
 
-  <form method="post" action="{% url 'editar_perfil_empregador' %}">
-    {% csrf_token %}
+    <div class="topo">
 
-    {% if erro %}
-      <p class="mensagem-erro" role="alert">{{ erro }}</p>
-    {% endif %}
+        <a href="{% url 'perfil_empresa' %}"
+           class="voltar"
+           aria-label="{% trans 'Voltar' %}"
+           title="{% trans 'Voltar ao perfil' %}">
+            ‹
+        </a>
 
-    <div class="logo-empresa">
-      <div class="avatar">{{ empresa.iniciais }}</div>
-      <p class="tipo-conta">{% trans "Conta de empregador" %}</p>
+        <h1>{% trans "Editar perfil" %}</h1>
+
+        <span class="espaco" aria-hidden="true"></span>
+
     </div>
 
-    <div class="card">
-      <h2>{% trans "Dados da empresa" %}</h2>
+    <!-- FORMULÁRIO -->
 
-      <label for="nome">{% trans "Nome da empresa" %}</label>
-      <input
-        type="text"
-        id="nome"
-        name="nome"
-        maxlength="100"
-        value="{{ empresa.nome }}"
-        required
-      >
+    <form method="post" action="{% url 'editar_perfil_empregador' %}">
+        {% csrf_token %}
 
-      <label for="email">{% trans "E-mail de contato" %}</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        maxlength="150"
-        value="{{ empresa.email }}"
-        required
-      >
-      <p class="dica">{% trans "Esse é o e-mail usado para entrar no Connecto." %}</p>
-    </div>
+        <!-- MENSAGEM DE ERRO -->
 
-    <div class="card">
-      <h2>{% trans "Sobre a empresa" %}</h2>
+        {% if erro %}
+            <p class="mensagem-erro" role="alert">
+                {{ erro }}
+            </p>
+        {% endif %}
 
-      <label for="descricao">{% trans "Descrição" %}</label>
-      <textarea
-        id="descricao"
-        name="descricao"
-        rows="5"
-        maxlength="1000"
-        placeholder="{% trans 'Conte o que a empresa faz e o que oferece para os estagiários.' %}"
-      >{{ empresa.descricao }}</textarea>
-      <p class="contador-texto"><span id="contador-descricao">{{ empresa.descricao|length }}</span>/1000</p>
-    </div>
+        <!-- IDENTIFICAÇÃO DA EMPRESA -->
 
-    <button type="submit" class="botao botao-salvar">
-      {% trans "Salvar alterações" %}
-    </button>
+        <div class="logo-empresa">
 
-    <a href="{% url 'perfil_empresa' %}" class="botao botao-cancelar">
-      {% trans "Cancelar" %}
-    </a>
-  </form>
+            <div class="avatar" aria-hidden="true">
+                {{ empresa.iniciais }}
+            </div>
 
-  <script>
-    // Atualiza o contador de caracteres da descrição enquanto a pessoa digita
-    const descricao = document.getElementById("descricao");
-    const contador = document.getElementById("contador-descricao");
+            <p class="tipo-conta">
+                {% trans "Conta de empregador" %}
+            </p>
 
-    descricao.addEventListener("input", function () {
-      contador.textContent = descricao.value.length;
-    });
-  </script>
+        </div>
+
+        <!-- DADOS DA EMPRESA -->
+
+        <div class="card">
+
+            <h2>{% trans "Dados da empresa" %}</h2>
+
+            <label for="nome">
+                {% trans "Nome da empresa" %}
+            </label>
+
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                maxlength="100"
+                value="{{ empresa.nome }}"
+                autocomplete="organization"
+                required
+            >
+
+            <label for="email">
+                {% trans "E-mail de contato" %}
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                maxlength="150"
+                value="{{ empresa.email }}"
+                autocomplete="email"
+                required
+            >
+
+            <p class="dica">
+                {% trans "Esse é o e-mail usado para entrar no Connecto." %}
+            </p>
+
+        </div>
+
+        <!-- DESCRIÇÃO DA EMPRESA -->
+
+        <div class="card">
+
+            <h2>{% trans "Sobre a empresa" %}</h2>
+
+            <label for="descricao">
+                {% trans "Descrição" %}
+            </label>
+
+            <textarea
+                id="descricao"
+                name="descricao"
+                rows="5"
+                maxlength="1000"
+                placeholder="{% trans 'Conte o que a empresa faz e o que oferece para os estagiários.' %}"
+            >{{ empresa.descricao|default_if_none:"" }}</textarea>
+
+            <p class="contador-texto">
+                <span id="contador-descricao">
+                    {{ empresa.descricao|default_if_none:""|length }}
+                </span>/1000
+            </p>
+
+        </div>
+
+        <!-- BOTÃO SALVAR -->
+
+        <button type="submit" class="botao botao-salvar">
+            {% trans "Salvar alterações" %}
+        </button>
+
+        <!-- BOTÃO CANCELAR -->
+
+        <a href="{% url 'perfil_empresa' %}"
+           class="botao botao-cancelar">
+            {% trans "Cancelar" %}
+        </a>
+
+    </form>
+
+    <!-- CONTADOR DE CARACTERES -->
+
+    <script>
+        const descricao = document.getElementById("descricao");
+        const contador = document.getElementById("contador-descricao");
+
+        function atualizarContador() {
+            contador.textContent = descricao.value.length;
+        }
+
+        descricao.addEventListener("input", atualizarContador);
+
+        atualizarContador();
+    </script>
 
 </body>
 </html>
