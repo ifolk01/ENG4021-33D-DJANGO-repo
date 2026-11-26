@@ -740,3 +740,76 @@ a {
   }
 }
 
+
+
+/* =========================================
+   UI/UX FIX — NAVEGACAO, TEMA E WORDMARK
+   ========================================= */
+
+:root {
+  --connecto-nav-surface: rgba(255, 255, 255, .96);
+  --connecto-nav-ink: #202333;
+  --connecto-nav-border: rgba(48, 53, 79, .10);
+  --connecto-nav-hover: rgba(48, 53, 79, .055);
+  --connecto-brand-ink: #13254f;
+  --connecto-brand-font: "Montserrat", "Avenir Next", "Century Gothic", "Segoe UI", sans-serif;
+
+  --connecto-status-info-fg: #34738c;
+  --connecto-status-warning-fg: #88702a;
+  --connecto-status-purple-bg: #e8e7fa;
+  --connecto-status-purple-fg: #6257a8;
+  --connecto-status-success-bg: #e2f3e8;
+  --connecto-status-success-fg: #397950;
+  --connecto-status-danger-fg: #a34f61;
+  --connecto-status-neutral-bg: #ececef;
+  --connecto-status-neutral-fg: #6f7078;
+}
+
+.bottom-nav,
+.bottom-nav-empresa {
+  color: var(--connecto-nav-ink);
+  background: var(--connecto-nav-surface);
+  border-color: var(--connecto-nav-border);
+}
+
+.nav-item,
+.nav-item:visited {
+  color: var(--connecto-nav-ink);
+}
+
+.nav-item.active {
+  color: var(--tema-ink, var(--connecto-nav-ink));
+}
+
+.nav-item:focus-visible,
+.nav-brand:focus-visible {
+  outline: 3px solid var(--connecto-cyan);
+  outline-offset: 3px;
+}
+
+.nav-brand__name {
+  color: var(--connecto-brand-ink);
+  font-family: var(--connecto-brand-font);
+  font-weight: 800;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 700px) {
+  .bottom-nav,
+  .bottom-nav-empresa {
+    background: var(--connecto-nav-surface);
+    border-right: 1px solid var(--connecto-nav-border);
+    box-shadow: 8px 0 28px rgba(20, 22, 31, .08);
+  }
+
+  .nav-item:hover {
+    background: var(--connecto-nav-hover);
+  }
+}
+
+@media (min-width: 1024px) {
+  .nav-brand__name {
+    font-size: 18px;
+  }
+}

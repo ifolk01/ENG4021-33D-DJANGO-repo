@@ -1,6 +1,10 @@
 {% load i18n %}
 <button type="button" id="alternar-tema" class="botao-tema" aria-pressed="false">
-  <span aria-hidden="true">🌙</span>
+  <span class="theme-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.7 6.7 0 0 0 21 12.8Z"></path>
+    </svg>
+  </span>
   <span>{% trans "Modo noturno" %}</span>
 </button>
 <script>
