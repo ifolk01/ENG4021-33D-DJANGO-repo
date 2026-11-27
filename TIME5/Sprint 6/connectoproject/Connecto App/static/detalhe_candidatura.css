@@ -810,3 +810,55 @@
     grid-column: 1;
   }
 }
+
+
+/* =========================================
+   UI/UX FIX — DETALHE DA CANDIDATURA
+   ========================================= */
+
+.application-detail-back {
+  border: 1px solid var(--tema-line, var(--connecto-line));
+  background: var(--tema-surface, var(--connecto-surface));
+  font-size: 0;
+}
+
+.application-detail-back svg {
+  width: 22px;
+  height: 22px;
+}
+
+.application-detail-back:focus-visible,
+.application-action:focus-visible {
+  outline: 3px solid var(--connecto-cyan);
+  outline-offset: 3px;
+}
+
+.application-summary-card,
+.application-timeline-card,
+.application-actions-card {
+  border-color: var(--tema-line, var(--connecto-line));
+}
+
+.application-summary-meta > div {
+  border-top-color: var(--tema-line, var(--connecto-line));
+}
+
+.application-detail-status--enviada { color: var(--connecto-status-info-fg); }
+.application-detail-status--em_analise { color: var(--connecto-status-warning-fg); }
+.application-detail-status--entrevista { background: var(--connecto-status-purple-bg); color: var(--connecto-status-purple-fg); }
+.application-detail-status--aprovada { background: var(--connecto-status-success-bg); color: var(--connecto-status-success-fg); }
+.application-detail-status--nao_selecionada { color: var(--connecto-status-danger-fg); }
+.application-detail-status--retirada { background: var(--connecto-status-neutral-bg); color: var(--connecto-status-neutral-fg); }
+
+.timeline-marker::after {
+  background: var(--tema-line, var(--connecto-line));
+}
+
+.application-action--primary {
+  background: var(--connecto-cyan);
+}
+
+.application-action--secondary {
+  border-color: color-mix(in srgb, var(--connecto-cyan) 30%, var(--tema-line, var(--connecto-line)));
+  color: var(--connecto-cyan);
+}

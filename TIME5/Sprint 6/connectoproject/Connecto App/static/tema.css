@@ -42,7 +42,7 @@ html[data-theme="dark"] {
 
   --connecto-primary-dark: #464b71; 
   --connecto-border:       #33364f;
-  --connecto-text-soft:    #6b6f80;
+  --connecto-text-soft:    #a4a8b9;
 }
 
 html[data-theme="dark"] .cadastro-header h1 { color: var(--tema-ink); }
@@ -63,3 +63,27 @@ html[data-theme="dark"] .avatar { color: var(--tema-ink); }
   cursor: pointer;
 }
 .botao-tema[aria-pressed="true"] { border-color: var(--connecto-cyan, #1596b7); }
+
+
+/* Sidebar / wordmark no modo escuro */
+html[data-theme="dark"] {
+  --connecto-nav-surface: #1e2130;
+  --connecto-nav-ink: #e8e9f0;
+  --connecto-nav-border: #34384f;
+  --connecto-nav-hover: rgba(232, 233, 240, .07);
+  --connecto-brand-ink: #f4f6ff;
+
+  --connecto-status-info-fg: #77c9df;
+  --connecto-status-warning-fg: #edc760;
+  --connecto-status-purple-bg: #2d2948;
+  --connecto-status-purple-fg: #c7bff5;
+  --connecto-status-success-bg: #173826;
+  --connecto-status-success-fg: #78d19a;
+  --connecto-status-danger-fg: #ee9aa6;
+  --connecto-status-neutral-bg: #2b2f40;
+  --connecto-status-neutral-fg: #b9bdcb;
+}
+
+html[data-theme="dark"] .nav-brand img {
+  filter: brightness(1.22) saturate(1.08);
+}

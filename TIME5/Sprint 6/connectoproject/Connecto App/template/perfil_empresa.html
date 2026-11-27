@@ -82,13 +82,13 @@
 
         <div class="dados">
             <div class="linha">
-                <span class="icone">📧</span>
+                <span class="icone" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg></span>
                 <span>{% trans "E-mail" %}</span>
                 <span class="valor">{{ empresa.email }}</span>
             </div>
 
             <div class="linha">
-                <span class="icone">🏢</span>
+                <span class="icone" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5h2a2 2 0 0 1 2 2v10"></path><path d="M8 6h4M8 10h4M8 14h4M8 18h4M16 13h2M16 17h2M3 21h18"></path></svg></span>
                 <span>{% trans "Descrição" %}</span>
                 <span class="valor">
                     {{ empresa.descricao|default:_("Nenhuma descrição cadastrada.") }}
