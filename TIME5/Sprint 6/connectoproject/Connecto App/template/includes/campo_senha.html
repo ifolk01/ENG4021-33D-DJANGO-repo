@@ -1,0 +1,31 @@
+{% load i18n %}
+{% comment %}
+  Campo de senha reutilizável, com o botão de mostrar/ocultar.
+  Uso: {% include 'includes/campo_senha.html' with campo_id='...' campo_nome='...' rotulo='...' autocomplete='...' %}
+{% endcomment %}
+
+<div class="campo-senha">
+  <label for="{{ campo_id }}">{{ rotulo }}</label>
+
+  <div class="campo-senha-caixa">
+    <input
+      type="password"
+      id="{{ campo_id }}"
+      name="{{ campo_nome }}"
+      autocomplete="{{ autocomplete|default:'off' }}"
+      required
+    >
+
+    <button
+      type="button"
+      class="botao-olho"
+      data-alvo="{{ campo_id }}"
+      aria-label="{% trans 'Mostrar senha' %}"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+    </button>
+  </div>
+</div>

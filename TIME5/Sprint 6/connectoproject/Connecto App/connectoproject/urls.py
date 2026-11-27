@@ -48,6 +48,7 @@ urlpatterns = [
     path("notificacoes/", views.notificacoes, name="notificacoes"),
     path("notificacoes/verificar/", views.verificar_notificacoes, name="notificacoes_verificar"),
     path("configuracoes/", views.configuracoes, name="configuracoes"),
+    path("configuracoes/alterar-senha/", views.alterar_senha, name="alterar_senha"),
     
     path("esqueceu-senha/", views.esqueceu_senha, name="esqueceu_senha"),
     path(
