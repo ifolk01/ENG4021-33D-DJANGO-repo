@@ -1,37 +1,103 @@
-/* Botão de configurações (⚙️) no topo da tela de Perfil */
-.profile-shell .botao-config,
-.profile-shell .botao-config:visited {
-  position: absolute;
-  top: 10px;
-  right: 61px;
-  width: 38px;
-  height: 38px;
-  box-sizing: border-box;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Cabeçalho padronizado dos perfis */
 
-  background-color: var(--tema-surface, #FFFFFF);
-  border: 2px solid #116A85;
-  border-radius: 50%;
-
-  font-size: 18px;
-  line-height: 1;
-  text-decoration: none;
-
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-  transition: 0.2s;
-  cursor: pointer;
-  z-index: 2;
+.profile-shell .perfil-topo {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
 }
 
-.profile-shell .botao-config:hover {
-  background-color: #DDEEF4;
-  transform: scale(1.08) rotate(30deg);
+.profile-shell .perfil-topo h1 {
+    margin: 0;
+    min-width: 0;
+    text-align: center;
 }
 
-.profile-shell .botao-config:focus-visible {
-  outline: 3px solid #33364F;
-  outline-offset: 3px;
+/* Botões de ajuda e configurações */
+
+.profile-shell .perfil-topo .botao-ajuda,
+.profile-shell .perfil-topo .botao-config {
+    position: static;
+    inset: auto;
+    transform: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 1px solid var(--tema-line, #DCDCD3);
+    border-radius: 12px;
+
+    background-color: var(--tema-surface, #FFFFFF);
+    color: var(--tema-ink, #33364F);
+
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Ícones */
+
+.profile-shell .perfil-topo .botao-ajuda svg,
+.profile-shell .perfil-topo .botao-config svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+/* Efeito ao passar o mouse */
+
+.profile-shell .perfil-topo .botao-ajuda:hover,
+.profile-shell .perfil-topo .botao-config:hover {
+    background-color: var(--tema-cyan-soft, #DDEEF4);
+    color: var(--tema-ink, #33364F);
+    transform: translateY(-2px);
+}
+
+/* Acessibilidade */
+
+.profile-shell .perfil-topo .botao-ajuda:focus-visible,
+.profile-shell .perfil-topo .botao-config:focus-visible {
+    outline: 2px solid #116A85;
+    outline-offset: 3px;
+}
+
+/* Telas pequenas */
+
+@media (max-width: 380px) {
+    .profile-shell .perfil-topo {
+        grid-template-columns: 40px minmax(0, 1fr) 40px;
+        gap: 8px;
+    }
+
+    .profile-shell .perfil-topo .botao-ajuda,
+    .profile-shell .perfil-topo .botao-config {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+
+    .profile-shell .perfil-topo h1 {
+        font-size: clamp(22px, 6vw, 28px);
+    }
 }
