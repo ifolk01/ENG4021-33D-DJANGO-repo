@@ -1,24 +1,11 @@
 :root {
-  /* Compatibilidade da tela de autenticação com o Design System global */
-  --connecto-primary-dark:
-    var(--connecto-navy, #33364F);
-
+  --connecto-primary-dark: var(--connecto-navy, #33364F);
   --connecto-secondary: #2a6d8c;
-
-  --connecto-bg:
-    var(--tema-bg, #F2F2ED);
-
-  --connecto-surface:
-    var(--tema-surface, #FFFFFF);
-
-  --connecto-border:
-    var(--tema-line, #DCDCD3);
-
-  --connecto-text:
-    var(--tema-ink, #33364F);
-
-  --connecto-text-soft:
-    var(--tema-muted, #6B6F80);
+  --connecto-bg: var(--tema-bg, #F2F2ED);
+  --connecto-surface: var(--tema-surface, #FFFFFF);
+  --connecto-border: var(--tema-line, #DCDCD3);
+  --connecto-text: var(--tema-ink, #33364F);
+  --connecto-text-soft: var(--tema-muted, #6B6F80);
 }
 
 * {
@@ -27,7 +14,6 @@
 
 body {
   min-height: 100dvh;
-
   margin: 0;
 
   display: flex;
@@ -38,11 +24,8 @@ body {
     var(--connecto-page-gutter, clamp(16px, 4vw, 32px))
     max(var(--connecto-space-xl, 24px), env(safe-area-inset-bottom));
 
-  background-color:
-    var(--connecto-bg);
-
-  color:
-    var(--connecto-text);
+  background-color: var(--connecto-bg);
+  color: var(--connecto-text);
 
   font-family:
     -apple-system,
@@ -53,11 +36,8 @@ body {
     Arial,
     sans-serif;
 
-  font-size:
-    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
-
-  line-height:
-    var(--connecto-line-body, 1.45);
+  font-size: var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+  line-height: var(--connecto-line-body, 1.45);
 }
 
 
@@ -69,8 +49,6 @@ body {
   width: 100%;
   max-width: 400px;
 
-  flex: 1;
-
   flex: 0 1 auto;
   display: flex;
   flex-direction: column;
@@ -79,7 +57,6 @@ body {
   justify-content: center;
 
   margin: 0 auto;
-  width: 100%;
   padding-top: 120px;
 }
 
@@ -91,52 +68,32 @@ body {
   align-items: center;
   justify-content: center;
 
-  margin-bottom:
-    var(--connecto-space-base, 16px);
+  margin-bottom: var(--connecto-space-base, 16px);
 
-  border-radius:
-    var(--connecto-radius-xl, 24px);
-
-  background-color:
-    var(--connecto-surface);
-
-  box-shadow:
-    0 4px 12px
-    rgba(0, 0, 0, .05);
+  border-radius: var(--connecto-radius-xl, 24px);
+  background-color: var(--connecto-surface);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
 }
 
 .auth-logo-box img {
   width: clamp(46px, 10vw, 54px);
-
   object-fit: contain;
 }
 
 .auth-subtitle {
-  margin:
-    0
-    0
-    clamp(28px, 6vw, 40px);
+  margin: 0 0 clamp(28px, 6vw, 40px);
 
-  color:
-    var(--connecto-text-soft);
-
-  font-size:
-    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
-
-  line-height:
-    var(--connecto-line-body, 1.45);
-
+  color: var(--connecto-text-soft);
+  font-size: var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+  line-height: var(--connecto-line-body, 1.45);
   text-align: center;
 }
 
 .auth-form {
   width: 100%;
-
   display: flex;
   flex-direction: column;
-
-  gap:
-    var(--connecto-space-base, 16px);
+  gap: var(--connecto-space-base, 16px);
 }
 
 .auth-input {
@@ -147,26 +104,15 @@ body {
     var(--connecto-space-md, 12px)
     var(--connecto-space-base, 16px);
 
-  border:
-    1px solid
-    var(--connecto-border);
-
-  border-radius:
-    var(--connecto-radius-sm, 12px);
-
+  border: 1px solid var(--connecto-border);
+  border-radius: var(--connecto-radius-sm, 12px);
   outline: none;
 
-  background-color:
-    var(--connecto-surface);
+  background-color: var(--connecto-surface);
+  color: var(--connecto-text);
 
-  color:
-    var(--connecto-text);
-
-  font-size:
-    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
-
-  line-height:
-    var(--connecto-line-body, 1.45);
+  font-size: var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
+  line-height: var(--connecto-line-body, 1.45);
 }
 
 .auth-input::placeholder {
@@ -174,8 +120,7 @@ body {
 }
 
 .auth-input:focus {
-  border-color:
-    var(--connecto-primary-dark);
+  border-color: var(--connecto-primary-dark);
 }
 
 .auth-forgot {
@@ -188,12 +133,8 @@ body {
 }
 
 .auth-forgot a {
-  color:
-    var(--connecto-secondary);
-
-  font-size:
-    var(--connecto-text-md, clamp(13px, 1.2vw, 14px));
-
+  color: var(--connecto-secondary);
+  font-size: var(--connecto-text-md, clamp(13px, 1.2vw, 14px));
   text-decoration: none;
 }
 
@@ -201,252 +142,46 @@ body {
   width: 100%;
   min-height: 50px;
 
-  margin-bottom:
-    clamp(28px, 6vw, 40px);
+  margin-bottom: clamp(28px, 6vw, 40px);
 
   padding:
     var(--connecto-space-md, 12px)
     var(--connecto-space-base, 16px);
 
   border: none;
+  border-radius: var(--connecto-radius-sm, 12px);
 
-  border-radius:
-    var(--connecto-radius-sm, 12px);
+  background-color: var(--connecto-primary-dark);
+  color: var(--connecto-surface);
 
-  background-color:
-    var(--connecto-primary-dark);
-
-  color:
-    var(--connecto-surface);
-
-  font-size:
-    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
-
+  font-size: var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
   font-weight: 650;
-
-  line-height:
-    var(--connecto-line-tight, 1.15);
+  line-height: var(--connecto-line-tight, 1.15);
 
   cursor: pointer;
 }
 
 .auth-footer {
   margin-top: auto;
+  padding-bottom: var(--connecto-space-xl, 24px);
 
-  padding-bottom:
-    var(--connecto-space-xl, 24px);
-
-  color:
-    var(--connecto-text-soft);
-
-  font-size:
-    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
-
-  line-height:
-    var(--connecto-line-body, 1.45);
-
+  color: var(--connecto-text-soft);
+  font-size: var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+  line-height: var(--connecto-line-body, 1.45);
   text-align: center;
 }
 
 .auth-footer a {
-  color:
-    var(--connecto-text);
-
+  color: var(--connecto-text);
   font-weight: 650;
-
   text-decoration: none;
 }
 
 
 /* =========================================
-   CADASTRO
+   AJUSTES ESPECÍFICOS DO LOGIN
    ========================================= */
 
-.cadastro-container {
-  width: 100%;
-  max-width: 400px;
-
-  margin: 0 auto;
-}
-
-.cadastro-topbar {
-  position: relative;
-
-  display: flex;
-  align-items: center;
-
-  margin-bottom:
-    var(--connecto-space-2xl, 32px);
-}
-
-.back-button {
-  position: absolute;
-  left: 0;
-
-  width: 40px;
-  height: 40px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius:
-    var(--connecto-radius-pill, 999px);
-
-  background-color:
-    var(--connecto-surface);
-
-  color:
-    var(--connecto-text);
-
-  text-decoration: none;
-
-  box-shadow:
-    0 2px 8px
-    rgba(0, 0, 0, .05);
-}
-
-.back-button svg {
-  width: 20px;
-  height: 20px;
-}
-
-.cadastro-topbar h2 {
-  flex: 1;
-
-  margin: 0;
-
-  color:
-    var(--connecto-text);
-
-  font-size:
-    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
-
-  line-height:
-    var(--connecto-line-title, 1.2);
-
-  text-align: center;
-}
-
-.cadastro-header h1 {
-  margin:
-    0
-    0
-    var(--connecto-space-sm, 8px);
-
-  color:
-    var(--connecto-primary-dark);
-
-  font-size:
-    var(--connecto-text-page, clamp(28px, 4vw, 36px));
-
-  font-weight: 600;
-
-  line-height:
-    var(--connecto-line-title, 1.2);
-}
-
-.cadastro-header p {
-  margin:
-    0
-    0
-    var(--connecto-space-2xl, 32px);
-
-  color:
-    var(--connecto-text-soft);
-
-  font-size:
-    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
-
-  line-height:
-    var(--connecto-line-body, 1.45);
-}
-
-
-/* =========================================
-   SENHA
-   ========================================= */
-
-.password-wrapper {
-  position: relative;
-
-  width: 100%;
-}
-
-.password-wrapper .auth-input {
-  padding-right: 48px;
-}
-
-.toggle-password {
-  position: absolute;
-
-  top: 50%;
-  right: 14px;
-
-  transform:
-    translateY(-50%);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0;
-
-  border: none;
-
-  background: none;
-
-  color: #999999;
-
-  cursor: pointer;
-}
-
-.toggle-password:hover {
-  color:
-    var(--connecto-primary-dark);
-}
-
-.toggle-password svg {
-  width: 22px;
-  height: 22px;
-
-  transition:
-    color .2s ease;
-}
-
-.toggle-password:focus {
-  outline: none;
-}
-
-
-/* =========================================
-   MOBILE PEQUENO
-   ========================================= */
-
-@media (max-width: 360px) {
-  body {
-    padding-inline:
-      var(--connecto-space-md, 12px);
-  }
-
-  .auth-input,
-  .auth-button {
-    min-height: 48px;
-  }
-}
-
-
-/* =========================================
-   TABLET / DESKTOP
-   ========================================= */
-
-@media (min-width: 700px) {
-  body {
-    padding-top:
-      var(--connecto-space-2xl, 32px);
-
-    padding-bottom:
-      var(--connecto-space-2xl, 32px);
 body:has(.login-container) {
   justify-content: flex-start;
   position: relative;
@@ -461,18 +196,44 @@ body:has(.login-container) .seletor-idioma {
 }
 
 .login-container .auth-logo-box {
-  width: 128px;
-  height: 128px;
-  border-radius: 28px;
-  margin-bottom: 14px;
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  margin-bottom: 12px;
+
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .login-container .auth-logo-box img {
-  width: 82px;
+  display: block;
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.login-container .auth-brand {
+  margin: 0;
+  color: var(--tema-ink, #33364F);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  line-height: 1.2;
+}
+
+html[data-theme="dark"] .login-container .auth-logo-box img {
+  filter: brightness(0) invert(1);
 }
 
 .login-container .auth-subtitle {
-  color: #111111;
+  color: var(--tema-ink, #33364F);
   font-size: 18px;
   font-weight: 500;
   font-style: italic;
@@ -480,18 +241,73 @@ body:has(.login-container) .seletor-idioma {
   margin-bottom: 30px;
 }
 
+
+/* =========================================
+   SELETOR ALUNO / EMPREGADOR
+   ========================================= */
+
 .login-container .tipo-usuario {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 6px;
+  padding: 5px;
+
+  border: 1px solid var(--tema-line, #DCDCD3);
+  border-radius: var(--connecto-radius-xl, 24px);
+
+  background: var(--tema-surface-2, #e8e8e4);
 }
 
 .login-container .tipo-usuario label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  position: relative;
+  min-width: 0;
   cursor: pointer;
+}
+
+.login-container .tipo-usuario input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.login-container .tipo-usuario label span {
+  min-height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 6px;
+
+  border-radius: var(--connecto-radius-lg, 18px);
+
+  color: var(--tema-muted, #6B6F80);
+
+  font-size: var(--connecto-text-md, 14px);
+  font-weight: 750;
+  line-height: var(--connecto-line-tight, 1.15);
+  text-align: center;
+
+  transition:
+    background-color .18s ease,
+    color .18s ease,
+    box-shadow .18s ease;
+}
+
+.login-container .tipo-usuario input:checked + span {
+  background: var(--tema-surface, #FFFFFF);
+  color: var(--tema-ink, #33364F);
+  box-shadow: 0 3px 12px rgba(48, 53, 79, .08);
+}
+
+.login-container .tipo-usuario input:focus-visible + span {
+  outline: 3px solid var(--connecto-cyan, #1596b7);
+  outline-offset: 2px;
 }
 
 .login-container .auth-forgot {
@@ -503,14 +319,160 @@ body:has(.login-container) .seletor-idioma {
   font-size: 15px;
 }
 
+html[data-theme="dark"] .login-container .auth-forgot a {
+  color: var(--connecto-cyan, #3bb5d3);
+}
+
 .login-container .auth-button {
   margin-bottom: 0;
+  color: #FFFFFF;
 }
 
 body:has(.login-container) .auth-footer {
   margin-top: 24px;
   padding-bottom: 0;
 }
+
+
+/* =========================================
+   CADASTRO
+   ========================================= */
+
+.cadastro-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.cadastro-topbar {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  margin-bottom: var(--connecto-space-2xl, 32px);
+}
+
+.back-button {
+  position: absolute;
+  left: 0;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: var(--connecto-radius-pill, 999px);
+
+  background-color: var(--connecto-surface);
+  color: var(--connecto-text);
+
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+}
+
+.back-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cadastro-topbar h2 {
+  flex: 1;
+  margin: 0;
+
+  color: var(--connecto-text);
+  font-size: var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
+  line-height: var(--connecto-line-title, 1.2);
+  text-align: center;
+}
+
+.cadastro-header h1 {
+  margin: 0 0 var(--connecto-space-sm, 8px);
+
+  color: var(--connecto-primary-dark);
+  font-size: var(--connecto-text-page, clamp(28px, 4vw, 36px));
+  font-weight: 600;
+  line-height: var(--connecto-line-title, 1.2);
+}
+
+.cadastro-header p {
+  margin: 0 0 var(--connecto-space-2xl, 32px);
+
+  color: var(--connecto-text-soft);
+  font-size: var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+  line-height: var(--connecto-line-body, 1.45);
+}
+
+
+/* =========================================
+   SENHA
+   ========================================= */
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper .auth-input {
+  padding-right: 48px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  border: none;
+  background: none;
+
+  color: #999999;
+  cursor: pointer;
+}
+
+.toggle-password:hover {
+  color: var(--connecto-primary-dark);
+}
+
+.toggle-password svg {
+  width: 22px;
+  height: 22px;
+
+  transition: color .2s ease;
+}
+
+.toggle-password:focus {
+  outline: none;
+}
+
+
+/* =========================================
+   MOBILE PEQUENO
+   ========================================= */
+
+@media (max-width: 360px) {
+  body {
+    padding-inline: var(--connecto-space-md, 12px);
+  }
+
+  .auth-input,
+  .auth-button {
+    min-height: 48px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
 
 @media (max-width: 480px) {
   body:has(.login-container) .seletor-idioma {
@@ -522,9 +484,28 @@ body:has(.login-container) .auth-footer {
     padding-top: 110px;
   }
 
+  .login-container .auth-logo-box img {
+    width: 130px;
+  }
+
+  .login-container .auth-brand {
+    font-size: 28px;
+  }
+
   .login-container .auth-subtitle {
+    font-size: 16px;
     margin-bottom: 26px;
   }
-  }
 }
+
+
+/* =========================================
+   TABLET / DESKTOP
+   ========================================= */
+
+@media (min-width: 700px) {
+  body {
+    padding-top: var(--connecto-space-2xl, 32px);
+    padding-bottom: var(--connecto-space-2xl, 32px);
+  }
 }
