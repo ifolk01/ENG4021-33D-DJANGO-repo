@@ -1,93 +1,276 @@
 
-/* Identificação da empresa */
+/* PERFIL DA EMPRESA - SPRINT 11 */
+
+.perfil-empresa {
+    --empresa-destaque: #116A85;
+    --empresa-destaque-hover: #0D5469;
+}
+
+/* IDENTIFICAÇÃO DA EMPRESA */
+
 .perfil-empresa .identificacao {
-    margin: 32px 0 24px;
+    margin: 20px 0 24px;
+    padding: 30px 20px;
+
+    background-color: var(--tema-surface, #FFFFFF);
+    border: 1px solid var(--tema-line, #E4E4DD);
+    border-radius: 18px;
+
     text-align: center;
 }
 
 .perfil-empresa .identificacao h2 {
+    margin: 12px 0 6px;
+    color: var(--tema-ink, #33364F);
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 700;
     overflow-wrap: anywhere;
 }
 
-/* Logo da empresa (iniciais) */
-.perfil-empresa .logo-empresa {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 12px;
-    border-radius: 18px;
-    background-color: #116A85;
-    color: #FFFFFF;
-    font-size: 26px;
-    font-weight: 600;
-    line-height: 72px;
+.perfil-empresa .identificacao .curso {
+    color: var(--tema-muted, #6B6F80);
+    font-size: 14px;
 }
 
-/* Botão de editar perfil */
-.perfil-empresa .botao-editar {
-    max-width: 220px;
-    margin: 20px auto 0;
-    background-color: #116A85;
+/* LOGO DA EMPRESA */
+
+.perfil-empresa .logo-empresa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 14px;
+
+    border-radius: 20px;
+
+    background-color: var(--empresa-destaque);
     color: #FFFFFF;
+
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+
+    box-shadow: 0 5px 14px rgba(17, 106, 133, 0.18);
+}
+
+/* BOTÃO EDITAR PERFIL */
+
+.perfil-empresa .botao-editar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 220px;
+    min-height: 44px;
+
+    margin: 20px auto 0;
+    padding: 12px 18px;
+
+    border: none;
+    border-radius: 12px;
+
+    background-color: var(--empresa-destaque);
+    color: #FFFFFF;
+
+    font-size: 14px;
     font-weight: 600;
+    text-decoration: none;
+
     opacity: 1;
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .perfil-empresa .botao-editar:hover {
-    background-color: #0D5469;
+    background-color: var(--empresa-destaque-hover);
+    color: #FFFFFF;
+    transform: translateY(-2px);
 }
 
-/* Contador de candidaturas leva para a lista de candidaturas */
+/* CONTADORES */
+
+.perfil-empresa .contadores {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+
+    margin: 0 0 24px;
+}
+
 .perfil-empresa .contador-link {
-    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 0;
+    padding: 20px 12px;
+
+    background-color: var(--tema-surface, #FFFFFF);
+    border: 1px solid var(--tema-line, #E4E4DD);
+    border-radius: 14px;
+
+    color: var(--tema-ink, #33364F);
+    text-align: center;
     text-decoration: none;
-    transition: border-color 0.2s;
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .perfil-empresa .contador-link:hover {
-    border-color: #116A85;
+    border-color: var(--empresa-destaque);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.06);
 }
 
-/* Aviso de perfil atualizado */
-.perfil-empresa .aviso {
-    margin: 12px 0 0;
-    padding: 12px 14px;
-    border-radius: 12px;
-    background-color: var(--tema-cyan-soft, #DDEEF4);
-    color: #116A85;
-    font-size: 14px;
-    text-align: center;
+.perfil-empresa .contador-link h3 {
+    margin: 0 0 5px;
+
+    color: var(--empresa-destaque);
+    font-size: 26px;
+    font-weight: 700;
 }
 
-/* Informações da empresa */
+.perfil-empresa .contador-link p {
+    margin: 0;
+
+    color: var(--tema-muted, #6B6F80);
+    font-size: 13px;
+}
+
+/* INFORMAÇÕES DA EMPRESA */
+
 .perfil-empresa .dados {
+    margin-bottom: 20px;
+    padding: 8px 16px;
+
     background-color: var(--tema-surface, #FFFFFF);
     border: 1px solid var(--tema-line, #E4E4DD);
+    border-radius: 14px;
 }
 
 .perfil-empresa .linha {
+    display: flex;
     align-items: flex-start;
+    gap: 12px;
+
+    padding: 15px 0;
+
+    color: var(--tema-ink, #33364F);
+}
+
+.perfil-empresa .linha + .linha {
+    border-top: 1px solid var(--tema-line, #E4E4DD);
+}
+
+.perfil-empresa .linha .icone {
+    flex-shrink: 0;
+    font-size: 19px;
 }
 
 .perfil-empresa .linha > span:nth-child(2) {
     flex-shrink: 0;
+    font-weight: 600;
 }
 
 .perfil-empresa .valor {
+    flex: 1;
     min-width: 0;
+
+    color: var(--tema-muted, #6B6F80);
     text-align: right;
+
     overflow-wrap: anywhere;
     white-space: pre-line;
 }
 
-/* Ajustes para telas pequenas */
+/* AVISOS */
+
+.perfil-empresa .aviso {
+    margin: 12px 0 18px;
+    padding: 13px 16px;
+
+    border: 1px solid var(--tema-line, #E4E4DD);
+    border-radius: 12px;
+
+    background-color: var(--tema-surface, #FFFFFF);
+    color: var(--tema-ink, #33364F);
+
+    font-size: 14px;
+    text-align: center;
+}
+
+/* ACESSIBILIDADE */
+
+.perfil-empresa .botao-editar:focus-visible,
+.perfil-empresa .contador-link:focus-visible {
+    outline: 2px solid var(--empresa-destaque);
+    outline-offset: 3px;
+}
+
+/* CELULAR */
+
+@media (max-width: 480px) {
+    .perfil-empresa .identificacao {
+        margin-top: 16px;
+        padding: 24px 16px;
+    }
+
+    .perfil-empresa .logo-empresa {
+        width: 72px;
+        height: 72px;
+        font-size: 25px;
+    }
+
+    .perfil-empresa .contadores {
+        gap: 10px;
+    }
+
+    .perfil-empresa .contador-link {
+        padding: 17px 10px;
+    }
+
+    .perfil-empresa .dados {
+        padding: 6px 12px;
+    }
+}
+
+/* CELULARES MUITO PEQUENOS */
+
 @media (max-width: 380px) {
     .perfil-empresa .linha {
         flex-wrap: wrap;
+        gap: 8px;
     }
 
     .perfil-empresa .valor {
         flex-basis: 100%;
-        margin-left: 32px;
+        margin-left: 30px;
         text-align: left;
+    }
+}
+
+/* COMPUTADOR */
+
+@media (min-width: 900px) {
+    .perfil-empresa .identificacao {
+        padding: 36px 28px;
+    }
+
+    .perfil-empresa .contadores {
+        gap: 18px;
+    }
+
+    .perfil-empresa .contador-link {
+        padding: 24px 16px;
     }
 }

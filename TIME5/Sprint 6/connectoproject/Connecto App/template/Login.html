@@ -1,79 +1,146 @@
+
 {% load static %}
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Connecto - {% trans "Login" %}</title>
+
   <link rel="stylesheet" href="{% static 'login.css' %}">
   <link rel="stylesheet" href="{% static 'botao_idiomas.css' %}">
+
   {% include 'includes/tema_head.html' %}
 </head>
-<body>
+
+<body class="login-page">
+
   {% include 'includes/seletor_idioma.html' %}
 
-  <div class="login-container">
-    <div class="auth-logo-box">
-      <img src="{% static 'logo_icon.jpg' %}" alt="{% trans 'Logo Connecto' %}">
+  <main class="login-container">
+
+    <div class="auth-header">
+      <div class="auth-logo-box">
+        <img
+          src="{% static 'logo_icon.jpg' %}"
+          alt="{% trans 'Logo Connecto' %}"
+        >
+      </div>
+
+      <h1 class="auth-title">Connecto</h1>
+
+      <p class="auth-subtitle">
+        {% trans "Conectando Talentos e Oportunidades" %}
+      </p>
     </div>
 
-    <div class="auth-subtitle">
-      {% trans "Conectando Talentos e Oportunidades" %}
-    </div>
-
-    <form class="auth-form" method="POST" action="{% url 'login' %}">
+    <form
+      class="auth-form"
+      method="POST"
+      action="{% url 'login' %}"
+    >
       {% csrf_token %}
 
       <div class="tipo-usuario">
-        <label>
-          <input type="radio" name="tipo_usuario" value="aluno" checked>
-          {% trans "Aluno" %}
+        <label class="tipo-opcao">
+          <input
+            type="radio"
+            name="tipo_usuario"
+            value="aluno"
+            {% if tipo_usuario != "empregador" %}checked{% endif %}
+          >
+          <span>{% trans "Aluno" %}</span>
         </label>
 
-        <label>
-          <input type="radio" name="tipo_usuario" value="empregador">
-          {% trans "Empregador" %}
+        <label class="tipo-opcao">
+          <input
+            type="radio"
+            name="tipo_usuario"
+            value="empregador"
+            {% if tipo_usuario == "empregador" %}checked{% endif %}
+          >
+          <span>{% trans "Empregador" %}</span>
         </label>
       </div>
 
-      <input
-        type="text"
-        id="identificador"
-        name="username"
-        class="auth-input"
-        placeholder="{% trans 'Matrícula' %}"
-        required
-      >
+      <div class="auth-field">
+        <label for="identificador" id="label-identificador">
+          {% trans "Matrícula" %}
+        </label>
 
-      <!-- NOVO CONTAINER PARA SENHA COM BOTÃO DE EXIBIR/OCULTAR -->
-      <div class="password-wrapper">
         <input
-          type="password"
-          id="senha"
-          name="password"
+          type="text"
+          id="identificador"
+          name="username"
           class="auth-input"
-          placeholder="{% trans 'Senha' %}"
+          placeholder="{% trans 'Digite sua matrícula' %}"
+          autocomplete="username"
           required
         >
-        <button type="button" class="toggle-password" id="btn-toggle-senha" aria-label="{% trans 'Exibir senha' %}">
-          <!-- SVG Ícone Olho Fechado (Padrão) -->
-          <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-            <line x1="1" y1="1" x2="23" y2="23"></line>
-          </svg>
-          <!-- SVG Ícone Olho Aberto (Oculto por padrão) -->
-          <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
-        </button>
+      </div>
+
+      <div class="auth-field">
+        <label for="senha">{% trans "Senha" %}</label>
+
+        <div class="password-wrapper">
+          <input
+            type="password"
+            id="senha"
+            name="password"
+            class="auth-input"
+            placeholder="{% trans 'Digite sua senha' %}"
+            autocomplete="current-password"
+            required
+          >
+
+          <button
+            type="button"
+            class="toggle-password"
+            id="btn-toggle-senha"
+            aria-label="{% trans 'Exibir senha' %}"
+            aria-pressed="false"
+            data-mostrar="{% trans 'Exibir senha' %}"
+            data-ocultar="{% trans 'Ocultar senha' %}"
+          >
+            <svg
+              class="icon-eye-off"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+
+            <svg
+              class="icon-eye"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              hidden
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
       </div>
 
       {% if erro %}
-        <p style="color: red; font-size: 14px; text-align: center; margin: 0;">
+        <div class="auth-error" role="alert">
           {{ erro }}
-        </p>
+        </div>
       {% endif %}
 
       <div class="auth-forgot">
@@ -84,58 +151,85 @@
 
       <button type="submit" class="auth-button">
         {% trans "Entrar" %}
+        <span aria-hidden="true">→</span>
       </button>
-    </form>
-  </div>
 
-  <div class="auth-footer">
+    </form>
+
+  </main>
+
+  <footer class="auth-footer">
     {% trans "Não tem conta?" %}
     <a id="link-criar-conta" href="{% url 'criar_conta' %}">
       {% trans "Criar conta" %}
     </a>
-  </div>
+  </footer>
 
   <script>
     const identificador = document.getElementById("identificador");
+    const labelIdentificador = document.getElementById("label-identificador");
     const linkCriarConta = document.getElementById("link-criar-conta");
     const tiposUsuario = document.querySelectorAll('input[name="tipo_usuario"]');
-    
-    // Lógica Alternar Aluno/Empregador
-    tiposUsuario.forEach(function (opcao) {
-      opcao.addEventListener("change", function () {
-        if (this.value === "empregador") {
-          identificador.placeholder = "{% trans 'Email' %}";
-          identificador.type = "email";
-          identificador.autocomplete = "email";
-          linkCriarConta.href = "{% url 'criar_conta_empresa' %}";
-        } else {
-          identificador.placeholder = "{% trans 'Matrícula' %}";
-          identificador.type = "text";
-          identificador.autocomplete = "username";
-          linkCriarConta.href = "{% url 'criar_conta' %}";
-        }
 
+    function atualizarTipoUsuario(limparCampo = false) {
+      const empregador = document.querySelector(
+        'input[name="tipo_usuario"][value="empregador"]'
+      ).checked;
+
+      if (empregador) {
+        labelIdentificador.textContent = "{% trans 'Email' %}";
+        identificador.placeholder = "{% trans 'Digite seu email' %}";
+        identificador.type = "email";
+        identificador.autocomplete = "email";
+        linkCriarConta.href = "{% url 'criar_conta_empresa' %}";
+      } else {
+        labelIdentificador.textContent = "{% trans 'Matrícula' %}";
+        identificador.placeholder = "{% trans 'Digite sua matrícula' %}";
+        identificador.type = "text";
+        identificador.autocomplete = "username";
+        linkCriarConta.href = "{% url 'criar_conta' %}";
+      }
+
+      if (limparCampo) {
         identificador.value = "";
+      }
+    }
+
+    tiposUsuario.forEach(function(opcao) {
+      opcao.addEventListener("change", function() {
+        atualizarTipoUsuario(true);
       });
     });
 
-    // Lógica de Exibir/Ocultar Senha
-    const btnToggleSenha = document.getElementById('btn-toggle-senha');
-    const inputSenha = document.getElementById('senha');
-    const iconEyeOff = btnToggleSenha.querySelector('.icon-eye-off');
-    const iconEye = btnToggleSenha.querySelector('.icon-eye');
+    atualizarTipoUsuario();
 
-    btnToggleSenha.addEventListener('click', function () {
-      if (inputSenha.type === 'password') {
-        inputSenha.type = 'text';
-        iconEyeOff.style.display = 'none';
-        iconEye.style.display = 'block';
-      } else {
-        inputSenha.type = 'password';
-        iconEyeOff.style.display = 'block';
-        iconEye.style.display = 'none';
-      }
+    const btnToggleSenha = document.getElementById("btn-toggle-senha");
+    const inputSenha = document.getElementById("senha");
+
+    const iconEyeOff = btnToggleSenha.querySelector(".icon-eye-off");
+    const iconEye = btnToggleSenha.querySelector(".icon-eye");
+
+    btnToggleSenha.addEventListener("click", function() {
+      const exibindo = inputSenha.type === "password";
+
+      inputSenha.type = exibindo ? "text" : "password";
+
+      iconEye.hidden = !exibindo;
+      iconEyeOff.hidden = exibindo;
+
+      btnToggleSenha.setAttribute(
+        "aria-label",
+        exibindo
+          ? btnToggleSenha.dataset.ocultar
+          : btnToggleSenha.dataset.mostrar
+      );
+
+      btnToggleSenha.setAttribute(
+        "aria-pressed",
+        String(exibindo)
+      );
     });
   </script>
+
 </body>
 </html>

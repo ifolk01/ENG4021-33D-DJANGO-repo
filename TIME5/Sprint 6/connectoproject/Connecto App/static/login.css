@@ -1,24 +1,13 @@
-:root {
-  /* Compatibilidade da tela de autenticação com o Design System global */
-  --connecto-primary-dark:
-    var(--connecto-navy, #33364F);
 
+:root {
+  --connecto-primary-dark: var(--connecto-navy, #33364F);
   --connecto-secondary: #2a6d8c;
 
-  --connecto-bg:
-    var(--tema-bg, #F2F2ED);
-
-  --connecto-surface:
-    var(--tema-surface, #FFFFFF);
-
-  --connecto-border:
-    var(--tema-line, #DCDCD3);
-
-  --connecto-text:
-    var(--tema-ink, #33364F);
-
-  --connecto-text-soft:
-    var(--tema-muted, #6B6F80);
+  --connecto-bg: var(--tema-bg, #F2F2ED);
+  --connecto-surface: var(--tema-surface, #FFFFFF);
+  --connecto-border: var(--tema-line, #DCDCD3);
+  --connecto-text: var(--tema-ink, #33364F);
+  --connecto-text-soft: var(--tema-muted, #6B6F80);
 }
 
 * {
@@ -27,256 +16,396 @@
 
 body {
   min-height: 100dvh;
-
   margin: 0;
 
-  display: flex;
-  flex-direction: column;
+  background: var(--connecto-bg);
+  color: var(--connecto-text);
 
-  padding:
-    max(var(--connecto-space-xl, 24px), env(safe-area-inset-top))
-    var(--connecto-page-gutter, clamp(16px, 4vw, 32px))
-    max(var(--connecto-space-xl, 24px), env(safe-area-inset-bottom));
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  background-color:
-    var(--connecto-bg);
-
-  color:
-    var(--connecto-text);
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
-
-  font-size:
-    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
-
-  line-height:
-    var(--connecto-line-body, 1.45);
+  font-size: 15px;
+  line-height: 1.5;
 }
 
+/* LOGIN */
 
-/* =========================================
-   LOGIN
-   ========================================= */
+body.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding:
+    max(24px, env(safe-area-inset-top))
+    20px
+    max(24px, env(safe-area-inset-bottom));
+
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(42, 109, 140, 0.10),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 85%,
+      rgba(51, 54, 79, 0.08),
+      transparent 35%
+    ),
+    var(--connecto-bg);
+}
 
 .login-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 460px;
 
-  flex: 1;
+  margin: auto auto 0;
+  padding: 32px;
 
-  flex: 0 1 auto;
+  background: var(--connecto-surface);
+  border: 1px solid var(--connecto-border);
+  border-radius: 24px;
+
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.07);
+}
+
+/* CABEÇALHO */
+
+.auth-header {
   display: flex;
   flex-direction: column;
-
   align-items: center;
-  justify-content: center;
+  text-align: center;
 
-  margin: 0 auto;
-  width: 100%;
-  padding-top: 120px;
+  margin-bottom: 28px;
 }
 
 .auth-logo-box {
-  width: clamp(72px, 16vw, 84px);
-  height: clamp(72px, 16vw, 84px);
+  width: 88px;
+  height: 88px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin-bottom:
-    var(--connecto-space-base, 16px);
+  margin-bottom: 16px;
 
-  border-radius:
-    var(--connecto-radius-xl, 24px);
+  background: var(--connecto-surface);
+  border: 1px solid var(--connecto-border);
+  border-radius: 22px;
 
-  background-color:
-    var(--connecto-surface);
-
-  box-shadow:
-    0 4px 12px
-    rgba(0, 0, 0, .05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .auth-logo-box img {
-  width: clamp(46px, 10vw, 54px);
-
+  width: 62px;
+  height: 62px;
   object-fit: contain;
+  border-radius: 12px;
+}
+
+.auth-title {
+  margin: 0 0 5px;
+
+  color: var(--connecto-text);
+  font-size: 30px;
+  font-weight: 750;
+  letter-spacing: -1px;
+  line-height: 1.2;
 }
 
 .auth-subtitle {
-  margin:
-    0
-    0
-    clamp(28px, 6vw, 40px);
+  max-width: 320px;
+  margin: 0;
 
-  color:
-    var(--connecto-text-soft);
-
-  font-size:
-    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
-
-  line-height:
-    var(--connecto-line-body, 1.45);
-
-  text-align: center;
+  color: var(--connecto-text-soft);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-.auth-form {
-  width: 100%;
+/* FORMULÁRIO */
 
+.auth-form {
   display: flex;
   flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
 
-  gap:
-    var(--connecto-space-base, 16px);
+/* SELEÇÃO ALUNO / EMPREGADOR */
+
+.tipo-usuario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+
+  padding: 5px;
+  border: 1px solid var(--connecto-border);
+  border-radius: 13px;
+  background: var(--connecto-bg);
+}
+
+.tipo-opcao {
+  position: relative;
+  cursor: pointer;
+}
+
+.tipo-opcao input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.tipo-opcao span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+  padding: 8px 12px;
+
+  border-radius: 9px;
+
+  color: var(--connecto-text-soft);
+  font-size: 14px;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.tipo-opcao input:checked + span {
+  background: var(--connecto-surface);
+  color: var(--connecto-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tipo-opcao input:focus-visible + span {
+  outline: 2px solid var(--connecto-secondary);
+  outline-offset: 2px;
+}
+
+/* CAMPOS */
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.auth-field > label {
+  color: var(--connecto-text);
+  font-size: 13px;
+  font-weight: 650;
 }
 
 .auth-input {
   width: 100%;
   min-height: 50px;
 
-  padding:
-    var(--connecto-space-md, 12px)
-    var(--connecto-space-base, 16px);
+  padding: 12px 15px;
 
-  border:
-    1px solid
-    var(--connecto-border);
+  border: 1px solid var(--connecto-border);
+  border-radius: 11px;
 
-  border-radius:
-    var(--connecto-radius-sm, 12px);
+  background: var(--connecto-surface);
+  color: var(--connecto-text);
+
+  font: inherit;
+  font-size: 15px;
 
   outline: none;
 
-  background-color:
-    var(--connecto-surface);
-
-  color:
-    var(--connecto-text);
-
-  font-size:
-    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
-
-  line-height:
-    var(--connecto-line-body, 1.45);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .auth-input::placeholder {
-  color: #999999;
+  color: var(--connecto-text-soft);
+  opacity: 0.75;
 }
 
 .auth-input:focus {
-  border-color:
-    var(--connecto-primary-dark);
+  border-color: var(--connecto-secondary);
+  box-shadow: 0 0 0 3px rgba(42, 109, 140, 0.13);
 }
 
-.auth-forgot {
-  margin:
-    calc(var(--connecto-space-sm, 8px) * -1)
-    0
-    var(--connecto-space-base, 16px);
+/* SENHA */
 
-  text-align: right;
-}
-
-.auth-forgot a {
-  color:
-    var(--connecto-secondary);
-
-  font-size:
-    var(--connecto-text-md, clamp(13px, 1.2vw, 14px));
-
-  text-decoration: none;
-}
-
-.auth-button {
+.password-wrapper {
+  position: relative;
   width: 100%;
-  min-height: 50px;
+}
 
-  margin-bottom:
-    clamp(28px, 6vw, 40px);
+.password-wrapper .auth-input {
+  padding-right: 52px;
+}
 
-  padding:
-    var(--connecto-space-md, 12px)
-    var(--connecto-space-base, 16px);
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 12px;
 
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
   border: none;
+  border-radius: 8px;
 
-  border-radius:
-    var(--connecto-radius-sm, 12px);
-
-  background-color:
-    var(--connecto-primary-dark);
-
-  color:
-    var(--connecto-surface);
-
-  font-size:
-    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
-
-  font-weight: 650;
-
-  line-height:
-    var(--connecto-line-tight, 1.15);
+  background: transparent;
+  color: var(--connecto-text-soft);
 
   cursor: pointer;
 }
 
-.auth-footer {
-  margin-top: auto;
+.toggle-password:hover {
+  color: var(--connecto-text);
+  background: var(--connecto-bg);
+}
 
-  padding-bottom:
-    var(--connecto-space-xl, 24px);
+.toggle-password:focus-visible {
+  outline: 2px solid var(--connecto-secondary);
+}
 
-  color:
-    var(--connecto-text-soft);
+.toggle-password svg {
+  width: 21px;
+  height: 21px;
+}
 
-  font-size:
-    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
+.toggle-password svg[hidden] {
+  display: none;
+}
 
-  line-height:
-    var(--connecto-line-body, 1.45);
+/* ERROS */
 
+.auth-error {
+  padding: 11px 13px;
+
+  border: 1px solid #e6a1a1;
+  border-radius: 10px;
+
+  background: rgba(220, 55, 55, 0.09);
+  color: #d44545;
+
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ESQUECEU A SENHA */
+
+.auth-forgot {
+  margin-top: -8px;
+  text-align: right;
+}
+
+.auth-forgot a {
+  color: var(--connecto-secondary);
+  font-size: 13px;
+  font-weight: 550;
+  text-decoration: none;
+}
+
+.auth-forgot a:hover {
+  text-decoration: underline;
+}
+
+/* BOTÃO ENTRAR */
+
+.auth-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  width: 100%;
+  min-height: 52px;
+
+  padding: 12px 18px;
+
+  border: 0;
+  border-radius: 11px;
+
+  background: var(--connecto-primary-dark);
+  color: #FFFFFF;
+
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.auth-button:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.auth-button:active {
+  transform: translateY(0);
+}
+
+.auth-button:focus-visible {
+  outline: 3px solid var(--connecto-secondary);
+  outline-offset: 3px;
+}
+
+.auth-button span {
+  font-size: 21px;
+  line-height: 1;
+}
+
+/* RODAPÉ */
+
+body.login-page .auth-footer {
+  width: 100%;
+  margin: 18px auto auto;
+
+  padding: 0 10px;
+
+  color: var(--connecto-text-soft);
+  font-size: 14px;
   text-align: center;
 }
 
 .auth-footer a {
-  color:
-    var(--connecto-text);
+  margin-left: 4px;
 
-  font-weight: 650;
-
+  color: var(--connecto-text);
+  font-weight: 700;
   text-decoration: none;
 }
 
+.auth-footer a:hover {
+  text-decoration: underline;
+}
 
-/* =========================================
-   CADASTRO
-   ========================================= */
+/* CADASTRO - ESTILOS PRESERVADOS */
 
 .cadastro-container {
   width: 100%;
   max-width: 400px;
-
   margin: 0 auto;
 }
 
 .cadastro-topbar {
   position: relative;
-
   display: flex;
   align-items: center;
-
-  margin-bottom:
-    var(--connecto-space-2xl, 32px);
+  margin-bottom: 32px;
 }
 
 .back-button {
@@ -290,20 +419,12 @@ body {
   align-items: center;
   justify-content: center;
 
-  border-radius:
-    var(--connecto-radius-pill, 999px);
-
-  background-color:
-    var(--connecto-surface);
-
-  color:
-    var(--connecto-text);
+  border-radius: 999px;
+  background: var(--connecto-surface);
+  color: var(--connecto-text);
 
   text-decoration: none;
-
-  box-shadow:
-    0 2px 8px
-    rgba(0, 0, 0, .05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .back-button svg {
@@ -313,218 +434,97 @@ body {
 
 .cadastro-topbar h2 {
   flex: 1;
-
   margin: 0;
 
-  color:
-    var(--connecto-text);
-
-  font-size:
-    var(--connecto-text-lg, clamp(15px, 1.4vw, 16px));
-
-  line-height:
-    var(--connecto-line-title, 1.2);
-
+  color: var(--connecto-text);
+  font-size: 16px;
   text-align: center;
 }
 
 .cadastro-header h1 {
-  margin:
-    0
-    0
-    var(--connecto-space-sm, 8px);
+  margin: 0 0 8px;
 
-  color:
-    var(--connecto-primary-dark);
-
-  font-size:
-    var(--connecto-text-page, clamp(28px, 4vw, 36px));
-
+  color: var(--connecto-text);
+  font-size: clamp(28px, 4vw, 36px);
   font-weight: 600;
-
-  line-height:
-    var(--connecto-line-title, 1.2);
 }
 
 .cadastro-header p {
-  margin:
-    0
-    0
-    var(--connecto-space-2xl, 32px);
+  margin: 0 0 32px;
 
-  color:
-    var(--connecto-text-soft);
-
-  font-size:
-    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
-
-  line-height:
-    var(--connecto-line-body, 1.45);
+  color: var(--connecto-text-soft);
+  font-size: 15px;
 }
 
+/* RESPONSIVIDADE */
 
-/* =========================================
-   SENHA
-   ========================================= */
+@media (min-width: 700px) {
+  .login-container {
+    max-width: 480px;
+    padding: 38px;
+  }
 
-.password-wrapper {
-  position: relative;
+  .auth-logo-box {
+    width: 96px;
+    height: 96px;
+  }
 
-  width: 100%;
+  .auth-logo-box img {
+    width: 68px;
+    height: 68px;
+  }
+
+  .auth-title {
+    font-size: 34px;
+  }
 }
 
-.password-wrapper .auth-input {
-  padding-right: 48px;
+@media (max-width: 480px) {
+  body.login-page {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .login-container {
+    padding: 25px 20px;
+    border-radius: 18px;
+  }
+
+  .auth-header {
+    margin-bottom: 24px;
+  }
+
+  .auth-logo-box {
+    width: 76px;
+    height: 76px;
+  }
+
+  .auth-logo-box img {
+    width: 54px;
+    height: 54px;
+  }
+
+  .auth-title {
+    font-size: 27px;
+  }
+
+  .auth-form {
+    gap: 15px;
+  }
 }
-
-.toggle-password {
-  position: absolute;
-
-  top: 50%;
-  right: 14px;
-
-  transform:
-    translateY(-50%);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0;
-
-  border: none;
-
-  background: none;
-
-  color: #999999;
-
-  cursor: pointer;
-}
-
-.toggle-password:hover {
-  color:
-    var(--connecto-primary-dark);
-}
-
-.toggle-password svg {
-  width: 22px;
-  height: 22px;
-
-  transition:
-    color .2s ease;
-}
-
-.toggle-password:focus {
-  outline: none;
-}
-
-
-/* =========================================
-   MOBILE PEQUENO
-   ========================================= */
 
 @media (max-width: 360px) {
-  body {
-    padding-inline:
-      var(--connecto-space-md, 12px);
+  .login-container {
+    padding: 20px 15px;
+  }
+
+  .tipo-opcao span {
+    padding: 8px 4px;
+    font-size: 13px;
   }
 
   .auth-input,
   .auth-button {
     min-height: 48px;
   }
-}
-
-
-/* =========================================
-   TABLET / DESKTOP
-   ========================================= */
-
-@media (min-width: 700px) {
-  body {
-    padding-top:
-      var(--connecto-space-2xl, 32px);
-
-    padding-bottom:
-      var(--connecto-space-2xl, 32px);
-body:has(.login-container) {
-  justify-content: flex-start;
-  position: relative;
-}
-
-body:has(.login-container) .seletor-idioma {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  margin: 0;
-  z-index: 10;
-}
-
-.login-container .auth-logo-box {
-  width: 128px;
-  height: 128px;
-  border-radius: 28px;
-  margin-bottom: 14px;
-}
-
-.login-container .auth-logo-box img {
-  width: 82px;
-}
-
-.login-container .auth-subtitle {
-  color: #111111;
-  font-size: 18px;
-  font-weight: 500;
-  font-style: italic;
-  line-height: 1.4;
-  margin-bottom: 30px;
-}
-
-.login-container .tipo-usuario {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.login-container .tipo-usuario label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-}
-
-.login-container .auth-forgot {
-  margin-top: -8px;
-  margin-bottom: 4px;
-}
-
-.login-container .auth-forgot a {
-  font-size: 15px;
-}
-
-.login-container .auth-button {
-  margin-bottom: 0;
-}
-
-body:has(.login-container) .auth-footer {
-  margin-top: 24px;
-  padding-bottom: 0;
-}
-
-@media (max-width: 480px) {
-  body:has(.login-container) .seletor-idioma {
-    top: 16px;
-    right: 16px;
-  }
-
-  .login-container {
-    padding-top: 110px;
-  }
-
-  .login-container .auth-subtitle {
-    margin-bottom: 26px;
-  }
-  }
-}
 }
