@@ -5,23 +5,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#333957">
   <title>Connecto</title>
+
+  <link rel="manifest" href="{% static 'manifest.json' %}">
   <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
   <link rel="stylesheet" href="{% static 'home.css' %}">
+
   {% include 'includes/tema_head.html' %}
 </head>
-<link
-    rel="manifest"
-    href="{% static 'manifest.json' %}"
->
 
-<meta name="theme-color" content="#333957">
 <body class="connecto-page">
   <main class="app-shell home-shell nav-safe-bottom">
-    <header class="home-topbar">
-      <img src="{% static 'connectologo-transparente-simples.png' %}" alt="Connecto" class="home-logo">
 
-      <a href="{% url 'notificacoes' %}" class="home-bell" aria-label="{% trans 'Notificações' %}">
+    <header class="home-topbar">
+      <img
+        src="{% static 'connectologo-transparente-simples.png' %}"
+        alt="Connecto"
+        class="home-logo"
+      >
+
+      <a
+        href="{% url 'notificacoes' %}"
+        class="home-bell"
+        aria-label="{% trans 'Notificações' %}"
+      >
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 22a2.4 2.4 0 0 0 2.25-1.6h-4.5A2.4 2.4 0 0 0 12 22Zm7-5.1-1.8-2.1V10a5.2 5.2 0 0 0-4.1-5.1V4a1.1 1.1 0 1 0-2.2 0v.9A5.2 5.2 0 0 0 6.8 10v4.8L5 16.9V18h14v-1.1Z"/>
         </svg>
@@ -29,60 +37,109 @@
       </a>
     </header>
 
-    <form class="home-search" action="{% url 'busca' %}" method="get">
-      <svg class="home-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <circle cx="11" cy="11" r="7.5"></circle>
-        <path d="m20 20-3.6-3.6"></path>
+    <form
+      class="home-search"
+      action="{% url 'home' %}"
+      method="get"
+      role="search"
+    >
+      {% if area_selecionada %}
+        <input type="hidden" name="area" value="{{ area_selecionada }}">
+      {% endif %}
+
+      <svg
+        class="home-search__icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m20 20-3.8-3.8"></path>
       </svg>
+
       <input
+        id="home-search-input"
         name="q"
         type="search"
         class="home-search__input"
+        value="{{ query|default:'' }}"
         placeholder="{% trans 'Buscar vaga ou empresa...' %}"
         autocomplete="off"
+        aria-label="{% trans 'Buscar vaga ou empresa' %}"
       >
     </form>
 
     <section class="filters-section">
-
       <div class="filters-scroll">
-  
+
+        <a
+          href="{% url 'home' %}{% if query %}?q={{ query|urlencode }}{% endif %}"
+          class="filter-chip {% if not area_selecionada %}active{% endif %}"
+        >
+          {% trans "Todas" %}
+        </a>
+
+        {% for categoria in categorias %}
           <a
-              href="{% url 'home' %}"
-              class="filter-chip {% if not area_selecionada %}active{% endif %}"
+            href="{% url 'home' %}?area={{ categoria|urlencode }}{% if query %}&amp;q={{ query|urlencode }}{% endif %}"
+            class="filter-chip {% if area_selecionada == categoria %}active{% endif %}"
           >
-              {% trans "Todas" %}
+            {% trans categoria %}
           </a>
-  
-          {% for categoria in categorias %}
-  
-              <a
-                  href="{% url 'home' %}?area={{ categoria|urlencode }}"
-                  class="filter-chip {% if area_selecionada == categoria %}active{% endif %}"
-              >
-                  {% trans categoria %}
-              </a>
-  
-          {% endfor %}
-  
+        {% endfor %}
+
       </div>
-  
-  </section>
+    </section>
 
-    <h1 class="home-section-title">{% trans "Recomendadas para você" %}</h1>
+    <h1
+      id="home-section-title"
+      class="home-section-title"
+      data-default-title="{% trans 'Recomendadas para você' %}"
+      data-results-title="{% trans 'Resultados da busca' %}"
+    >
+      {% if query %}
+        {% trans "Resultados da busca" %}
+      {% else %}
+        {% trans "Recomendadas para você" %}
+      {% endif %}
+    </h1>
 
-    <section class="home-jobs" aria-label="{% trans 'Vagas recomendadas' %}">
+    <section
+      id="home-jobs"
+      class="home-jobs"
+      aria-label="{% trans 'Vagas recomendadas' %}"
+    >
       {% for vaga in vagas %}
-        <article class="job-card">
-          <form method="post" action="{% url 'toggle_favorito' vaga.id %}" class="job-card__favorite-form">
+        <article
+          class="job-card"
+          data-search="{{ vaga.titulo }} {{ vaga.empresa.nome }} {{ vaga.cidade }} {{ vaga.local }} {{ vaga.modalidade }} {{ vaga.area }} {{ vaga.descricao }}"
+        >
+          <form
+            method="post"
+            action="{% url 'toggle_favorito' vaga.id %}"
+            class="job-card__favorite-form"
+          >
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next_url }}">
+
             <button
               type="submit"
               class="job-card__favorite {% if vaga.id in favoritos_ids %}is-favorite{% endif %}"
               aria-label="{% if vaga.id in favoritos_ids %}{% trans 'Remover dos favoritos' %}{% else %}{% trans 'Salvar vaga' %}{% endif %}"
             >
-              <svg viewBox="0 0 24 24" {% if vaga.id in favoritos_ids %}fill="currentColor"{% else %}fill="none" stroke="currentColor" stroke-width="1.8"{% endif %} aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                {% if vaga.id in favoritos_ids %}
+                  fill="currentColor"
+                {% else %}
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                {% endif %}
+                aria-hidden="true"
+              >
                 <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8Z"/>
               </svg>
             </button>
@@ -103,26 +160,115 @@
             </div>
 
             <div class="job-card__tags">
-              {% if vaga.cidade %}<span class="job-chip job-chip--location"><svg class="job-chip__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path>
-                  <circle cx="12" cy="10" r="2.5"></circle>
-                </svg> <span>{{ vaga.cidade }}</span></span>{% endif %}
-              {% if vaga.modalidade %}<span class="job-chip job-chip--work">{{ vaga.modalidade }}</span>{% endif %}
-              {% if vaga.area %}<span class="job-chip job-chip--area">{% trans vaga.area %}</span>{% endif %}
+              {% if vaga.cidade %}
+                <span class="job-chip job-chip--location">
+                  <svg
+                    class="job-chip__icon"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path>
+                    <circle cx="12" cy="10" r="2.5"></circle>
+                  </svg>
+                  <span>{{ vaga.cidade }}</span>
+                </span>
+              {% endif %}
+
+              {% if vaga.modalidade %}
+                <span class="job-chip job-chip--work">{{ vaga.modalidade }}</span>
+              {% endif %}
+
+              {% if vaga.area %}
+                <span class="job-chip job-chip--area">{% trans vaga.area %}</span>
+              {% endif %}
             </div>
 
             <div class="job-card__footer">{{ vaga.publicada }}</div>
           </a>
         </article>
       {% empty %}
-        <section class="home-empty">
-          <p>{% trans "Não há novas vagas para mostrar com esse filtro." %}</p>
+        <section class="home-empty home-empty--server">
+          <p>{% trans "Nenhuma vaga corresponde à busca ou aos filtros selecionados." %}</p>
           <a href="{% url 'home' %}" class="primary-link">{% trans "Ver todas" %}</a>
         </section>
       {% endfor %}
     </section>
+
+    <section id="home-search-empty" class="home-empty" hidden>
+      <p>{% trans "Nenhuma vaga corresponde ao que você digitou." %}</p>
+    </section>
   </main>
 
   {% include 'includes/bottom_nav.html' with pagina_ativa='home' %}
+
+  <script>
+    (() => {
+      const input = document.getElementById("home-search-input");
+      const cards = Array.from(document.querySelectorAll(".job-card"));
+      const emptyState = document.getElementById("home-search-empty");
+      const title = document.getElementById("home-section-title");
+
+      if (!input || !cards.length) {
+        return;
+      }
+
+      const initialQuery = input.value.trim();
+
+      const normalize = (value) => String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleLowerCase("pt-BR")
+        .trim();
+
+      const filterCards = () => {
+        const rawQuery = input.value.trim();
+        const terms = normalize(rawQuery)
+          .split(/\s+/)
+          .filter(Boolean);
+
+        let visibleCards = 0;
+
+        cards.forEach((card) => {
+          const searchableText = normalize(card.dataset.search);
+          const matches = terms.every((term) => searchableText.includes(term));
+
+          card.hidden = !matches;
+
+          if (matches) {
+            visibleCards += 1;
+          }
+        });
+
+        if (emptyState) {
+          emptyState.hidden = terms.length === 0 || visibleCards > 0;
+        }
+
+        if (title) {
+          title.textContent = terms.length
+            ? title.dataset.resultsTitle
+            : title.dataset.defaultTitle;
+        }
+
+        // Se a página foi carregada pelo backend com ?q=...
+        // e o usuário limpar o campo, recarregamos a Home para
+        // recuperar todos os cards que não vieram no resultado servidor.
+        if (!rawQuery && initialQuery) {
+          const url = new URL(window.location.href);
+          url.searchParams.delete("q");
+          window.location.replace(url.toString());
+        }
+      };
+
+      input.addEventListener("input", filterCards);
+      filterCards();
+    })();
+  </script>
 </body>
 </html>
