@@ -1,104 +1,110 @@
-
 {% load static %}
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connecto - {% trans "Abrir Solicitação" %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Connecto — {% trans "Abrir solicitação" %}</title>
   <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
   <link rel="stylesheet" href="{% static 'abrir_solicitacao.css' %}">
   {% include 'includes/tema_head.html' %}
 </head>
-
 <body class="connecto-page suporte-page">
-
-  <header class="topo">
-    <a href="{% url 'duvidas_frequentes' %}" class="voltar" aria-label="{% trans 'Voltar' %}">‹</a>
-
-    <div class="topo-texto">
-      <h1>{% trans "Abrir solicitação" %}</h1>
-      <p>{% trans "Central de Ajuda Connecto" %}</p>
-    </div>
-
-    <span class="icone-ajuda">🎧</span>
-  </header>
-
-  <main class="conteudo-suporte">
-
-    <div class="card-solicitacao">
-
-      <div class="cabecalho-card">
-        <h2>{% trans "Como podemos ajudar?" %}</h2>
-        <p>
-          {% trans "Preencha as informações abaixo para enviar sua dúvida ou relatar um problema." %}
-        </p>
+  <main class="standard-shell suporte-shell nav-safe-bottom">
+    <header class="support-header">
+      <a href="{% url 'duvidas_frequentes' %}" class="support-back" aria-label="{% trans 'Voltar para a Central de Ajuda' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+      </a>
+      <div class="support-header__copy">
+        <span class="support-eyebrow">{% trans "SUPORTE" %}</span>
+        <h1>{% trans "Abrir solicitação" %}</h1>
+        <p>{% trans "Envie sua dúvida ou relate um problema para a equipe do Connecto." %}</p>
       </div>
+      <div class="support-header__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"></path><path d="M18 19h-1a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h3v5a3 3 0 0 1-3 3Z"></path><path d="M6 19h1a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2H4v5a3 3 0 0 0 3 3Z"></path><path d="M18 19c0 1.1-.9 2-2 2h-3"></path></svg>
+      </div>
+    </header>
 
-      {% if messages %}
-        <div class="avisos">
-          {% for message in messages %}
-            <div class="mensagem-sistema {{ message.tags }}">
-              {{ message }}
+    {% if messages %}
+      <section class="support-feedback" aria-live="polite">
+        {% for message in messages %}
+          <div class="mensagem-sistema {{ message.tags }}" role="status">{{ message }}</div>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    <div class="support-layout">
+      <section class="card-solicitacao">
+        <div class="cabecalho-card">
+          <div class="cabecalho-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"></path><path d="M8 9h8M8 13h5"></path></svg>
+          </div>
+          <div>
+            <h2>{% trans "Como podemos ajudar?" %}</h2>
+            <p>{% trans "Preencha os campos abaixo. A solicitação será registrada para acompanhamento da equipe administrativa." %}</p>
+          </div>
+        </div>
+
+        <form method="post" action="{% url 'abrir_solicitacao' %}" class="form-solicitacao" novalidate>
+          {% csrf_token %}
+          <div class="campo-formulario">
+            <label for="assunto">{% trans "Assunto da solicitação" %}</label>
+            <input type="text" id="assunto" name="assunto" maxlength="120" placeholder="{% trans 'Ex.: Problema ao acessar minha conta' %}" value="{{ assunto|default:'' }}" required>
+            <span class="field-hint">{% trans "Resuma o problema em uma linha." %}</span>
+          </div>
+
+          <div class="campo-formulario">
+            <div class="field-label-row">
+              <label for="mensagem">{% trans "Descreva seu problema" %}</label>
+              <span id="support-char-count" class="char-count">0 / 3000</span>
             </div>
-          {% endfor %}
+            <textarea id="mensagem" name="mensagem" rows="8" maxlength="3000" placeholder="{% trans 'Conte o que aconteceu, o que você esperava e qualquer detalhe que possa ajudar...' %}" required>{{ mensagem|default:'' }}</textarea>
+            <span class="field-hint">{% trans "Evite informar senhas ou dados sensíveis." %}</span>
+          </div>
+
+          <div class="acoes-formulario">
+            <a href="{% url 'duvidas_frequentes' %}" class="botao-cancelar">{% trans "Cancelar" %}</a>
+            <button type="submit" class="botao-enviar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4 20-7Z"></path><path d="M22 2 11 13"></path></svg>
+              <span>{% trans "Enviar solicitação" %}</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="support-aside">
+        <div class="support-info-card">
+          <span class="support-info-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg>
+          </span>
+          <h2>{% trans "O que acontece depois?" %}</h2>
+          <p>{% trans "Sua solicitação fica registrada no sistema para que a administração possa visualizar e acompanhar o atendimento." %}</p>
+          <ul>
+            <li>{% trans "Você recebe uma confirmação após o envio." %}</li>
+            <li>{% trans "A equipe poderá alterar o status para Em análise ou Resolvida." %}</li>
+            <li>{% trans "Se o e-mail de suporte estiver configurado, uma cópia também será enviada por e-mail." %}</li>
+          </ul>
         </div>
-      {% endif %}
-
-      <form method="POST" action="{% url 'abrir_solicitacao' %}" class="form-solicitacao">
-        {% csrf_token %}
-
-        <div class="campo-formulario">
-          <label for="assunto">
-            {% trans "Assunto da solicitação" %}
-          </label>
-
-          <input
-            type="text"
-            id="assunto"
-            name="assunto"
-            maxlength="120"
-            placeholder="{% trans 'Ex: Problema ao acessar minha conta' %}"
-            value="{{ assunto|default:'' }}"
-            required
-          >
-        </div>
-
-        <div class="campo-formulario">
-          <label for="mensagem">
-            {% trans "Descreva seu problema" %}
-          </label>
-
-          <textarea
-            id="mensagem"
-            name="mensagem"
-            rows="7"
-            maxlength="3000"
-            placeholder="{% trans 'Conte o que aconteceu ou descreva sua dúvida...' %}"
-            required
-          >{{ mensagem|default:'' }}</textarea>
-
-          <p class="texto-auxiliar">
-            {% trans "Máximo de 3.000 caracteres." %}
-          </p>
-        </div>
-
-        <div class="acoes-formulario">
-          <a href="{% url 'duvidas_frequentes' %}" class="botao-cancelar">
-            {% trans "Cancelar" %}
-          </a>
-
-          <button type="submit" class="botao-enviar">
-            {% trans "Enviar solicitação" %}
-          </button>
-        </div>
-
-      </form>
+      </aside>
     </div>
-
   </main>
 
+  {% if empresa %}
+    {% include 'includes/bottom_nav_empresa.html' with pagina_ativa='configuracoes' %}
+  {% else %}
+    {% include 'includes/bottom_nav.html' with pagina_ativa='perfil' %}
+  {% endif %}
+
+  <script>
+    (() => {
+      const textarea = document.getElementById('mensagem');
+      const counter = document.getElementById('support-char-count');
+      if (!textarea || !counter) return;
+      const update = () => { counter.textContent = `${textarea.value.length} / 3000`; };
+      textarea.addEventListener('input', update);
+      update();
+    })();
+  </script>
 </body>
 </html>
