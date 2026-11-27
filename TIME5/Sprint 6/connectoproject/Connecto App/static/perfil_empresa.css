@@ -1,7 +1,7 @@
 
 /* Identificação da empresa */
 .perfil-empresa .identificacao {
-    margin: 32px 0 24px;
+    margin: 32px 0 var(--connecto-space-xl, 24px);
     text-align: center;
 }
 
@@ -36,7 +36,14 @@
     background-color: #0D5469;
 }
 
-/* Contador de candidaturas leva para a lista de candidaturas */
+/* Distribuição dos contadores */
+.perfil-empresa .contadores {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--connecto-card-gap, 16px);
+    margin-bottom: var(--connecto-space-xl, 24px);
+}
+
 .perfil-empresa .contador-link {
     color: inherit;
     text-decoration: none;
@@ -60,16 +67,13 @@
 
 /* Informações da empresa */
 .perfil-empresa .dados {
+    margin-bottom: var(--connecto-space-xl, 24px);
     background-color: var(--tema-surface, #FFFFFF);
     border: 1px solid var(--tema-line, #E4E4DD);
 }
 
 .perfil-empresa .linha {
     align-items: flex-start;
-}
-
-.perfil-empresa .linha > span:nth-child(2) {
-    flex-shrink: 0;
 }
 
 .perfil-empresa .valor {
@@ -79,15 +83,20 @@
     white-space: pre-line;
 }
 
+/* Espaçamento do botão de sair */
+.perfil-empresa .form-sair {
+    margin-top: 0;
+}
+
 /* Ajustes para telas pequenas */
 @media (max-width: 380px) {
     .perfil-empresa .linha {
-        flex-wrap: wrap;
+        grid-template-columns: 24px minmax(0, 1fr);
     }
 
     .perfil-empresa .valor {
-        flex-basis: 100%;
-        margin-left: 32px;
+        grid-column: 2;
+        margin-left: 0;
         text-align: left;
     }
 }
