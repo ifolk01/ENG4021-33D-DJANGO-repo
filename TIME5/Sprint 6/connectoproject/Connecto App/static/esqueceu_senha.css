@@ -1,65 +1,136 @@
-/* =========================================
-   RECUPERAÇÃO DE SENHA — RESPONSIVO
-   Herda a base de login.css
-   ========================================= */
+/* Recuperação de senha — centralizada, responsiva e alinhada ao Login */
+body.recovery-page {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: max(76px, env(safe-area-inset-top)) clamp(16px, 4vw, 28px) max(28px, env(safe-area-inset-bottom));
+}
+
+.recovery-page > .seletor-idioma {
+  position: absolute;
+  top: max(20px, env(safe-area-inset-top));
+  right: max(20px, env(safe-area-inset-right));
+  margin: 0;
+  z-index: 5;
+}
+
+.recovery-container {
+  position: relative;
+  width: min(100%, 520px);
+  max-width: 520px;
+  margin: 0;
+  padding: clamp(26px, 5vw, 38px);
+}
+
+.recovery-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--connecto-border, #DCDCD3);
+  border-radius: 12px;
+  background: var(--connecto-surface, #FFFFFF);
+  color: var(--connecto-text, #33364F);
+  text-decoration: none;
+}
+.recovery-back:hover { border-color: var(--connecto-secondary, #2a6d8c); color: var(--connecto-secondary, #2a6d8c); }
+.recovery-back:focus-visible { outline: 3px solid rgba(42,109,140,.18); outline-offset: 2px; }
+.recovery-back svg { width: 20px; height: 20px; }
+
+.recovery-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 4px 0 26px;
+  padding: 0 36px;
+  text-align: center;
+}
+
+.recovery-icon {
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+  border: 1px solid var(--connecto-border, #DCDCD3);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--connecto-secondary, #2a6d8c) 9%, var(--connecto-surface, #FFFFFF));
+  color: var(--connecto-secondary, #2a6d8c);
+}
+.recovery-icon svg { width: 32px; height: 32px; }
 
 .recuperacao-title {
-  margin: 0;
-
-  color:
-    var(--connecto-primary-dark, var(--connecto-navy, #33364F));
-
-  font-size:
-    var(--connecto-text-3xl, clamp(22px, 2.6vw, 26px));
-
-  font-weight: 600;
-
-  line-height:
-    var(--connecto-line-title, 1.2);
-
-  text-align: center;
+  margin: 0 0 9px;
+  color: var(--connecto-text, #33364F);
+  font-size: clamp(24px, 5vw, 30px);
+  font-weight: 750;
+  line-height: 1.15;
 }
-
 .recuperacao-description {
-  margin:
-    0
-    0
-    var(--connecto-space-sm, 8px);
-
-  color:
-    var(--connecto-text-soft, var(--connecto-muted, #6B6F80));
-
-  font-size:
-    var(--connecto-text-base, clamp(14px, 1.3vw, 15px));
-
-  line-height:
-    var(--connecto-line-body, 1.45);
-
-  text-align: center;
+  max-width: 410px;
+  margin: 0;
+  color: var(--connecto-text-soft, #6B6F80);
+  font-size: 14px;
+  line-height: 1.55;
 }
 
+.recovery-form { gap: 18px; }
+.recovery-account-type { margin-bottom: 2px; }
 
-/* =========================================
-   MOBILE PEQUENO
-   ========================================= */
+.recovery-info {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: start;
+  gap: 9px;
+  padding: 12px 13px;
+  border: 1px solid var(--connecto-border, #DCDCD3);
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--connecto-secondary, #2a6d8c) 5%, var(--connecto-surface, #FFFFFF));
+  color: var(--connecto-text-soft, #6B6F80);
+}
+.recovery-info svg { width: 19px; height: 19px; margin-top: 1px; color: var(--connecto-secondary, #2a6d8c); }
+.recovery-info p { margin: 0; font-size: 13px; line-height: 1.5; }
+
+.recovery-success {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 13px;
+  align-items: start;
+  margin: 2px 0 18px;
+  padding: 16px;
+  border: 1px solid rgba(38,173,190,.34);
+  border-radius: 14px;
+  background: rgba(38,173,190,.09);
+  color: var(--connecto-text, #33364F);
+}
+.recovery-success__icon { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 12px; background: rgba(38,173,190,.14); color: #116A85; }
+.recovery-success__icon svg { width: 24px; height: 24px; }
+.recovery-success strong { display: block; margin-bottom: 4px; font-size: 15px; }
+.recovery-success p { margin: 0; color: var(--connecto-text-soft, #6B6F80); font-size: 13px; line-height: 1.5; }
+.recovery-back-button { text-decoration: none; }
+.recovery-footer { margin-top: 18px; text-align: center; }
+.recovery-footer a { color: var(--connecto-secondary, #2a6d8c); font-size: 13px; font-weight: 650; text-decoration: none; }
+.recovery-footer a:hover { text-decoration: underline; }
+
+@media (max-width: 560px) {
+  body.recovery-page {
+    place-items: start center;
+    padding-top: max(82px, env(safe-area-inset-top));
+  }
+  .recovery-page > .seletor-idioma { right: 16px; }
+  .recovery-container { padding: 24px 18px; border-radius: 18px; }
+  .recovery-back { top: 16px; left: 16px; width: 38px; height: 38px; }
+  .recovery-header { margin-top: 22px; padding: 0 12px; }
+  .recovery-icon { width: 60px; height: 60px; border-radius: 17px; }
+  .recovery-icon svg { width: 28px; height: 28px; }
+}
 
 @media (max-width: 360px) {
-  .recuperacao-title {
-    font-size:
-      var(--connecto-text-2xl, clamp(19px, 2vw, 22px));
-  }
-}
-
-
-/* =========================================
-   TABLET / DESKTOP
-   ========================================= */
-
-@media (min-width: 700px) {
-  .recuperacao-description {
-    max-width: 380px;
-
-    margin-left: auto;
-    margin-right: auto;
-  }
+  .recovery-container { padding-left: 15px; padding-right: 15px; }
+  .recovery-header { padding: 0 8px; }
+  .recuperacao-title { font-size: 23px; }
 }

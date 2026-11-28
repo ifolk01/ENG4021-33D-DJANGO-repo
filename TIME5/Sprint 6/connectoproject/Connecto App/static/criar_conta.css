@@ -1,0 +1,112 @@
+.cadastro-connecto-container {
+  max-width: 650px;
+  margin-top: auto;
+}
+
+.cadastro-header-connecto {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 42px;
+  align-items: start;
+  gap: 12px;
+  margin-bottom: 26px;
+  text-align: center;
+}
+
+.cadastro-header-connecto > div {
+  grid-column: 2;
+}
+
+.cadastro-header-connecto h1 {
+  margin: 0 0 6px;
+  color: var(--connecto-text, #33364F);
+  font-size: clamp(24px, 4vw, 30px);
+  line-height: 1.2;
+}
+
+.cadastro-header-connecto p {
+  margin: 0;
+  color: var(--connecto-text-soft, #6B6F80);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.cadastro-back {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--connecto-border, #DCDCD3);
+  border-radius: 12px;
+  background: var(--connecto-surface, #FFFFFF);
+  color: var(--connecto-text, #33364F);
+  text-decoration: none;
+}
+
+.cadastro-back svg {
+  width: 21px;
+  height: 21px;
+}
+
+.cadastro-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.cadastro-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cadastro-grid-span-2 {
+  grid-column: 1 / -1;
+}
+
+.cadastro-email-note {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: start;
+  gap: 8px;
+  margin-top: -4px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  background: rgba(42, 109, 140, .08);
+  color: var(--connecto-text-soft, #6B6F80);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.cadastro-email-note svg {
+  width: 18px;
+  height: 18px;
+  color: var(--connecto-secondary, #2a6d8c);
+}
+
+.cadastro-form select.auth-input {
+  appearance: none;
+}
+
+.cadastro-login-link {
+  margin: 18px 0 0;
+  color: var(--connecto-text-soft, #6B6F80);
+  font-size: 13px;
+  text-align: center;
+}
+
+.cadastro-login-link a {
+  color: var(--connecto-text, #33364F);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .cadastro-connecto-container {
+    padding: 25px 20px;
+  }
+
+  .cadastro-grid--2 {
+    grid-template-columns: 1fr;
+  }
+
+  .cadastro-grid-span-2 {
+    grid-column: auto;
+  }
+}

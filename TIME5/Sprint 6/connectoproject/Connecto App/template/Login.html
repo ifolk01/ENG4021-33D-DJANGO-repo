@@ -37,6 +37,12 @@
       </p>
     </div>
 
+    {% if messages %}
+      {% for message in messages %}
+        <div class="auth-message {{ message.tags }}" role="status">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
     <form
       class="auth-form"
       method="POST"
@@ -144,7 +150,7 @@
       {% endif %}
 
       <div class="auth-forgot">
-        <a href="{% url 'esqueceu_senha' %}">
+        <a id="link-esqueceu-senha" href="{% url 'esqueceu_senha' %}?tipo=aluno">
           {% trans "Esqueceu a senha?" %}
         </a>
       </div>
@@ -169,6 +175,7 @@
     const identificador = document.getElementById("identificador");
     const labelIdentificador = document.getElementById("label-identificador");
     const linkCriarConta = document.getElementById("link-criar-conta");
+    const linkEsqueceuSenha = document.getElementById("link-esqueceu-senha");
     const tiposUsuario = document.querySelectorAll('input[name="tipo_usuario"]');
 
     function atualizarTipoUsuario(limparCampo = false) {
@@ -182,12 +189,14 @@
         identificador.type = "email";
         identificador.autocomplete = "email";
         linkCriarConta.href = "{% url 'criar_conta_empresa' %}";
+        linkEsqueceuSenha.href = "{% url 'esqueceu_senha' %}?tipo=empregador";
       } else {
         labelIdentificador.textContent = "{% trans 'Matrícula' %}";
         identificador.placeholder = "{% trans 'Digite sua matrícula' %}";
         identificador.type = "text";
         identificador.autocomplete = "username";
         linkCriarConta.href = "{% url 'criar_conta' %}";
+        linkEsqueceuSenha.href = "{% url 'esqueceu_senha' %}?tipo=aluno";
       }
 
       if (limparCampo) {

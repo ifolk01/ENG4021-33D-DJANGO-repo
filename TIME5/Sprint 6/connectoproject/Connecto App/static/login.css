@@ -528,3 +528,25 @@ body.login-page .auth-footer {
     min-height: 48px;
   }
 }
+
+/* Mensagens do Django após cadastro/redefinição de senha */
+.auth-message {
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 11px 13px;
+  border-radius: 10px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.auth-message.success {
+  border: 1px solid rgba(38, 173, 190, .32);
+  background: rgba(38, 173, 190, .09);
+  color: #116A85;
+}
+
+.auth-message.error {
+  border: 1px solid #e6a1a1;
+  background: rgba(220, 55, 55, .09);
+  color: #d44545;
+}

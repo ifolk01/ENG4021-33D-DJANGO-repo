@@ -4,112 +4,62 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Connecto - {% trans "Redefinir senha" %}</title>
-
   <link rel="stylesheet" href="{% static 'login.css' %}">
-  <link rel="stylesheet" href="{% static 'esqueceu_senha.css' %}">
-  <link rel="stylesheet" href="{% static 'botao_idiomas.css' %}">
+  <link rel="stylesheet" href="{% static 'redefinir_senha.css' %}">
   {% include 'includes/tema_head.html' %}
 </head>
-<body>
-  {% include 'includes/seletor_idioma.html' %}
+<body class="login-page reset-page">
+  <main class="login-container reset-container">
+    <header class="auth-header reset-header">
+      <div class="auth-logo-box reset-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+          <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+          <path d="M12 14v2"></path>
+        </svg>
+      </div>
+      <h1 class="reset-title">{% trans "Crie uma nova senha" %}</h1>
+      <p class="reset-description">{% trans "Escolha uma nova senha para sua conta Connecto." %}</p>
+    </header>
 
-  <div class="login-container">
-    <div class="auth-logo-box">
-      <img src="{% static 'logo_icon.jpg' %}" alt="Logo Connecto">
-    </div>
-
-    <div class="auth-subtitle">
-      {% trans "Conectando talentos e oportunidades" %}
-    </div>
-
-    <form class="auth-form" method="POST">
-      {% csrf_token %}
-
-      <h1 class="recuperacao-title">
-        {% trans "Redefinir senha" %}
-      </h1>
-
-      {% if link_invalido %}
-        <p class="recuperacao-description">
-          {% trans "Este link é inválido ou expirou. Solicite uma nova recuperação de senha." %}
-        </p>
-
-        <a href="{% url 'esqueceu_senha' %}">
-          {% trans "Solicitar novo link" %}
-        </a>
-      {% else %}
-        <p class="recuperacao-description">
-          {% trans "Digite sua nova senha abaixo." %}
-        </p>
+    {% if link_invalido %}
+      <div class="reset-invalid" role="alert">
+        <strong>{% trans "Este link não é mais válido" %}</strong>
+        <p>{% trans "Ele pode ter expirado, já ter sido utilizado ou ter sido invalidado por uma alteração de senha." %}</p>
+      </div>
+      <a href="{% url 'esqueceu_senha' %}" class="auth-button reset-link-button">{% trans "Solicitar novo link" %}</a>
+    {% else %}
+      <form method="POST" class="auth-form">
+        {% csrf_token %}
 
         {% if erro %}
-          <p class="recuperacao-description" role="alert">{{ erro }}</p>
+          <div class="auth-error" role="alert">{{ erro }}</div>
         {% endif %}
 
+        <div class="auth-field">
+          <label for="nova-senha-reset">{% trans "Nova senha" %}</label>
+          <input id="nova-senha-reset" name="password" class="auth-input" type="password" minlength="6" autocomplete="new-password" required autofocus>
+        </div>
 
-<div class="password-wrapper">
-  <input
-    type="password"
-    id="nova-senha"
-    name="password"
-    class="auth-input"
-    placeholder="{% trans 'Nova senha' %}"
-    required
-  >
-  <button type="button" class="toggle-password" aria-label="Mostrar senha" onclick="togglePassword('nova-senha', this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
-      <circle cx="12" cy="12" r="3"/>
-    </svg>
-  </button>
-</div>
+        <div class="auth-field">
+          <label for="confirmar-senha-reset">{% trans "Confirmar nova senha" %}</label>
+          <input id="confirmar-senha-reset" name="confirmar_senha" class="auth-input" type="password" minlength="6" autocomplete="new-password" required>
+        </div>
 
-<div class="password-wrapper">
-  <input
-    type="password"
-    id="confirmar-senha"
-    name="confirmar_senha"
-    class="auth-input"
-    placeholder="{% trans 'Confirmar nova senha' %}"
-    required
-  >
-  <button type="button" class="toggle-password" aria-label="Mostrar senha" onclick="togglePassword('confirmar-senha', this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
-      <circle cx="12" cy="12" r="3"/>
-    </svg>
-  </button>
-</div>
+        <p class="reset-hint">{% trans "Use pelo menos 6 caracteres." %}</p>
 
         <button type="submit" class="auth-button">
           {% trans "Salvar nova senha" %}
+          <span aria-hidden="true">→</span>
         </button>
-      {% endif %}
-    </form>
-  </div>
+      </form>
+    {% endif %}
 
-  <div class="auth-footer">
-    <a href="{% url 'login' %}">
-      {% trans "Voltar para o login" %}
-    </a>
-  </div>
-
-
-<script>
-  function togglePassword(inputId, button) {
-    const input = document.getElementById(inputId);
-    const mostrar = input.type === "password";
-
-    input.type = mostrar ? "text" : "password";
-    button.setAttribute("aria-label", mostrar ? "Ocultar senha" : "Mostrar senha");
-
-    button.querySelector("svg").innerHTML = mostrar
-      ? '<path d="M3 3l18 18M10.6 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a15.5 15.5 0 0 1-3.1 3.8M6.3 6.3C3.5 8.1 2 12 2 12s3.5 7 10 7a10.7 10.7 0 0 0 4.2-.8"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>'
-      : '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>';
-  }
-</script>
-
+    <footer class="reset-footer">
+      <a href="{% url 'login' %}">{% trans "Voltar para o login" %}</a>
+    </footer>
+  </main>
 </body>
 </html>
