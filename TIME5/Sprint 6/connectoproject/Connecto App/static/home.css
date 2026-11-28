@@ -91,29 +91,70 @@
 
 
 /* =========================================
-   BUSCA
+   BUSCA — MESMO PADRÃO DE MENSAGENS
    ========================================= */
 
 .home-search {
   position: relative;
 
+  width: 100%;
+  max-width: none;
+  height: 49px;
+
+  display: flex;
+  align-items: center;
+
   margin:
     var(--connecto-space-xs)
     0
-    var(--connecto-space-md);
+    var(--connecto-space-lg);
+
+  border:
+    1px solid
+    var(
+      --tema-line,
+      #ededeb
+    );
+
+  border-radius:
+    var(--connecto-radius-pill);
+
+  background:
+    var(
+      --tema-surface,
+      #ffffff
+    );
+
+  box-shadow:
+    var(
+      --connecto-shadow,
+      0 3px 12px rgba(0, 0, 0, .05)
+    );
+
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.home-search:focus-within {
+  border-color:
+    var(
+      --connecto-navy,
+      #333957
+    );
 }
 
 .home-search__icon {
   position: absolute;
-  z-index: 1;
 
-  left: 14px;
+  left: 15px;
   top: 50%;
 
   width: 21px;
   height: 21px;
 
-  transform: translateY(-50%);
+  transform:
+    translateY(-50%);
 
   color:
     var(
@@ -126,31 +167,18 @@
 
 .home-search__input {
   width: 100%;
-  height: 49px;
+  height: 100%;
 
-  border:
-    1px solid
-    var(
-      --tema-line,
-      #ededeb
-    );
+  border: 0;
+  outline: 0;
 
-  border-radius:
-    var(--connecto-radius-pill);
-
-  outline: none;
-
-  background:
-    var(
-      --tema-surface,
-      #ffffff
-    );
+  background: transparent;
 
   padding:
     0
     var(--connecto-space-xl)
     0
-    45px;
+    46px;
 
   color:
     var(
@@ -158,6 +186,7 @@
       #30354f
     );
 
+  font: inherit;
   font-size:
     var(--connecto-text-base);
 
@@ -171,6 +200,11 @@
       --tema-muted,
       #85868c
     );
+}
+
+.job-card[hidden],
+#home-search-empty[hidden] {
+  display: none !important;
 }
 
 
@@ -680,7 +714,8 @@
   }
 
   .home-search {
-    max-width: 760px;
+    width: 100%;
+    max-width: none;
   }
 
   .filters-scroll {

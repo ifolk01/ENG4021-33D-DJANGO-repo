@@ -421,3 +421,56 @@ class PushSubscription(models.Model):
 
     def __str__(self):
         return f"{self.usuario.username} - {self.endpoint[:40]}"
+
+class SolicitacaoSuporte(models.Model):
+    TIPO_CANDIDATO = "candidato"
+    TIPO_EMPREGADOR = "empregador"
+    TIPOS_CONTA = [
+        (TIPO_CANDIDATO, "Candidato"),
+        (TIPO_EMPREGADOR, "Empregador"),
+    ]
+
+    STATUS_ABERTA = "aberta"
+    STATUS_ANALISE = "em_analise"
+    STATUS_RESOLVIDA = "resolvida"
+    STATUS_CHOICES = [
+        (STATUS_ABERTA, "Aberta"),
+        (STATUS_ANALISE, "Em análise"),
+        (STATUS_RESOLVIDA, "Resolvida"),
+    ]
+
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="solicitacoes_suporte",
+    )
+    empresa = models.ForeignKey(
+        "Empresa",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="solicitacoes_suporte",
+    )
+    tipo_conta = models.CharField(
+        max_length=20,
+        choices=TIPOS_CONTA,
+        default=TIPO_CANDIDATO,
+    )
+    assunto = models.CharField(max_length=120)
+    mensagem = models.TextField(max_length=3000)
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=STATUS_ABERTA,
+    )
+    email_enviado = models.BooleanField(default=False)
+    criada_em = models.DateTimeField(auto_now_add=True)
+    atualizada_em = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-criada_em", "-id"]
+        verbose_name = "Solicitação de suporte"
+        verbose_name_plural = "Solicitações de suporte"
+
+    def __str__(self):
+        return f"#{self.pk} - {self.assunto}"

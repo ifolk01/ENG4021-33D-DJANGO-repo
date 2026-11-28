@@ -28,6 +28,7 @@ from .models import (
     VagaDescartada,
     PerfilUsuario,
     HistoricoStatusCandidatura,
+    SolicitacaoSuporte,
 )
 from django.contrib import messages
 from django.conf import settings
@@ -1416,7 +1417,6 @@ def redefinir_senha(request, uidb64, token):
 
 @login_required
 def duvidas_frequentes(request):
-    # Empresa usa a mesma tela; muda só o botão de voltar
     empresa = Empresa.objects.filter(usuario=request.user).first()
 
     return render(
@@ -1695,78 +1695,103 @@ def verificar_notificacoes(request):
 
 @login_required
 def abrir_solicitacao(request):
+    empresa = Empresa.objects.filter(usuario=request.user).first()
+    tipo_conta = (
+        SolicitacaoSuporte.TIPO_EMPREGADOR
+        if empresa
+        else SolicitacaoSuporte.TIPO_CANDIDATO
+    )
+
+    assunto = ""
+    mensagem = ""
+
     if request.method == "POST":
         assunto = request.POST.get("assunto", "").strip()
         mensagem = request.POST.get("mensagem", "").strip()
 
+        erro = None
+
         if not assunto:
-            messages.error(request, "Digite o assunto da solicitação.")
-
+            erro = "Digite o assunto da solicitação."
         elif len(assunto) > 120:
-            messages.error(request, "O assunto deve ter no máximo 120 caracteres.")
-
+            erro = "O assunto deve ter no máximo 120 caracteres."
         elif "\n" in assunto or "\r" in assunto:
-            messages.error(request, "O assunto deve conter apenas uma linha.")
-
+            erro = "O assunto deve conter apenas uma linha."
         elif not mensagem:
-            messages.error(request, "Digite uma mensagem antes de enviar.")
-
+            erro = "Digite uma mensagem antes de enviar."
         elif len(mensagem) > 3000:
-            messages.error(request, "A mensagem deve ter no máximo 3000 caracteres.")
+            erro = "A mensagem deve ter no máximo 3000 caracteres."
 
-        elif not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD or not settings.SUPPORT_EMAIL:
-            messages.error(request, "O e-mail de suporte ainda não está configurado.")
-
+        if erro:
+            messages.error(request, erro)
         else:
-            usuario = request.user
-            nome = usuario.get_full_name().strip() or usuario.username
-
-            conteudo = (
-                "Nova solicitação de suporte - Connecto\n\n"
-                f"Assunto: {assunto}\n"
-                f"Nome: {nome}\n"
-                f"Matrícula: {usuario.username}\n"
-                f"E-mail: {usuario.email or 'Não informado'}\n\n"
-                "Mensagem:\n"
-                f"{mensagem}"
+            solicitacao = SolicitacaoSuporte.objects.create(
+                usuario=request.user,
+                empresa=empresa,
+                tipo_conta=tipo_conta,
+                assunto=assunto,
+                mensagem=mensagem,
             )
 
-            try:
-                enviados = send_mail(
-                    subject=f"Connecto - Suporte: {assunto}",
-                    message=conteudo,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.SUPPORT_EMAIL],
-                    fail_silently=False,
+            # O registro no banco é a fonte principal. O e-mail é apenas
+            # uma notificação adicional e não bloqueia a abertura do chamado.
+            support_email = getattr(settings, "SUPPORT_EMAIL", "").strip()
+            default_from_email = getattr(settings, "DEFAULT_FROM_EMAIL", "").strip()
+
+            if support_email and default_from_email:
+                usuario = request.user
+                nome = usuario.get_full_name().strip() or usuario.username
+                identificacao = empresa.nome if empresa else usuario.username
+
+                conteudo = (
+                    "Nova solicitação de suporte - Connecto\n\n"
+                    f"ID: {solicitacao.pk}\n"
+                    f"Assunto: {assunto}\n"
+                    f"Solicitante: {nome}\n"
+                    f"Tipo de conta: {solicitacao.get_tipo_conta_display()}\n"
+                    f"Identificação: {identificacao}\n"
+                    f"E-mail: {usuario.email or 'Não informado'}\n\n"
+                    "Mensagem:\n"
+                    f"{mensagem}"
                 )
 
-                if enviados != 1:
-                    raise SMTPException("O servidor não confirmou o envio.")
+                try:
+                    enviados = send_mail(
+                        subject=f"Connecto - Suporte #{solicitacao.pk}: {assunto}",
+                        message=conteudo,
+                        from_email=default_from_email,
+                        recipient_list=[support_email],
+                        fail_silently=False,
+                    )
 
-            except (SMTPException, OSError):
-                logger.exception("Erro ao enviar solicitação de suporte.")
-                messages.error(
-                    request,
-                    "Não foi possível enviar sua solicitação. Tente novamente."
-                )
+                    if enviados == 1:
+                        solicitacao.email_enviado = True
+                        solicitacao.save(
+                            update_fields=["email_enviado", "atualizada_em"]
+                        )
+                except (SMTPException, OSError):
+                    logger.exception(
+                        "Solicitação #%s foi salva, mas o e-mail de suporte falhou.",
+                        solicitacao.pk,
+                    )
 
-            else:
-                messages.success(
-                    request,
-                    "Sua solicitação foi enviada com sucesso!"
-                )
-                return redirect("abrir_solicitacao")
+            messages.success(
+                request,
+                f"Solicitação #{solicitacao.pk} registrada com sucesso!",
+            )
+            return redirect("abrir_solicitacao")
 
-        return render(
-            request,
-            "abrir_solicitacao.html",
-            {
-                "assunto": assunto,
-                "mensagem": mensagem
-            }
-        )
+    return render(
+        request,
+        "abrir_solicitacao.html",
+        {
+            "empresa": empresa,
+            "assunto": assunto,
+            "mensagem": mensagem,
+        },
+    )
 
-    return render(request, "abrir_solicitacao.html")
+
 @require_POST
 @login_required
 

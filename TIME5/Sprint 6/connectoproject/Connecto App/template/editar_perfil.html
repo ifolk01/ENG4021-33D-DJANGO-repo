@@ -2,160 +2,252 @@
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#333957">
   <title>Connecto - {% trans "Editar Perfil" %}</title>
+
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
   <link rel="stylesheet" href="{% static 'editar_perfil.css' %}">
   {% include 'includes/tema_head.html' %}
 </head>
 
-<body>
+<body class="connecto-page edit-profile-page">
+  <main class="standard-shell edit-profile-shell nav-safe-bottom">
 
-  <div class="topo">
-    <a href="{% url 'perfil' %}" class="voltar">‹</a>
-    <h1>{% trans "Editar perfil" %}</h1>
-    <span class="espaco"></span>
-  </div>
+    <header class="edit-profile-header">
+      <a
+        href="{% url 'perfil' %}"
+        class="edit-profile-back"
+        aria-label="{% trans 'Voltar para o perfil' %}"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m15 18-6-6 6-6"></path>
+        </svg>
+      </a>
 
-  <form method="post" action="{% url 'editar_perfil' %}">
-    {% csrf_token %}
+      <div class="edit-profile-heading">
+        <h1>{% trans "Editar perfil" %}</h1>
+        <p>{% trans "Atualize seus dados pessoais e acadêmicos." %}</p>
+      </div>
+
+      <span class="edit-profile-header-space" aria-hidden="true"></span>
+    </header>
 
     {% if messages %}
-      <div class="mensagens-feedback">
+      <div class="edit-profile-feedback" aria-live="polite">
         {% for message in messages %}
-          <div class="mensagem-feedback {{ message.tags }}">
+          <div class="edit-profile-message {{ message.tags }}" role="status">
             {{ message }}
           </div>
         {% endfor %}
       </div>
     {% endif %}
 
-    <div class="foto">
-      <div class="avatar">
+    <section class="edit-profile-identity" aria-label="{% trans 'Identificação do perfil' %}">
+      <div class="edit-profile-avatar" aria-hidden="true">
         {{ nome|default:matricula|slice:":2"|upper }}
       </div>
 
-      <a href="{% url 'perfil' %}" class="alterar-foto">
-        {% trans "Alterar foto" %}
-      </a>
-    </div>
-
-    <div class="card">
-      <h2>{% trans "Dados pessoais" %}</h2>
-
-      <label for="nome">{% trans "Nome completo" %}</label>
-      <input
-        type="text"
-        id="nome"
-        name="nome"
-        value="{{ nome }}"
-        required
-      >
-
-      <label for="email">{% trans "E-mail" %}</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        value="{{ email }}"
-        required
-      >
-    </div>
-
-    <div class="card">
-      <h2>{% trans "Dados acadêmicos" %}</h2>
-
-      <label for="matricula">{% trans "Matrícula" %}</label>
-      <input
-        type="text"
-        id="matricula"
-        value="{{ matricula }}"
-        disabled
-      >
-
-      <label for="curso">{% trans "Curso" %}</label>
-      <select name="curso" id="curso">
-        <option value="">
-          {% trans "Selecione seu curso" %}
-        </option>
-
-        {% for curso_item in cursos %}
-          <option
-            value="{{ curso_item.id }}"
-            {% if perfil_usuario.curso_id == curso_item.id %}selected{% endif %}
-          >
-            {% trans curso_item.nome %}
-          </option>
-        {% empty %}
-          <option value="" disabled>
-            {% trans "Nenhum curso cadastrado" %}
-          </option>
-        {% endfor %}
-      </select>
-
-      <label for="periodo">{% trans "Período" %}</label>
-      <select id="periodo" name="periodo">
-        <option value="">
-          {% trans "Selecione seu período" %}
-        </option>
-
-        <option value="1" {% if perfil_usuario.periodo == 1 %}selected{% endif %}>{% trans "1º" %}</option>
-        <option value="2" {% if perfil_usuario.periodo == 2 %}selected{% endif %}>{% trans "2º" %}</option>
-        <option value="3" {% if perfil_usuario.periodo == 3 %}selected{% endif %}>{% trans "3º" %}</option>
-        <option value="4" {% if perfil_usuario.periodo == 4 %}selected{% endif %}>{% trans "4º" %}</option>
-        <option value="5" {% if perfil_usuario.periodo == 5 %}selected{% endif %}>{% trans "5º" %}</option>
-        <option value="6" {% if perfil_usuario.periodo == 6 %}selected{% endif %}>{% trans "6º" %}</option>
-        <option value="7" {% if perfil_usuario.periodo == 7 %}selected{% endif %}>{% trans "7º" %}</option>
-        <option value="8" {% if perfil_usuario.periodo == 8 %}selected{% endif %}>{% trans "8º" %}</option>
-        <option value="9" {% if perfil_usuario.periodo == 9 %}selected{% endif %}>{% trans "9º" %}</option>
-        <option value="10" {% if perfil_usuario.periodo == 10 %}selected{% endif %}>{% trans "10º" %}</option>
-      </select>
-
-      <label for="instituicao">{% trans "Instituição" %}</label>
-      <input
-        type="text"
-        id="instituicao"
-        name="instituicao"
-        maxlength="150"
-        value="{{ perfil_usuario.instituicao|default:'' }}"
-        placeholder="{% trans 'Ex.: PUC-Rio' %}"
-      >
-    </div>
-
-    <div class="card">
-      <h2>{% trans "Áreas de interesse" %}</h2>
-
-      <div class="areas">
-        <input type="checkbox" id="a-tec" name="areas" value="tecnologia" checked>
-        <label for="a-tec">{% trans "Tecnologia" %}</label>
-
-        <input type="checkbox" id="a-dados" name="areas" value="dados">
-        <label for="a-dados">{% trans "Dados / BI" %}</label>
-
-        <input type="checkbox" id="a-fin" name="areas" value="financas">
-        <label for="a-fin">{% trans "Finanças" %}</label>
-
-        <input type="checkbox" id="a-mkt" name="areas" value="marketing">
-        <label for="a-mkt">{% trans "Marketing" %}</label>
-
-        <input type="checkbox" id="a-eng" name="areas" value="engenharia">
-        <label for="a-eng">{% trans "Engenharia" %}</label>
-
-        <input type="checkbox" id="a-design" name="areas" value="design">
-        <label for="a-design">{% trans "Design" %}</label>
+      <div class="edit-profile-identity-copy">
+        <strong>{{ nome|default:matricula }}</strong>
+        <span>{{ email|default:matricula }}</span>
       </div>
-    </div>
 
-    <button type="submit" class="botao botao-salvar">
-      {% trans "Salvar alterações" %}
-    </button>
+      <a href="{% url 'perfil' %}" class="edit-profile-photo-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14.5 4 16 6h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3l1.5-2h5Z"></path>
+          <circle cx="12" cy="13" r="3.5"></circle>
+        </svg>
+        <span>{% trans "Alterar foto" %}</span>
+      </a>
+    </section>
 
-    <a href="{% url 'perfil' %}" class="botao botao-cancelar">
-      {% trans "Cancelar" %}
-    </a>
-  </form>
+    <form class="edit-profile-form" method="post" action="{% url 'editar_perfil' %}">
+      {% csrf_token %}
 
+      <div class="edit-profile-grid">
+        <section class="edit-profile-card">
+          <div class="edit-profile-card__header">
+            <span class="edit-profile-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M4 21a8 8 0 0 1 16 0"></path>
+              </svg>
+            </span>
+            <div>
+              <h2>{% trans "Dados pessoais" %}</h2>
+              <p>{% trans "Informações usadas para identificar sua conta." %}</p>
+            </div>
+          </div>
+
+          <div class="edit-profile-fields">
+            <div class="edit-profile-field">
+              <label for="nome">{% trans "Nome completo" %}</label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                value="{{ nome }}"
+                autocomplete="name"
+                required
+              >
+            </div>
+
+            <div class="edit-profile-field">
+              <label for="email">{% trans "E-mail" %}</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value="{{ email }}"
+                autocomplete="email"
+                required
+              >
+            </div>
+          </div>
+        </section>
+
+        <section class="edit-profile-card">
+          <div class="edit-profile-card__header">
+            <span class="edit-profile-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 10 9-5 9 5-9 5-9-5Z"></path>
+                <path d="M7 12.5V17c3 2 7 2 10 0v-4.5"></path>
+                <path d="M21 10v6"></path>
+              </svg>
+            </span>
+            <div>
+              <h2>{% trans "Dados acadêmicos" %}</h2>
+              <p>{% trans "Curso, período e instituição de ensino." %}</p>
+            </div>
+          </div>
+
+          <div class="edit-profile-fields">
+            <div class="edit-profile-field">
+              <label for="matricula">{% trans "Matrícula" %}</label>
+              <input
+                type="text"
+                id="matricula"
+                value="{{ matricula }}"
+                disabled
+                aria-describedby="matricula-help"
+              >
+              <small id="matricula-help">{% trans "A matrícula é vinculada à sua conta e não pode ser alterada aqui." %}</small>
+            </div>
+
+            <div class="edit-profile-field-row">
+              <div class="edit-profile-field edit-profile-field--course">
+                <label for="curso">{% trans "Curso" %}</label>
+                <div class="edit-profile-select-wrap">
+                  <select name="curso" id="curso">
+                    <option value="">{% trans "Selecione seu curso" %}</option>
+                    {% for curso_item in cursos %}
+                      <option
+                        value="{{ curso_item.id }}"
+                        {% if perfil_usuario.curso_id == curso_item.id %}selected{% endif %}
+                      >
+                        {% trans curso_item.nome %}
+                      </option>
+                    {% empty %}
+                      <option value="" disabled>{% trans "Nenhum curso cadastrado" %}</option>
+                    {% endfor %}
+                  </select>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6"></path>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="edit-profile-field edit-profile-field--period">
+                <label for="periodo">{% trans "Período" %}</label>
+                <div class="edit-profile-select-wrap">
+                  <select id="periodo" name="periodo">
+                    <option value="">{% trans "Selecione" %}</option>
+                    <option value="1" {% if perfil_usuario.periodo == 1 %}selected{% endif %}>{% trans "1º" %}</option>
+                    <option value="2" {% if perfil_usuario.periodo == 2 %}selected{% endif %}>{% trans "2º" %}</option>
+                    <option value="3" {% if perfil_usuario.periodo == 3 %}selected{% endif %}>{% trans "3º" %}</option>
+                    <option value="4" {% if perfil_usuario.periodo == 4 %}selected{% endif %}>{% trans "4º" %}</option>
+                    <option value="5" {% if perfil_usuario.periodo == 5 %}selected{% endif %}>{% trans "5º" %}</option>
+                    <option value="6" {% if perfil_usuario.periodo == 6 %}selected{% endif %}>{% trans "6º" %}</option>
+                    <option value="7" {% if perfil_usuario.periodo == 7 %}selected{% endif %}>{% trans "7º" %}</option>
+                    <option value="8" {% if perfil_usuario.periodo == 8 %}selected{% endif %}>{% trans "8º" %}</option>
+                    <option value="9" {% if perfil_usuario.periodo == 9 %}selected{% endif %}>{% trans "9º" %}</option>
+                    <option value="10" {% if perfil_usuario.periodo == 10 %}selected{% endif %}>{% trans "10º" %}</option>
+                  </select>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="edit-profile-field">
+              <label for="instituicao">{% trans "Instituição" %}</label>
+              <input
+                type="text"
+                id="instituicao"
+                name="instituicao"
+                maxlength="150"
+                value="{{ perfil_usuario.instituicao|default:'' }}"
+                placeholder="{% trans 'Ex.: PUC-Rio' %}"
+                autocomplete="organization"
+              >
+            </div>
+          </div>
+        </section>
+
+        <section class="edit-profile-card edit-profile-card--interests">
+          <div class="edit-profile-card__header">
+            <span class="edit-profile-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 21s-7-4.5-9-9a5.5 5.5 0 0 1 9-6 5.5 5.5 0 0 1 9 6c-2 4.5-9 9-9 9Z"></path>
+              </svg>
+            </span>
+            <div>
+              <h2>{% trans "Áreas de interesse" %}</h2>
+              <p>{% trans "Selecione os temas que mais combinam com seu perfil." %}</p>
+            </div>
+          </div>
+
+          <div class="edit-profile-interests">
+            <input type="checkbox" id="a-tec" name="areas" value="tecnologia" checked>
+            <label for="a-tec">{% trans "Tecnologia" %}</label>
+
+            <input type="checkbox" id="a-dados" name="areas" value="dados">
+            <label for="a-dados">{% trans "Dados / BI" %}</label>
+
+            <input type="checkbox" id="a-fin" name="areas" value="financas">
+            <label for="a-fin">{% trans "Finanças" %}</label>
+
+            <input type="checkbox" id="a-mkt" name="areas" value="marketing">
+            <label for="a-mkt">{% trans "Marketing" %}</label>
+
+            <input type="checkbox" id="a-eng" name="areas" value="engenharia">
+            <label for="a-eng">{% trans "Engenharia" %}</label>
+
+            <input type="checkbox" id="a-design" name="areas" value="design">
+            <label for="a-design">{% trans "Design" %}</label>
+          </div>
+        </section>
+      </div>
+
+      <div class="edit-profile-actions">
+        <a href="{% url 'perfil' %}" class="edit-profile-button edit-profile-button--secondary">
+          {% trans "Cancelar" %}
+        </a>
+
+        <button type="submit" class="edit-profile-button edit-profile-button--primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 6 9 17l-5-5"></path>
+          </svg>
+          <span>{% trans "Salvar alterações" %}</span>
+        </button>
+      </div>
+    </form>
+  </main>
+
+  {% include 'includes/bottom_nav.html' with pagina_ativa='perfil' %}
 </body>
 </html>
