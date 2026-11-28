@@ -2,80 +2,75 @@
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Connecto - {% trans "Alterar senha" %}</title>
+  <link rel="stylesheet" href="{% static 'connecto_ui.css' %}">
   <link rel="stylesheet" href="{% static 'alterar_senha.css' %}">
   {% include 'includes/tema_head.html' %}
 </head>
+<body class="connecto-page password-page">
+  <main class="standard-shell password-shell nav-safe-bottom">
+    <header class="password-header">
+      <a href="{% url 'configuracoes' %}" class="password-back" aria-label="{% trans 'Voltar às configurações' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+      </a>
+      <div>
+        <h1>{% trans "Alterar senha" %}</h1>
+        <p>{% trans "Confirme sua senha atual antes de criar uma nova." %}</p>
+      </div>
+      <span class="password-header-space" aria-hidden="true"></span>
+    </header>
 
-<body>
+    {% if erro %}<div class="password-alert password-alert--error" role="alert">{{ erro }}</div>{% endif %}
 
-  <div class="topo">
-    <a href="{% url 'configuracoes' %}" class="voltar" aria-label="{% trans 'Voltar' %}">‹</a>
-    <h1>{% trans "Alterar senha" %}</h1>
-    <span class="espaco"></span>
-  </div>
+    <form method="post" action="{% url 'alterar_senha' %}" class="password-form">
+      {% csrf_token %}
+      <section class="password-card">
+        <div class="password-card__heading">
+          <span class="password-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+          </span>
+          <div><h2>{% trans "Segurança da conta" %}</h2><p>{% trans "Use uma senha diferente da atual e que seja fácil de lembrar apenas para você." %}</p></div>
+        </div>
 
-  <form method="post" action="{% url 'alterar_senha' %}">
-    {% csrf_token %}
+        {% trans "Senha atual" as rotulo_atual %}
+        {% include 'includes/campo_senha.html' with campo_id='senha-atual' campo_nome='senha_atual' rotulo=rotulo_atual autocomplete='current-password' %}
 
-    <div class="icone-cadeado" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="5" y="10" width="14" height="10" rx="2"></rect>
-        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
-      </svg>
-    </div>
+        {% trans "Nova senha" as rotulo_nova %}
+        {% include 'includes/campo_senha.html' with campo_id='nova-senha' campo_nome='nova_senha' rotulo=rotulo_nova autocomplete='new-password' %}
+        <p class="password-hint">{% trans "Use pelo menos 6 caracteres." %}</p>
 
-    <p class="explicacao">
-      {% trans "Para sua segurança, confirme a senha atual antes de escolher uma nova." %}
-    </p>
+        {% trans "Confirmar nova senha" as rotulo_confirmar %}
+        {% include 'includes/campo_senha.html' with campo_id='confirmar-senha' campo_nome='confirmar_senha' rotulo=rotulo_confirmar autocomplete='new-password' %}
+      </section>
 
-    {% if erro %}
-      <p class="mensagem-erro" role="alert">{{ erro }}</p>
-    {% endif %}
+      <div class="password-actions">
+        <a href="{% url 'configuracoes' %}" class="password-button password-button--secondary">{% trans "Cancelar" %}</a>
+        <button type="submit" class="password-button password-button--primary">{% trans "Salvar nova senha" %}</button>
+      </div>
+    </form>
+  </main>
 
-    <div class="card">
-      {% trans "Senha atual" as rotulo_atual %}
-      {% include 'includes/campo_senha.html' with campo_id='senha-atual' campo_nome='senha_atual' rotulo=rotulo_atual autocomplete='current-password' %}
-    </div>
-
-    <div class="card">
-      {% trans "Nova senha" as rotulo_nova %}
-      {% include 'includes/campo_senha.html' with campo_id='nova-senha' campo_nome='nova_senha' rotulo=rotulo_nova autocomplete='new-password' %}
-      <p class="dica">{% trans "Use pelo menos 6 caracteres." %}</p>
-
-      {% trans "Confirmar nova senha" as rotulo_confirmar %}
-      {% include 'includes/campo_senha.html' with campo_id='confirmar-senha' campo_nome='confirmar_senha' rotulo=rotulo_confirmar autocomplete='new-password' %}
-    </div>
-
-    <button type="submit" class="botao botao-salvar">
-      {% trans "Salvar nova senha" %}
-    </button>
-
-    <a href="{% url 'configuracoes' %}" class="botao botao-cancelar">
-      {% trans "Cancelar" %}
-    </a>
-  </form>
+  {% if empresa %}
+    {% include 'includes/bottom_nav_empresa.html' with pagina_ativa='configuracoes' %}
+  {% else %}
+    {% include 'includes/bottom_nav.html' with pagina_ativa='perfil' %}
+  {% endif %}
 
   <script>
-    // Botão de olho: mostra ou esconde a senha do campo ao lado
     const olhoAberto = '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle>';
     const olhoFechado = '<path d="M3 3l18 18"></path><path d="M10.6 5.1A10.6 10.6 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2"></path><path d="M6.6 6.6C3.9 8.4 2 12 2 12s3.5 7 10 7a9.9 9.9 0 0 0 5.4-1.6"></path><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path>';
-
-    document.querySelectorAll(".botao-olho").forEach(function (botao) {
-      botao.addEventListener("click", function () {
+    document.querySelectorAll('.botao-olho').forEach((botao) => {
+      botao.addEventListener('click', () => {
         const campo = document.getElementById(botao.dataset.alvo);
-        const mostrar = campo.type === "password";
-
-        campo.type = mostrar ? "text" : "password";
-        botao.querySelector("svg").innerHTML = mostrar ? olhoFechado : olhoAberto;
-        botao.setAttribute("aria-label", mostrar ? "{% trans 'Ocultar senha' %}" : "{% trans 'Mostrar senha' %}");
+        const mostrar = campo.type === 'password';
+        campo.type = mostrar ? 'text' : 'password';
+        botao.querySelector('svg').innerHTML = mostrar ? olhoFechado : olhoAberto;
+        botao.setAttribute('aria-label', mostrar ? "{% trans 'Ocultar senha' %}" : "{% trans 'Mostrar senha' %}");
       });
     });
   </script>
-
 </body>
 </html>

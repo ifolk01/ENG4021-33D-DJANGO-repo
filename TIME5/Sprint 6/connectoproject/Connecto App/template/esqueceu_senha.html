@@ -4,64 +4,110 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connecto - {% trans "Esqueceu sua senha?" %}</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Connecto - {% trans "Recuperar senha" %}</title>
   <link rel="stylesheet" href="{% static 'login.css' %}">
   <link rel="stylesheet" href="{% static 'esqueceu_senha.css' %}">
   <link rel="stylesheet" href="{% static 'botao_idiomas.css' %}">
   {% include 'includes/tema_head.html' %}
 </head>
-<body>
+<body class="login-page recovery-page">
   {% include 'includes/seletor_idioma.html' %}
 
-  <div class="login-container">
-    <div class="auth-logo-box">
-      <img
-        src="{% static 'logo_icon.jpg' %}"
-        alt="{% trans 'Logo Connecto' %}"
-      >
-    </div>
-
-    <div class="auth-subtitle">
-      {% trans "Conectando talentos e oportunidades" %}
-    </div>
-
-    <form class="auth-form" method="POST">
-      {% csrf_token %}
-
-      <h1 class="recuperacao-title">
-        {% trans "Esqueceu sua senha?" %}
-      </h1>
-
-      {% if sucesso %}
-        <p class="recuperacao-description" role="status">
-          {% trans "Se o e-mail informado estiver cadastrado, você receberá um link para redefinir sua senha." %}
-        </p>
-      {% else %}
-        <p class="recuperacao-description">
-          {% trans "Informe seu e-mail cadastrado para receber instruções de recuperação de senha." %}
-        </p>
-
-        <input
-          type="email"
-          name="email"
-          class="auth-input"
-          placeholder="{% trans 'E-mail cadastrado' %}"
-          required
-        >
-
-        <button type="submit" class="auth-button">
-          {% trans "Enviar instruções" %}
-        </button>
-      {% endif %}
-    </form>
-  </div>
-
-  <div class="auth-footer">
-    <a href="{% url 'login' %}">
-      {% trans "Voltar para o login" %}
+  <main class="login-container recovery-container">
+    <a href="{% url 'login' %}" class="recovery-back" aria-label="{% trans 'Voltar para o login' %}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
     </a>
-  </div>
+
+    <header class="recovery-header">
+      <div class="recovery-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 10V7a5 5 0 0 1 10 0v3"></path>
+          <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+          <path d="M12 14v2"></path>
+        </svg>
+      </div>
+      <h1 class="recuperacao-title">{% trans "Recuperar senha" %}</h1>
+      <p class="recuperacao-description">{% trans "Informe os dados da sua conta. Se houver um e-mail de recuperação cadastrado, enviaremos um link seguro para você criar uma nova senha." %}</p>
+    </header>
+
+    {% if sucesso %}
+      <section class="recovery-success" role="status">
+        <div class="recovery-success__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></svg>
+        </div>
+        <div>
+          <strong>{% trans "Confira seu e-mail" %}</strong>
+          <p>{% trans "Se os dados informados estiverem cadastrados e houver um e-mail de recuperação associado à conta, você receberá as instruções em instantes." %}</p>
+        </div>
+      </section>
+      <a href="{% url 'login' %}" class="auth-button recovery-back-button">{% trans "Voltar para o login" %}</a>
+    {% else %}
+      <form class="auth-form recovery-form" method="POST" action="{% url 'esqueceu_senha' %}">
+        {% csrf_token %}
+        <div class="tipo-usuario recovery-account-type" aria-label="{% trans 'Tipo de conta' %}">
+          <label class="tipo-opcao">
+            <input type="radio" name="tipo_usuario" value="aluno" {% if tipo_usuario != 'empregador' %}checked{% endif %}>
+            <span>{% trans "Aluno" %}</span>
+          </label>
+          <label class="tipo-opcao">
+            <input type="radio" name="tipo_usuario" value="empregador" {% if tipo_usuario == 'empregador' %}checked{% endif %}>
+            <span>{% trans "Empregador" %}</span>
+          </label>
+        </div>
+
+        <div class="auth-field">
+          <label for="identificador-recuperacao" id="label-recuperacao">{% if tipo_usuario == 'empregador' %}{% trans "E-mail" %}{% else %}{% trans "Matrícula" %}{% endif %}</label>
+          <input
+            type="{% if tipo_usuario == 'empregador' %}email{% else %}text{% endif %}"
+            id="identificador-recuperacao"
+            name="identificador"
+            class="auth-input"
+            placeholder="{% if tipo_usuario == 'empregador' %}{% trans 'Digite o e-mail da empresa' %}{% else %}{% trans 'Digite sua matrícula' %}{% endif %}"
+            autocomplete="{% if tipo_usuario == 'empregador' %}email{% else %}username{% endif %}"
+            required
+            autofocus
+          >
+        </div>
+
+        <div class="recovery-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5"></path><path d="M12 8h.01"></path></svg>
+          <p id="texto-ajuda-recuperacao">{% if tipo_usuario == 'empregador' %}{% trans "O link será enviado para o e-mail cadastrado da empresa." %}{% else %}{% trans "O link será enviado para o e-mail de recuperação salvo no seu perfil." %}{% endif %}</p>
+        </div>
+
+        <button type="submit" class="auth-button">{% trans "Enviar link de recuperação" %}<span aria-hidden="true">→</span></button>
+      </form>
+
+      <footer class="recovery-footer"><a href="{% url 'login' %}">{% trans "Voltar para o login" %}</a></footer>
+    {% endif %}
+  </main>
+
+  <script>
+    const radiosRecuperacao = document.querySelectorAll('input[name="tipo_usuario"]');
+    const campoRecuperacao = document.getElementById("identificador-recuperacao");
+    const labelRecuperacao = document.getElementById("label-recuperacao");
+    const textoAjuda = document.getElementById("texto-ajuda-recuperacao");
+
+    function atualizarRecuperacao(limpar = false) {
+      if (!campoRecuperacao) return;
+      const empregador = document.querySelector('input[name="tipo_usuario"][value="empregador"]').checked;
+      if (empregador) {
+        labelRecuperacao.textContent = "{% trans 'E-mail' %}";
+        campoRecuperacao.type = "email";
+        campoRecuperacao.placeholder = "{% trans 'Digite o e-mail da empresa' %}";
+        campoRecuperacao.autocomplete = "email";
+        textoAjuda.textContent = "{% trans 'O link será enviado para o e-mail cadastrado da empresa.' %}";
+      } else {
+        labelRecuperacao.textContent = "{% trans 'Matrícula' %}";
+        campoRecuperacao.type = "text";
+        campoRecuperacao.placeholder = "{% trans 'Digite sua matrícula' %}";
+        campoRecuperacao.autocomplete = "username";
+        textoAjuda.textContent = "{% trans 'O link será enviado para o e-mail de recuperação salvo no seu perfil.' %}";
+      }
+      if (limpar) campoRecuperacao.value = "";
+    }
+
+    radiosRecuperacao.forEach((radio) => radio.addEventListener("change", () => atualizarRecuperacao(true)));
+  </script>
 </body>
 </html>

@@ -61,6 +61,22 @@
 
     </div>
 
+    {% if not email_recuperacao_configurado %}
+      <div class="recovery-email-warning" role="status">
+        <div class="recovery-email-warning__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <path d="m3 7 9 6 9-6"></path>
+          </svg>
+        </div>
+        <div>
+          <strong>{% trans "Cadastre um e-mail de recuperação" %}</strong>
+          <p>{% trans "Sua conta ainda não possui e-mail. Adicione um endereço no perfil para poder redefinir a senha caso esqueça." %}</p>
+        </div>
+        <a href="{% url 'editar_perfil' %}">{% trans "Adicionar e-mail" %}</a>
+      </div>
+    {% endif %}
+
     {% if messages %}
       {% for message in messages %}
         <div class="aviso {{ message.tags }}" role="status">
@@ -233,7 +249,7 @@
           </button>
         </form>
 
-        <button type="button" class="botao botao-excluir">
+        <button type="button" id="abrir-modal-excluir" class="botao botao-excluir">
           {% trans "Excluir conta" %}
         </button>
 
@@ -243,6 +259,44 @@
 
   </main>
 
+
+  <dialog id="modal-excluir-conta" class="account-delete-dialog" aria-labelledby="delete-title">
+    <div class="delete-step" id="delete-step-1">
+      <div class="delete-dialog-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v5M14 11v5"></path></svg>
+      </div>
+      <span class="delete-step-label">{% trans "Etapa 1 de 2" %}</span>
+      <h2 id="delete-title">{% trans "Excluir sua conta?" %}</h2>
+      <p>{% trans "Esta ação é permanente. Seu perfil, candidaturas, favoritos, conversas e notificações associados à conta serão removidos." %}</p>
+      <div class="delete-dialog-actions">
+        <button type="button" id="cancelar-exclusao" class="delete-dialog-button delete-dialog-button--secondary">{% trans "Cancelar" %}</button>
+        <button type="button" id="continuar-exclusao" class="delete-dialog-button delete-dialog-button--danger">{% trans "Continuar" %}</button>
+      </div>
+    </div>
+
+    <form method="POST" action="{% url 'excluir_conta' %}" class="delete-step" id="delete-step-2" hidden>
+      {% csrf_token %}
+      <span class="delete-step-label">{% trans "Etapa 2 de 2 · confirmação final" %}</span>
+      <h2>{% trans "Confirme a exclusão" %}</h2>
+      <p>{% trans "Informe sua senha atual e digite EXCLUIR para confirmar. Não será possível desfazer esta ação." %}</p>
+
+      <label class="delete-field">
+        <span>{% trans "Senha atual" %}</span>
+        <input id="delete-password" type="password" name="password" autocomplete="current-password" required>
+      </label>
+
+      <label class="delete-field">
+        <span>{% trans "Digite EXCLUIR" %}</span>
+        <input id="delete-confirmation" type="text" name="confirmacao" autocomplete="off" spellcheck="false" placeholder="EXCLUIR" required>
+      </label>
+
+      <div class="delete-dialog-actions">
+        <button type="button" id="voltar-exclusao" class="delete-dialog-button delete-dialog-button--secondary">{% trans "Voltar" %}</button>
+        <button type="submit" id="confirmar-exclusao" class="delete-dialog-button delete-dialog-button--danger" disabled>{% trans "Excluir conta definitivamente" %}</button>
+      </div>
+    </form>
+  </dialog>
+
   {% include 'modal_sair.html' %}
   {% include 'includes/bottom_nav.html' with pagina_ativa='perfil' %}
 
@@ -251,19 +305,46 @@
     const modalSair = document.getElementById("modal-sair");
     const cancelarSair = document.getElementById("cancelar-sair");
 
-    botaoSair.addEventListener("click", function () {
-      modalSair.showModal();
-    });
+    if (botaoSair && modalSair && cancelarSair) {
+      botaoSair.addEventListener("click", () => modalSair.showModal());
+      cancelarSair.addEventListener("click", () => modalSair.close());
+      modalSair.addEventListener("click", (event) => { if (event.target === modalSair) modalSair.close(); });
+    }
 
-    cancelarSair.addEventListener("click", function () {
-      modalSair.close();
-    });
+    const modalExcluir = document.getElementById("modal-excluir-conta");
+    const abrirExcluir = document.getElementById("abrir-modal-excluir");
+    const cancelarExcluir = document.getElementById("cancelar-exclusao");
+    const continuarExcluir = document.getElementById("continuar-exclusao");
+    const voltarExcluir = document.getElementById("voltar-exclusao");
+    const etapa1 = document.getElementById("delete-step-1");
+    const etapa2 = document.getElementById("delete-step-2");
+    const senhaExcluir = document.getElementById("delete-password");
+    const textoExcluir = document.getElementById("delete-confirmation");
+    const confirmarExcluir = document.getElementById("confirmar-exclusao");
 
-    modalSair.addEventListener("click", function (event) {
-      if (event.target === modalSair) {
-        modalSair.close();
-      }
-    });
+    function resetarExclusao() {
+      etapa1.hidden = false;
+      etapa2.hidden = true;
+      senhaExcluir.value = "";
+      textoExcluir.value = "";
+      confirmarExcluir.disabled = true;
+    }
+
+    function atualizarConfirmacaoExclusao() {
+      confirmarExcluir.disabled = !(
+        senhaExcluir.value.length > 0 &&
+        textoExcluir.value.trim().toUpperCase() === "EXCLUIR"
+      );
+    }
+
+    abrirExcluir.addEventListener("click", () => { resetarExclusao(); modalExcluir.showModal(); });
+    cancelarExcluir.addEventListener("click", () => modalExcluir.close());
+    continuarExcluir.addEventListener("click", () => { etapa1.hidden = true; etapa2.hidden = false; senhaExcluir.focus(); });
+    voltarExcluir.addEventListener("click", () => { etapa2.hidden = true; etapa1.hidden = false; });
+    senhaExcluir.addEventListener("input", atualizarConfirmacaoExclusao);
+    textoExcluir.addEventListener("input", atualizarConfirmacaoExclusao);
+    modalExcluir.addEventListener("click", (event) => { if (event.target === modalExcluir) modalExcluir.close(); });
+    modalExcluir.addEventListener("close", resetarExclusao);
   </script>
 
 </body>

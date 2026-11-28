@@ -1,26 +1,21 @@
-/* Botão de idioma (seletor_idioma.html) nas telas de login, cadastro e esqueci a senha */
+/* Seletor de idioma compartilhado por login/cadastro/recuperação.
+   Sem ícone adicional: o próprio texto do select identifica o controle. */
+
 .seletor-idioma {
   position: relative;
   align-self: flex-end;
-  margin: 0 0 12px 0;
-}
-
-/* Ícone de globo antes da lista */
-.seletor-idioma::before {
-  content: "🌐";
-  position: absolute;
-  top: 50%;
-  left: 12px;
-  transform: translateY(-50%);
-  font-size: 14px;
-  pointer-events: none;
+  margin: 0 0 12px;
+  color: var(--tema-muted, #6B6F80);
 }
 
 .seletor-idioma select {
+  min-height: 38px;
+
   appearance: none;
   -webkit-appearance: none;
 
-  padding: 8px 34px 8px 34px;
+  padding: 8px 34px 8px 14px;
+
   border: 1px solid var(--tema-line, #E4E4DD);
   border-radius: 999px;
 
@@ -30,12 +25,12 @@
   background-position: right 12px center;
 
   color: var(--tema-ink, #33364F);
-  font-family: inherit;
+
+  font: inherit;
   font-size: 14px;
 
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
   cursor: pointer;
-  transition: border-color 0.2s;
 }
 
 .seletor-idioma select:hover {
@@ -43,6 +38,15 @@
 }
 
 .seletor-idioma select:focus-visible {
-  outline: 3px solid #116A85;
+  outline: 3px solid rgba(17, 106, 133, .28);
   outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .seletor-idioma select {
+    min-height: 36px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-size: 13px;
+  }
 }

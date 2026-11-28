@@ -4,130 +4,102 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connecto - {% trans "Cadastro" %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Connecto - {% trans "Criar conta" %}</title>
   <link rel="stylesheet" href="{% static 'login.css' %}">
+  <link rel="stylesheet" href="{% static 'criar_conta.css' %}">
   <link rel="stylesheet" href="{% static 'botao_idiomas.css' %}">
   {% include 'includes/tema_head.html' %}
 </head>
-<body>
+<body class="login-page cadastro-page">
   {% include 'includes/seletor_idioma.html' %}
 
-  <div class="cadastro-container">
-    <div class="cadastro-topbar">
-      <a href="{% url 'login' %}" class="back-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
+  <main class="login-container cadastro-connecto-container">
+    <header class="cadastro-header-connecto">
+      <a href="{% url 'login' %}" class="cadastro-back" aria-label="{% trans 'Voltar para o login' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m15 18-6-6 6-6"></path>
         </svg>
       </a>
-      <h2>{% trans "Cadastro" %}</h2>
-    </div>
 
-    <div class="cadastro-header">
-      <h1>{% trans "Criar conta" %}</h1>
-      <p>{% trans "Leva menos de um minuto." %}</p>
-    </div>
+      <div>
+        <h1>{% trans "Criar conta" %}</h1>
+        <p>{% trans "Cadastre seus dados para acessar oportunidades e recuperar sua conta com segurança." %}</p>
+      </div>
+    </header>
 
-    <form class="auth-form" method="POST" action="{% url 'criar_conta' %}">
+    {% if erro %}
+      <div class="auth-error" role="alert">{{ erro }}</div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'criar_conta' %}" class="auth-form cadastro-form">
       {% csrf_token %}
 
-      <input
-        type="text"
-        name="nome"
-        class="auth-input"
-        placeholder="{% trans 'Nome completo' %}"
-        required
-      >
+      <div class="cadastro-grid cadastro-grid--2">
+        <div class="auth-field cadastro-grid-span-2">
+          <label for="nome">{% trans "Nome completo" %}</label>
+          <input id="nome" name="nome" class="auth-input" type="text" value="{{ valores.nome|default:'' }}" autocomplete="name" required>
+        </div>
 
-      <!-- O name="username" é vital para o Django reconhecer no views.py -->
-      <input
-        type="text"
-        name="username"
-        class="auth-input"
-        placeholder="{% trans 'Matrícula' %}"
-        required
-      >
+        <div class="auth-field">
+          <label for="matricula">{% trans "Matrícula" %}</label>
+          <input id="matricula" name="username" class="auth-input" type="text" value="{{ valores.username|default:'' }}" autocomplete="username" required>
+        </div>
 
-      <input
-        type="text"
-        name="curso"
-        class="auth-input"
-        placeholder="{% trans 'Curso' %}"
-        required
-      >
+        <div class="auth-field">
+          <label for="email">{% trans "E-mail de recuperação" %}</label>
+          <input id="email" name="email" class="auth-input" type="email" value="{{ valores.email|default:'' }}" autocomplete="email" required>
+        </div>
 
-      <!-- O name="password" é vital para o Django reconhecer no views.py -->
-      <div class="password-wrapper">
-        <input
-          type="password"
-          name="password"
-          class="auth-input"
-          placeholder="{% trans 'Senha (mínimo 6 caracteres)' %}"
-          minlength="6"
-          required
-        >
-        <button type="button" class="toggle-password" aria-label="{% trans 'Exibir senha' %}">
-          <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-            <line x1="1" y1="1" x2="23" y2="23"></line>
+        <div class="cadastro-email-note cadastro-grid-span-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"></path>
+            <path d="M12 10v6M12 7h.01"></path>
           </svg>
-          <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
-        </button>
+          <span>{% trans "Esse e-mail não muda seu login: você continuará entrando com matrícula e senha. Ele será usado apenas para segurança da conta e recuperação de senha." %}</span>
+        </div>
+
+        <div class="auth-field cadastro-grid-span-2">
+          <label for="curso">{% trans "Curso" %}</label>
+          <select id="curso" name="curso" class="auth-input" required>
+            <option value="">{% trans "Selecione seu curso" %}</option>
+            {% for curso in cursos %}
+              <option value="{{ curso.id }}" {% if valores.curso == curso.id|stringformat:"s" %}selected{% endif %}>{{ curso.nome }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="auth-field">
+          <label for="periodo">{% trans "Período" %}</label>
+          <input id="periodo" name="periodo" class="auth-input" type="number" min="1" max="20" value="{{ valores.periodo|default:'' }}" inputmode="numeric">
+        </div>
+
+        <div class="auth-field">
+          <label for="instituicao">{% trans "Instituição" %}</label>
+          <input id="instituicao" name="instituicao" class="auth-input" type="text" value="{{ valores.instituicao|default:'' }}" autocomplete="organization">
+        </div>
+
+        <div class="auth-field">
+          <label for="senha-cadastro">{% trans "Senha" %}</label>
+          <input id="senha-cadastro" name="password" class="auth-input" type="password" minlength="6" autocomplete="new-password" required>
+        </div>
+
+        <div class="auth-field">
+          <label for="confirmar-senha-cadastro">{% trans "Confirmar senha" %}</label>
+          <input id="confirmar-senha-cadastro" name="confirmar_senha" class="auth-input" type="password" minlength="6" autocomplete="new-password" required>
+        </div>
       </div>
 
-      <div class="password-wrapper">
-        <input
-          type="password"
-          name="confirmar_senha"
-          class="auth-input"
-          placeholder="{% trans 'Confirmar senha' %}"
-          required
-        >
-        <button type="button" class="toggle-password" aria-label="{% trans 'Exibir senha' %}">
-          <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-            <line x1="1" y1="1" x2="23" y2="23"></line>
-          </svg>
-          <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
-        </button>
-      </div>
-
-      {% if erro %}
-        <p style="color: red; font-size: 14px; text-align: center; margin: 0;">{{ erro }}</p>
-      {% endif %}
-
-      <button type="submit" class="auth-button" style="margin-top: 16px;">
+      <button type="submit" class="auth-button">
         {% trans "Criar conta" %}
+        <span aria-hidden="true">→</span>
       </button>
     </form>
-  </div>
 
-  <script>
-    document.querySelectorAll('.toggle-password').forEach(function (botao) {
-      botao.addEventListener('click', function () {
-        const campo = botao.parentElement.querySelector('input');
-        const iconEyeOff = botao.querySelector('.icon-eye-off');
-        const iconEye = botao.querySelector('.icon-eye');
-
-        if (campo.type === 'password') {
-          campo.type = 'text';
-          iconEyeOff.style.display = 'none';
-          iconEye.style.display = 'block';
-          botao.setAttribute('aria-label', "{% trans 'Ocultar senha' %}");
-        } else {
-          campo.type = 'password';
-          iconEyeOff.style.display = 'block';
-          iconEye.style.display = 'none';
-          botao.setAttribute('aria-label', "{% trans 'Exibir senha' %}");
-        }
-      });
-    });
-  </script>
+    <p class="cadastro-login-link">
+      {% trans "Já tem conta?" %}
+      <a href="{% url 'login' %}">{% trans "Entrar" %}</a>
+    </p>
+  </main>
 </body>
 </html>

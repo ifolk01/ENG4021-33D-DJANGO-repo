@@ -102,95 +102,100 @@ def login(request):
 def criar_conta(request):
     cursos = Curso.objects.all().order_by("nome")
 
+    valores = {
+        "nome": "",
+        "username": "",
+        "email": "",
+        "curso": "",
+        "periodo": "",
+        "instituicao": "",
+    }
+
     if request.method == "POST":
         nome = request.POST.get("nome", "").strip()
         matricula = request.POST.get("username", "").strip()
+        email = request.POST.get("email", "").strip().lower()
         senha = request.POST.get("password", "")
-        confirmar_senha = request.POST.get(
-            "confirmar_senha",
-            "",
-        )
+        confirmar_senha = request.POST.get("confirmar_senha", "")
+        curso_id = request.POST.get("curso", "").strip()
+        periodo = request.POST.get("periodo", "").strip()
+        instituicao = request.POST.get("instituicao", "").strip()
 
-        curso_id = request.POST.get("curso")
-        periodo = request.POST.get("periodo")
-        instituicao = request.POST.get(
-            "instituicao",
-            "",
-        ).strip()
+        valores = {
+            "nome": nome,
+            "username": matricula,
+            "email": email,
+            "curso": curso_id,
+            "periodo": periodo,
+            "instituicao": instituicao,
+        }
 
-        if senha != confirmar_senha:
+        erro = None
+
+        if not nome or not matricula or not email or not senha or not confirmar_senha:
+            erro = "Preencha todos os campos obrigatórios."
+        elif len(matricula) > 150:
+            erro = "A matrícula deve ter no máximo 150 caracteres."
+        else:
+            try:
+                validate_email(email)
+            except ValidationError:
+                erro = "Informe um e-mail válido para recuperação da conta."
+
+        if not erro and User.objects.filter(username__iexact=matricula).exists():
+            erro = "Esta matrícula já está cadastrada."
+
+        if not erro and (
+            User.objects.filter(email__iexact=email).exists()
+            or Empresa.objects.filter(email__iexact=email).exists()
+        ):
+            erro = "Este e-mail já está vinculado a outra conta."
+
+        if not erro and len(senha) < 6:
+            erro = "A senha deve ter no mínimo 6 caracteres."
+
+        if not erro and senha != confirmar_senha:
+            erro = "As senhas não coincidem."
+
+        if not erro and not curso_id:
+            erro = "Selecione seu curso."
+
+        curso = None
+        if not erro:
+            try:
+                curso = Curso.objects.get(pk=curso_id)
+            except (Curso.DoesNotExist, ValueError, TypeError):
+                erro = "Curso inválido."
+
+        periodo_numero = None
+        if not erro and periodo:
+            try:
+                periodo_numero = int(periodo)
+                if periodo_numero < 1 or periodo_numero > 20:
+                    erro = "Informe um período válido."
+            except ValueError:
+                erro = "Informe um período válido."
+
+        if erro:
             return render(
                 request,
                 "criar_conta.html",
                 {
-                    "erro": "As senhas não coincidem!",
+                    "erro": erro,
                     "cursos": cursos,
+                    "valores": valores,
                 },
             )
 
-        if User.objects.filter(
-            username=matricula
-        ).exists():
-            return render(
-                request,
-                "criar_conta.html",
-                {
-                    "erro": "Esta matrícula já está registada.",
-                    "cursos": cursos,
-                },
-            )
-
-        if not curso_id:
-            return render(
-                request,
-                "criar_conta.html",
-                {
-                    "erro": "Selecione seu curso.",
-                    "cursos": cursos,
-                },
-            )
-
-        try:
-            curso = Curso.objects.get(
-                pk=curso_id
-            )
-        except Curso.DoesNotExist:
-            return render(
-                request,
-                "criar_conta.html",
-                {
-                    "erro": "Curso inválido.",
-                    "cursos": cursos,
-                },
-            )
-
-        try:
-            periodo_numero = (
-                int(periodo)
-                if periodo
-                else None
-            )
-        except ValueError:
-            periodo_numero = None
-
-        partes_nome = nome.split(
-            maxsplit=1
-        )
+        partes_nome = nome.split(maxsplit=1)
 
         with transaction.atomic():
             user = User.objects.create_user(
                 username=matricula,
+                email=email,
                 password=senha,
-                first_name=(
-                    partes_nome[0]
-                    if partes_nome
-                    else ""
-                ),
-                last_name=(
-                    partes_nome[1]
-                    if len(partes_nome) > 1
-                    else ""
-                ),
+                first_name=partes_nome[0] if partes_nome else "",
+                last_name=partes_nome[1] if len(partes_nome) > 1 else "",
             )
 
             PerfilUsuario.objects.create(
@@ -200,6 +205,10 @@ def criar_conta(request):
                 instituicao=instituicao,
             )
 
+        messages.success(
+            request,
+            "Conta criada com sucesso. Seu e-mail foi cadastrado para recuperação de senha.",
+        )
         return redirect("login")
 
     return render(
@@ -207,6 +216,7 @@ def criar_conta(request):
         "criar_conta.html",
         {
             "cursos": cursos,
+            "valores": valores,
         },
     )
 
@@ -1148,54 +1158,51 @@ def editar_perfil(request):
     )
 
     cursos = Curso.objects.all().order_by("nome")
+    nome_formulario = usuario.get_full_name().strip() or usuario.username
+    email_formulario = usuario.email or ""
 
     if request.method == "POST":
-        nome = request.POST.get("nome", "").strip()
-        email = request.POST.get("email", "").strip()
-
+        nome_formulario = request.POST.get("nome", "").strip()
+        email_formulario = request.POST.get("email", "").strip().lower()
         curso_id = request.POST.get("curso")
         periodo = request.POST.get("periodo")
-        instituicao = request.POST.get(
-            "instituicao",
-            "",
-        ).strip()
+        instituicao = request.POST.get("instituicao", "").strip()
 
-        if not nome or not email:
-            messages.error(
-                request,
-                "Preencha nome e e-mail.",
-            )
+        erro = None
 
+        if not nome_formulario or not email_formulario:
+            erro = "Preencha nome e e-mail."
         else:
-            partes_nome = nome.split(maxsplit=1)
+            try:
+                validate_email(email_formulario)
+            except ValidationError:
+                erro = "Informe um e-mail válido."
+
+        if not erro and (
+            User.objects.filter(email__iexact=email_formulario)
+            .exclude(pk=usuario.pk)
+            .exists()
+            or Empresa.objects.filter(email__iexact=email_formulario)
+            .exclude(usuario=usuario)
+            .exists()
+        ):
+            erro = "Este e-mail já está vinculado a outra conta."
+
+        if erro:
+            messages.error(request, erro)
+        else:
+            partes_nome = nome_formulario.split(maxsplit=1)
 
             usuario.first_name = partes_nome[0]
-            usuario.last_name = (
-                partes_nome[1]
-                if len(partes_nome) > 1
-                else ""
-            )
+            usuario.last_name = partes_nome[1] if len(partes_nome) > 1 else ""
+            usuario.email = email_formulario
+            usuario.save(update_fields=["first_name", "last_name", "email"])
 
-            usuario.email = email
-
-            usuario.save(
-                update_fields=[
-                    "first_name",
-                    "last_name",
-                    "email",
-                ]
-            )
-
-            # Curso
             if curso_id:
-                perfil_usuario.curso = get_object_or_404(
-                    Curso,
-                    pk=curso_id,
-                )
+                perfil_usuario.curso = get_object_or_404(Curso, pk=curso_id)
             else:
                 perfil_usuario.curso = None
 
-            # Período
             if periodo:
                 try:
                     perfil_usuario.periodo = int(periodo)
@@ -1204,36 +1211,26 @@ def editar_perfil(request):
             else:
                 perfil_usuario.periodo = None
 
-            # Instituição
             perfil_usuario.instituicao = instituicao
-
             perfil_usuario.save()
 
             messages.success(
                 request,
-                "Perfil atualizado com sucesso!",
+                "Perfil atualizado com sucesso! O e-mail informado também será usado na recuperação de senha.",
             )
-
             return redirect("perfil")
-
-    nome = (
-        usuario.get_full_name().strip()
-        or usuario.username
-    )
 
     return render(
         request,
         "editar_perfil.html",
         {
-            "nome": nome,
-            "email": usuario.email,
+            "nome": nome_formulario,
+            "email": email_formulario,
             "matricula": usuario.username,
-
             "perfil_usuario": perfil_usuario,
             "cursos": cursos,
         },
     )
-    
 
 @login_required
 def perfil(request):
@@ -1300,6 +1297,7 @@ def perfil(request):
         "iniciais": iniciais,
         "matricula": matricula,
         "email": email,
+        "email_recuperacao_configurado": bool(usuario.email),
         "curso": curso,
         "periodo": periodo,
         "instituicao": instituicao,
@@ -1323,21 +1321,55 @@ def perfil(request):
     )
 
 def esqueceu_senha(request):
+    tipo_usuario = request.GET.get("tipo", "aluno").strip().lower()
+    if tipo_usuario not in {"aluno", "empregador"}:
+        tipo_usuario = "aluno"
+
     if request.method == "POST":
-        email = request.POST.get("email", "").strip().lower()
+        tipo_usuario = request.POST.get("tipo_usuario", "aluno").strip().lower()
+        identificador = request.POST.get("identificador", "").strip()
 
-        empresa = Empresa.objects.filter(
-            email__iexact=email,
-            usuario__isnull=False,
-            usuario__is_active=True,
-        ).select_related("usuario").first()
+        if tipo_usuario not in {"aluno", "empregador"}:
+            tipo_usuario = "aluno"
 
-        if empresa:
-            usuario = empresa.usuario
+        usuario = None
+        destinatario = ""
 
+        if tipo_usuario == "empregador":
+            email = identificador.lower()
+            empresa = (
+                Empresa.objects
+                .filter(
+                    email__iexact=email,
+                    usuario__isnull=False,
+                    usuario__is_active=True,
+                )
+                .select_related("usuario")
+                .first()
+            )
+
+            if empresa:
+                usuario = empresa.usuario
+                destinatario = (empresa.email or usuario.email or "").strip().lower()
+
+        else:
+            candidato = (
+                User.objects
+                .filter(
+                    username__iexact=identificador,
+                    is_active=True,
+                )
+                .first()
+            )
+
+            if candidato and not Empresa.objects.filter(usuario=candidato).exists():
+                usuario = candidato
+                destinatario = (candidato.email or "").strip().lower()
+
+        # Resposta sempre genérica para não revelar se uma conta existe.
+        if usuario and destinatario:
             uid = urlsafe_base64_encode(force_bytes(usuario.pk))
             token = default_token_generator.make_token(usuario)
-
             link = request.build_absolute_uri(
                 reverse(
                     "redefinir_senha",
@@ -1345,27 +1377,42 @@ def esqueceu_senha(request):
                 )
             )
 
-            send_mail(
-                subject="Connecto - Recuperação de senha",
-                message=(
-                    "Olá!\n\n"
-                    "Recebemos uma solicitação para redefinir sua senha "
-                    "no Connecto.\n\n"
-                    f"Acesse o link abaixo para criar uma nova senha:\n{link}\n\n"
-                    "Se você não solicitou a recuperação, ignore este e-mail."
-                ),
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[empresa.email],
-                fail_silently=False,
-            )
+            nome = usuario.get_full_name().strip() or usuario.username
+
+            try:
+                send_mail(
+                    subject="Connecto - Recuperação de senha",
+                    message=(
+                        f"Olá, {nome}!\n\n"
+                        "Recebemos uma solicitação para redefinir sua senha no Connecto.\n\n"
+                        f"Acesse o link abaixo para criar uma nova senha:\n{link}\n\n"
+                        "Se você não solicitou a recuperação, ignore este e-mail. "
+                        "O link deixa de funcionar depois que a senha é alterada."
+                    ),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[destinatario],
+                    fail_silently=False,
+                )
+            except Exception:
+                logger.exception(
+                    "Falha ao enviar e-mail de recuperação para o usuário %s.",
+                    usuario.pk,
+                )
 
         return render(
             request,
             "esqueceu_senha.html",
-            {"sucesso": True},
+            {
+                "sucesso": True,
+                "tipo_usuario": tipo_usuario,
+            },
         )
 
-    return render(request, "esqueceu_senha.html")
+    return render(
+        request,
+        "esqueceu_senha.html",
+        {"tipo_usuario": tipo_usuario},
+    )
 
 def redefinir_senha(request, uidb64, token):
     usuario = None
@@ -1374,16 +1421,11 @@ def redefinir_senha(request, uidb64, token):
         uid = force_str(urlsafe_base64_decode(uidb64))
         usuario = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        pass
+        usuario = None
 
-    empresa_valida = (
+    token_valido = bool(
         usuario is not None
         and usuario.is_active
-        and Empresa.objects.filter(usuario=usuario).exists()
-    )
-
-    token_valido = (
-        empresa_valida
         and default_token_generator.check_token(usuario, token)
     )
 
@@ -1404,7 +1446,11 @@ def redefinir_senha(request, uidb64, token):
             erro = "As senhas não coincidem."
         else:
             usuario.set_password(senha)
-            usuario.save()
+            usuario.save(update_fields=["password"])
+            messages.success(
+                request,
+                "Senha redefinida com sucesso. Entre com sua nova senha.",
+            )
             return redirect("login")
 
         return render(
@@ -1573,7 +1619,8 @@ def editar_perfil_empregador(request):
 @login_required
 def alterar_senha(request):
     usuario = request.user
-    eh_empresa = Empresa.objects.filter(usuario=usuario).exists()
+    empresa = Empresa.objects.filter(usuario=usuario).first()
+    eh_empresa = empresa is not None
     erro = None
 
     if request.method == "POST":
@@ -1612,7 +1659,10 @@ def alterar_senha(request):
     return render(
         request,
         "alterar_senha.html",
-        {"erro": erro},
+        {
+            "erro": erro,
+            "empresa": empresa,
+        },
     )
 
 
@@ -1794,7 +1844,43 @@ def abrir_solicitacao(request):
 
 @require_POST
 @login_required
+def excluir_conta(request):
+    usuario = request.user
+    senha_atual = request.POST.get("password", "")
+    confirmacao = request.POST.get("confirmacao", "").strip().upper()
 
+    # A exclusão precisa ser validada também no backend. O JavaScript apenas
+    # melhora a experiência e nunca é considerado uma barreira de segurança.
+    if confirmacao != "EXCLUIR":
+        messages.error(
+            request,
+            "Para excluir a conta, digite EXCLUIR exatamente como solicitado.",
+        )
+        return redirect("perfil")
+
+    if not senha_atual or not usuario.check_password(senha_atual):
+        messages.error(
+            request,
+            "A senha atual está incorreta. A conta não foi excluída.",
+        )
+        return redirect("perfil")
+
+    # Os modelos ligados ao usuário usam on_delete=CASCADE, então candidaturas,
+    # favoritos, conversas, notificações e o perfil associado são removidos
+    # junto com o User.
+    with transaction.atomic():
+        usuario.delete()
+
+    auth_logout(request)
+    messages.success(
+        request,
+        "Sua conta e os dados associados foram excluídos com sucesso.",
+    )
+    return redirect("login")
+
+
+@require_POST
+@login_required
 def sair_da_conta(request):
     auth_logout(request)
     return redirect("login")

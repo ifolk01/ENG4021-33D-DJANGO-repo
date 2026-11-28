@@ -25,12 +25,25 @@ load_dotenv(BASE_DIR / ".env")
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-92b883gdjkhd0d3ccvcl+7x3=xeb2d_=hj_-y_o&qqiq$x1+*a"
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-connecto-local-dev-only",
+)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Em desenvolvimento o padrão continua True. Em produção, configure
+# DJANGO_DEBUG=False no ambiente.
+DEBUG = os.environ.get("DJANGO_DEBUG", "True").strip().lower() in {
+    "1", "true", "yes", "on"
+}
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.15.136"]  # troca pelo seu IP
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get(
+        "DJANGO_ALLOWED_HOSTS",
+        "127.0.0.1,localhost,192.168.15.136",
+    ).split(",")
+    if host.strip()
+]
 
 
 # Application definition
@@ -48,12 +61,12 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "connectoproject.urls"
@@ -119,7 +132,7 @@ LANGUAGES = [
 LOCALE_PATHS = [BASE_DIR / "locale"]
 LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365
 
-TIME_ZONE = "UTC"
+TIME_ZONE = os.environ.get("DJANGO_TIME_ZONE", "America/Sao_Paulo")
 
 USE_I18N = True
 
@@ -202,31 +215,37 @@ VAPID_SUBJECT = os.environ.get(
 )
 
 
-# Suporte Connecto - Envio de emails
+# Suporte Connecto - envio de e-mails e recuperação de senha
 
-
-
-EMAIL_BACKEND = os.getenv(
+EMAIL_BACKEND = os.environ.get(
     "EMAIL_BACKEND",
-    "django.core.mail.backends.smtp.EmailBackend"
+    "django.core.mail.backends.smtp.EmailBackend",
 )
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 465
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "465"))
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "False").strip().lower() in {
+    "1", "true", "yes", "on"
+}
+EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL", "True").strip().lower() in {
+    "1", "true", "yes", "on"
+}
 
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+if EMAIL_USE_TLS and EMAIL_USE_SSL:
+    raise ValueError("Configure apenas EMAIL_USE_TLS ou EMAIL_USE_SSL, nunca ambos.")
 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-SUPPORT_EMAIL = os.getenv(
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+DEFAULT_FROM_EMAIL = os.environ.get(
+    "DEFAULT_FROM_EMAIL",
+    EMAIL_HOST_USER or "no-reply@localhost",
+)
+SUPPORT_EMAIL = os.environ.get(
     "SUPPORT_EMAIL",
-    "suporteconnectoapp@gmail.com"
+    "suporteconnectoapp@gmail.com",
 )
+EMAIL_TIMEOUT = int(os.environ.get("EMAIL_TIMEOUT", "20"))
 
-EMAIL_TIMEOUT = 20
-
-GEMINI_REQUEST_TIMEOUT_MS = int(
-    os.environ.get("GEMINI_REQUEST_TIMEOUT_MS", "12000")
+# Links de recuperação expiram após 1 hora por padrão.
+PASSWORD_RESET_TIMEOUT = int(
+    os.environ.get("PASSWORD_RESET_TIMEOUT", "3600")
 )
